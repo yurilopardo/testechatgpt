@@ -6,6 +6,7 @@ A especificação visual anexada descreve projeção superior ortográfica. O pe
 
 - Página de desenvolvimento: `isometrico.html`; alternativa: `/?visual=isometrico`.
 - Arquivo independente offline: `teste-isometrico.html`, gerado por `npm run build` ou `npm run gdevelop`.
+- A partir de 22/10/2026, há seis casas azuis para ajustar a formação inicial. Selecione cada ninja no painel e confirme o posicionamento antes do combate; isso não consome o turno 1.
 - Cenário: `src/isometric-scene.js`; renderer: `src/isometric-art.js`.
 - Superfície de desenho: 512×384; losangos de 56×28; coordenadas lógicas do combate continuam de 0 a 7.
 - Paleta limitada, contornos rasterizados em degraus e nenhuma imagem ou fonte remota adicional.

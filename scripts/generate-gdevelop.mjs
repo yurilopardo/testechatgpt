@@ -95,7 +95,7 @@ if (app) {
   group(
     "4. Movimentação",
     "Valida destino pelo BFS; um deslocamento por unidade. Desfazer movimento (Z) devolve a posição e o movimento antes da ação, se a rota original continuar livre. Ações, empurrões e fim do turno invalidam o histórico; dano recebido e outras alterações na batalha são preservados. Realça o caminho ao apontar.",
-    process("move", "undo"),
+    process("move", "undo", "deploy", "confirm-deployment"),
   ),
   group(
     "5. Seleção de ataques",

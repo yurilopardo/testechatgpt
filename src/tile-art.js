@@ -132,7 +132,19 @@ export function drawExtraObject(ctx, type, x, y, direction = "east") {
 export function drawEffectTile(ctx, type, x, y, direction = "east") {
   if (!type) return;
   local(ctx, x, y, () => {
-    if (type === "steam") {
+    if (type === "deployment") {
+      box(ctx, 3, 3, 58, 58, "#60bdd52b");
+      ctx.strokeStyle = "#a5eaff";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 4]);
+      ctx.strokeRect(5, 5, 54, 54);
+      ctx.setLineDash([]);
+      // Corner brackets remain distinguishable without relying on color.
+      for (const [xx, yy, dx, dy] of [[9,9,1,1], [55,9,-1,1], [9,55,1,-1], [55,55,-1,-1]]) {
+        box(ctx, xx + Math.min(0, dx * 8), yy, 10, 2, "#d2f5ff");
+        box(ctx, xx, yy + Math.min(0, dy * 8), 2, 10, "#d2f5ff");
+      }
+    } else if (type === "steam") {
       ctx.globalAlpha = 0.8;
       box(ctx, 5, 24, 45, 15, "#c0d3c8");
       box(ctx, 14, 15, 36, 23, "#b6ccbf");

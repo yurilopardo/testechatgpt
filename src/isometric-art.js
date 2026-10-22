@@ -454,6 +454,15 @@ export class IsometricRenderer extends BoardRenderer {
       outline(c, p, water ? "#234a68" : "#254d3b", 0);
     }
     const targets = this.inputLocked ? [] : b.targets();
+    if (b.phase === "deployment")
+      for (const p of b.deploymentCells) {
+        const q = projectCell(p.x, p.y);
+        polygon(c, diamond(q, 2), "#60bdd544");
+        c.save();
+        c.setLineDash([4, 3]);
+        outline(c, q, "#b6edff", 2);
+        c.restore();
+      }
     for (const p of targets) {
       const q = projectCell(p.x, p.y);
       polygon(c, diamond(q, 2), b.mode === "move" ? "#4fa8ba20" : "#f1c76b20");

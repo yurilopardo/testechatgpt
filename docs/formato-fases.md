@@ -2,7 +2,7 @@
 
 O arquivo JSON usa `format: "triade-level"`, `version: 1` e `size: 8`. `name` tem até 80 caracteres e `description`, até 1.000.
 
-As camadas `ground`, `objects`, `effects` e `directions` têm oito linhas de oito células, indexadas como `[y][x]`. Chão sempre contém um identificador de tile; objetos e efeitos usam `null` quando vazios. Direções aceitam `north`, `east`, `south` e `west`.
+As camadas `ground`, `objects`, `effects`, `deployment` e `directions` têm oito linhas de oito células, indexadas como `[y][x]`. Chão sempre contém um identificador de tile; objetos e efeitos usam `null` quando vazios. `deployment` é opcional em arquivos v1 antigos: usa `"deployment"` nas casas marcadas e `null` nas demais; quando ausente, é normalizada como uma camada vazia. Direções aceitam `north`, `east`, `south` e `west`.
 
 O catálogo e as regras disponíveis ficam em `src/levels.js`. Um arquivo não pode colocar um identificador na camada errada. Por exemplo, `mud` pertence a `ground`, `bridge` a `objects` e `steam` a `effects`. `abyss` aparece na categoria de efeitos da paleta, mas é salvo como chão, porque substitui a superfície transitável.
 
@@ -35,6 +35,14 @@ As regras da missão são:
 `maxRounds` vai de 1 a 20. Cada onda usa um turno único entre 2 e o prazo e contém de 1 a 8 inimigos. Uma lista vazia desativa os reforços. Marcadores `reinforcement` escolhem as entradas; sem marcadores, o jogo usa as bordas livres. Entradas ocupadas adiam o reforço. O total do objetivo soma os inimigos iniciais e os das ondas.
 
 Rascunhos incompletos podem ser salvos e exportados. Para jogar, são necessários exatamente três aliados de elementos distintos sobre casas transitáveis e pelo menos um inimigo inicial ou onda. Fases inválidas não substituem a partida em andamento. Objetos ocupam uma casa por segmento; o pincel de tronco pinta dois segmentos, com vida independente.
+
+## Área inicial
+
+O tile **Área inicial** pertence à camada `deployment`, independente das demais. Ele não substitui o chão nem outro efeito na mesma casa. Para habilitar o posicionamento, marque ao menos três casas transitáveis sem inimigos. Marcações sobre obstáculos, água profunda sem ponte, abismo ou inimigos são ignoradas como destinos e geram aviso; se restarem menos de três destinos, a fase não pode ser iniciada.
+
+Os três ninjas continuam obrigatórios em `units`, definindo o elenco e a formação sugerida. Posições já dentro da área são preservadas. Ninjas fora dela são colocados nas casas válidas restantes, sem alterar o JSON do autor. Antes do combate, o jogador pode mudar a formação livremente e trocar aliados de lugar; ainda não há ataques preparados. **Confirmar posicionamento** inicia o turno 1 sem gastar movimento ou ação e prepara os inimigos. Em fases autorais, os inimigos não avançam nessa preparação inicial.
+
+O posicionamento é preservado na biblioteca, importação/exportação JSON e HTML independente. A borracha de Área inicial só limpa essa camada. Arquivos antigos ou sem casas marcadas mantêm o início imediato nas posições fixas. Reiniciar volta à etapa de posicionamento e à formação sugerida do autor.
 
 O teste clona os dados da fase. Reiniciar restaura o mesmo mapa e posições; Novo mapa sai da fase personalizada e retorna à missão procedural. A preparação inicial arma os inimigos sem mover suas posições colocadas no editor. Nos turnos seguintes, eles seguem a movimentação e os ataques direcionais normais.
 

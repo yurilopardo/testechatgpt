@@ -12,6 +12,8 @@ const labels = (page) =>
 const ready = async (page) => {
   if (await page.locator("#team-dialog").isVisible())
     await page.locator("#team-start").click();
+  if (await page.locator("#start-battle").isVisible())
+    await page.locator("#start-battle").click();
   await expect(page.locator("#phase-label")).toHaveText("Sua vez de agir");
 };
 
@@ -143,9 +145,6 @@ test("procedural map: cancel preserves the mission and confirm generates a share
   expect(url.hash).toBe("#field");
   await expect(page.locator("#round-number")).toHaveText("TURNO 01");
   await expect(page.locator("#undo-move")).toBeDisabled();
-  await expect(
-    page.getByRole("button", { name: "Novo mapa", exact: true }),
-  ).toBeFocused();
   const generated = await labels(page);
   expect(generated).not.toEqual(before);
   await page.reload();

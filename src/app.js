@@ -76,6 +76,7 @@ export function createApp(root, options = {}) {
         : globalThis.__TRIADE_LEVEL__
           ? { level: globalThis.__TRIADE_LEVEL__ }
           : {
+              deployment: true,
               seed:
                 new URLSearchParams(location.search).get("map") || undefined,
             }),
@@ -114,7 +115,9 @@ export function createApp(root, options = {}) {
 
         <section class="map-strip" aria-label="Mapa da missão"><div class="map-terrain">${icon("water")}<span><strong id="map-kind">Terreno procedural</strong><small>Água contínua · muralhas em ruínas</small></span></div><div class="map-identity"><span>MAPA</span><code id="map-code"></code></div><button class="secondary-btn new-map-btn" data-command="new-map">${icon("reset")} Novo mapa</button></section>
 
-        <p class="level-rule-notice" id="level-rule-notice" hidden></p><div class="battle-layout">
+        <p class="level-rule-notice" id="level-rule-notice" hidden></p>
+        <section id="deployment-panel" class="deployment-panel" aria-label="Posicionamento inicial" hidden><div><div class="eyebrow">ANTES DO COMBATE</div><h2>Posicione seu esquadrão.</h2><p>Selecione um ninja no painel e clique em uma casa azul. Se já houver um aliado, os dois trocam de lugar. Você pode ajustar quantas vezes quiser.</p><strong id="deployment-selected"></strong></div><button class="primary-btn" data-command="confirm-deployment" id="start-battle">Confirmar posicionamento ${icon("arrow")}</button></section>
+        <div class="battle-layout">
           <aside class="squad-column">
             <div class="section-heading"><h2>Seu esquadrão</h2><span id="ally-count">03 UNIDADES</span></div><button class="change-team-btn" data-command="choose-team">Trocar equipe</button>
             <div id="squad" class="squad-list"></div>
@@ -193,6 +196,7 @@ export function createApp(root, options = {}) {
     previewGeneration++;
     const selected = battle.selected,
       meta = selected ? ELEMENTS[selected.element] : null;
+    const isDeployment = battle.phase === "deployment" && !teamSelectionPending;
     const isPlayer =
         battle.phase === "player" &&
         !enemyAnimating &&
@@ -200,6 +204,11 @@ export function createApp(root, options = {}) {
         !teamSelectionPending,
       isOver = ["victory", "defeat"].includes(battle.phase);
     const displayedRound = enemyAnimating ? enemyAnimationRound : battle.round;
+    root.classList.toggle("is-deploying", isDeployment);
+    $("#deployment-panel").hidden = !isDeployment;
+    $("#deployment-selected").textContent = selected ? `Reposicionando: ${selected.name} · ${battle.deploymentCells.length} casas disponíveis` : "";
+    $(".turn-summary small").textContent = isDeployment ? "Posicionamento livre · sem gastar ações" : "Um movimento + uma ação por unidade";
+    $(".intent-panel > p").textContent = isDeployment ? "Os inimigos permanecem nas posições iniciais. Os primeiros ataques serão preparados depois que você confirmar o posicionamento." : "A cada turno, os inimigos avançam até 2 casas e armam o próximo ataque. A seta mostra a direção: um empurrão desloca o ataque junto com o inimigo.";
     const custom = battle.options.level;
     $(".mission-header h1").textContent = custom?.name || "Clareira do Rio.";
     $(".mission-header p").textContent =
@@ -236,7 +245,7 @@ export function createApp(root, options = {}) {
     $("#map-kind").textContent =
       waterNames[battle.waterKind] || "Terreno procedural";
     $("#round-number").textContent =
-      `TURNO ${String(displayedRound).padStart(2, "0")}`;
+      isDeployment ? "PREPARAÇÃO" : `TURNO ${String(displayedRound).padStart(2, "0")}`;
     $("#round-limit").textContent =
       ` / ${String(battle.maxRounds).padStart(2, "0")}`;
     $(".round-display").classList.toggle(
@@ -248,6 +257,7 @@ export function createApp(root, options = {}) {
       : enemyAnimating
         ? "Inimigos em movimento"
         : {
+            deployment: "Posicionamento inicial",
             player: "Sua vez de agir",
             enemy: "Inimigos em ação",
             victory: "Missão cumprida",
@@ -261,7 +271,7 @@ export function createApp(root, options = {}) {
       "aria-label",
       `Turno ${displayedRound} de ${battle.maxRounds}. ${$("#phase-label").textContent}.`,
     );
-    $("#board-status").textContent = actionAnimating
+    $("#board-status").textContent = isDeployment ? "Casas azuis: área inicial" : actionAnimating
       ? "Dash Relâmpago…"
       : enemyAnimating
         ? "Inimigos avançando…"
@@ -276,7 +286,7 @@ export function createApp(root, options = {}) {
       .map((id, i) => {
         const e = ELEMENTS[id];
         const unit = battle.units.find((u) => u.id === id);
-        return `<button class="squad-card ${battle.selectedId === id ? "selected" : ""} ${!unit ? "defeated" : ""}" data-command="select" data-unit="${id}" style="--element:${e.color}" ${!unit || !isPlayer ? "disabled" : ""} aria-label="Selecionar ${e.character}, ${e.name}${unit ? `, ${unit.hp} pontos de vida` : ", derrotado"}" aria-pressed="${battle.selectedId === id}"><span class="portrait-frame"><canvas width="80" height="80" data-portrait="${id}" aria-hidden="true"></canvas><span class="element-badge">${icon(id)}</span></span><span class="squad-info"><span class="squad-name">${e.character}<kbd>${i + 1}</kbd></span><span class="element-name">${e.name}</span>${hearts(unit?.hp || 0, 3)}<span class="unit-status">${!unit ? "Derrotado" : unit.acted ? `${icon("check")} Turno concluído` : `<i></i> ${unit.moved ? "Ação disponível" : "Pronto para agir"}`}</span></span></button>`;
+        return `<button class="squad-card ${battle.selectedId === id ? "selected" : ""} ${!unit ? "defeated" : ""}" data-command="select" data-unit="${id}" style="--element:${e.color}" ${!unit || !(isPlayer || isDeployment) ? "disabled" : ""} aria-label="Selecionar ${e.character}, ${e.name}${unit ? `, ${unit.hp} pontos de vida` : ", derrotado"}" aria-pressed="${battle.selectedId === id}"><span class="portrait-frame"><canvas width="80" height="80" data-portrait="${id}" aria-hidden="true"></canvas><span class="element-badge">${icon(id)}</span></span><span class="squad-info"><span class="squad-name">${e.character}<kbd>${i + 1}</kbd></span><span class="element-name">${e.name}</span>${hearts(unit?.hp || 0, 3)}<span class="unit-status">${!unit ? "Derrotado" : isDeployment ? "Na área inicial" : unit.acted ? `${icon("check")} Turno concluído` : `<i></i> ${unit.moved ? "Ação disponível" : "Pronto para agir"}`}</span></span></button>`;
       })
       .join("");
     root
@@ -293,7 +303,7 @@ export function createApp(root, options = {}) {
       kills = battle.kills;
     $("#ready-count").textContent = remaining;
     $("#ready-label").textContent =
-      remaining === 1 ? "unidade disponível" : "unidades disponíveis";
+      isDeployment ? "ninjas posicionados" : remaining === 1 ? "unidade disponível" : "unidades disponíveis";
     $("#kill-count").textContent =
       `${kills} de ${battle.totalEnemies} derrotados`;
     $("#kill-dots").innerHTML = Array.from(
@@ -324,6 +334,11 @@ export function createApp(root, options = {}) {
       $("#unit-panel").innerHTML =
         `<div class="selected-profile"><span class="selected-portrait"><canvas id="large-portrait" width="80" height="80" aria-hidden="true"></canvas></span><div><div class="eyebrow">${icon(selected.element)} ${meta.name.toUpperCase()}</div><h3>${selected.name}</h3><span>${meta.title}</span></div></div><div class="unit-stats"><span>${icon("heart")} <strong>${selected.hp}</strong><small>/ 3 PV</small></span><span>${icon("move")} <strong>${selected.range}</strong><small>casas</small></span><span>${icon("sword")} <strong>1</strong><small>ação</small></span></div><div class="action-heading"><span class="eyebrow">${selected.acted ? "TURNO CONCLUÍDO" : "ESCOLHA SUA AÇÃO"}</span><span class="action-pips"><i class="${selected.moved ? "used" : ""}" title="Movimento"></i><i class="${selected.acted ? "used" : ""}" title="Ação"></i></span></div><div class="action-buttons"><button class="action-btn ${battle.mode === "move" && !selected.acted ? "active" : ""}" data-command="mode" data-mode="move" ${disabled || selected.moved ? "disabled" : ""}>${icon("move")}<span><strong>Mover</strong><small>Até ${selected.range} casas</small></span><span class="action-value">${selected.range}</span></button><button class="action-btn undo-btn" id="undo-move" data-command="undo" ${canUndo ? "" : "disabled"} aria-keyshortcuts="Z">${icon("undo")}<span><strong>Desfazer movimento</strong><small>Voltar antes de usar uma ação</small></span><kbd>Z</kbd></button><button class="action-btn ${battle.mode === "punch" ? "active" : ""}" data-command="mode" data-mode="punch" ${disabled ? "disabled" : ""}>${icon("punch")}<span><strong>Soco</strong><small>1 de dano · empurra 1 casa</small></span><span class="action-value">1</span></button><button class="action-btn special-btn ${battle.mode === "special" ? "active" : ""}" data-command="mode" data-mode="special" ${disabled ? "disabled" : ""}>${icon(selected.element)}<span><strong>${meta.special}</strong><small>${selected.element === "fire" ? "Linha reta · até 4 casas" : selected.element === "water" ? "Própria casa · 4 vizinhas" : selected.element === "lightning" ? "Linha reta · custa 1 PV" : selected.element === "wind" ? "Qualquer casa · 4 vizinhas" : "Adjacente · 2 PV"}</small></span><span class="special-star">✦</span></button><button class="action-btn wait-btn" data-command="wait" ${disabled ? "disabled" : ""}>${icon("wait")}<span><strong>Esperar</strong><small>Encerrar ação da unidade</small></span></button></div><div class="ability-note">${selected.acted ? `${icon("check")} ${selected.name} já agiu. Selecione outro aliado.` : battle.mode === "special" ? meta.description : battle.mode === "punch" ? "1 de dano e empurrão de 1 casa em inimigos, pedras ou barreiras. Colisão: 1 de dano em cada envolvido, sem empurrão em cadeia. Contra outro personagem: 2 PV no alvo (Soco + colisão) e 1 PV no personagem atrás, aliado ou inimigo. Mesmo com 0 PV, o alvo ainda é empurrado e causa dano no obstáculo atrás. Árvores e muralhas ficam no lugar; o Soco também danifica muralhas." : "Você pode agir sem se mover. Desfaça o movimento com Z antes de usar uma ação, que encerra a vez desta unidade."}</div>`;
       portrait($("#large-portrait"), selected, true);
+      if (isDeployment) {
+        $("#unit-panel .action-buttons").hidden = true;
+        $("#unit-panel .action-heading .eyebrow").textContent = "POSIÇÃO INICIAL";
+        $("#unit-panel .ability-note").textContent = `Escolha uma casa azul para ${selected.name}. O posicionamento não gasta caminhada nem ação. Confirme acima do tabuleiro para iniciar o turno 1.`;
+      }
     } else
       $("#unit-panel").innerHTML =
         '<div class="empty-unit">Nenhuma unidade disponível.</div>';
@@ -337,7 +352,7 @@ export function createApp(root, options = {}) {
           const ranged = e.kind === "ranged";
           const threatened = battle.enemyThreatenedCells(e);
           const point = threatened.at(-1) || battle.enemyAttackPath(e).at(-1);
-          return `<div class="intent-row ${ranged ? "ranged" : "melee"} ${e.intent && !threatened.length ? "attack-blocked" : ""}" data-enemy="${e.id}"><span class="enemy-number">${icon(ranged ? "ranged" : "sword")}</span><span><strong>${e.name}</strong><span class="enemy-role">${ranged ? "DISTÂNCIA · ATÉ 4 CASAS" : "CORPO A CORPO · 1 CASA"}</span><span class="enemy-ready-label">${facing(e)} · ${enemyAnimating ? "PREPARANDO ATAQUE" : "ATAQUE ARMADO"}</span><small>${e.advanceSteps ? `Avançou ${e.advanceSteps} casa${e.advanceSteps === 1 ? "" : "s"}` : "Em posição"} · ${point ? `Ataque em <b>${coord(point)}</b>` : "Voltado para fora do mapa"}${point && !threatened.length ? " · bloqueado" : ""} · 1 de dano</small></span>${hearts(e.hp, e.maxHp)}</div>`;
+          return `<div class="intent-row ${ranged ? "ranged" : "melee"} ${e.intent && !threatened.length ? "attack-blocked" : ""}" data-enemy="${e.id}"><span class="enemy-number">${icon(ranged ? "ranged" : "sword")}</span><span><strong>${e.name}</strong><span class="enemy-role">${ranged ? "DISTÂNCIA · ATÉ 4 CASAS" : "CORPO A CORPO · 1 CASA"}</span><span class="enemy-ready-label">${isDeployment ? "AGUARDANDO POSICIONAMENTO" : `${facing(e)} · ${enemyAnimating ? "PREPARANDO ATAQUE" : "ATAQUE ARMADO"}`}</span><small>${e.advanceSteps ? `Avançou ${e.advanceSteps} casa${e.advanceSteps === 1 ? "" : "s"}` : "Em posição"} · ${point ? `Ataque em <b>${coord(point)}</b>` : isDeployment ? "Ataque ainda não preparado" : "Voltado para fora do mapa"}${point && !threatened.length ? " · bloqueado" : ""} · 1 de dano</small></span>${hearts(e.hp, e.maxHp)}</div>`;
         })
         .join("") ||
       `<div class="no-threats">${battle.pendingReinforcements > 0 ? "Campo livre. Há reforços a caminho." : "Todas as ondas derrotadas."}</div>`;
@@ -350,7 +365,9 @@ export function createApp(root, options = {}) {
       .join("");
     $("#journal-round").textContent =
       `T${String(battle.round).padStart(2, "0")}`;
-    $("#action-hint").textContent = !isPlayer
+    $("#action-hint").textContent = isDeployment
+      ? `Escolha uma casa azul para ${selected?.name || "o ninja"}. Casas ocupadas trocam os aliados de lugar.`
+      : !isPlayer
       ? isOver
         ? "Reinicie para testar uma nova estratégia."
         : "Os inimigos executam as intenções anunciadas…"
@@ -399,8 +416,10 @@ export function createApp(root, options = {}) {
         structure = battle.structureAt(x, y);
       const type = battle.terrain[y][x];
       const label = `${coord({ x, y })}, ${tileNames[type] || TILE_BY_ID[type]?.name || type}${unit ? `, ${unit.name}, ${unit.hp} PV` : ""}${structure ? (structure.type === "barrier" ? ", barreira, " : ", estrutura, ") + structure.hp + " PV" : ""}${danger.has(key(x, y)) ? ", perigo: ataque anunciado" : announced.has(key(x, y)) ? ", ataque anunciado sem alcance ou bloqueado" : ""}${targets.has(key(x, y)) ? `, ${battle.mode === "move" ? "movimento disponível" : waveSelected ? "ativar Onda Circular" : "alcance da ação"}` : ""}${waveArea.has(key(x, y)) ? ", área afetada pela onda" : ""}${battle.levelLayers?.effects[y][x] ? `, ${TILE_BY_ID[battle.levelLayers.effects[y][x]].name}` : ""}${type === "mud" ? ", custo de movimento 2" : ""}`;
-      cell.setAttribute("aria-label", label);
-      cell.disabled = !isPlayer;
+      const deploymentLabel = isDeployment && battle.inDeploymentArea(x, y) ? ", área inicial, posicionamento disponível" : "";
+      cell.setAttribute("aria-label", label + deploymentLabel);
+      cell.classList.toggle("deployment-cell", !!deploymentLabel);
+      cell.disabled = !(isPlayer || isDeployment);
       cell.title = label;
       cell.setAttribute("aria-pressed", String(unit?.id === battle.selectedId));
     });
@@ -513,14 +532,19 @@ export function createApp(root, options = {}) {
   }
   function selectUnit(id) {
     if (battle.select(id)) {
+      const boardFocused = document.activeElement?.matches(".cell, .isometric-unit-target");
       cursor = { x: battle.selected.x, y: battle.selected.y };
       renderer.cursor = null;
+      cells.forEach((cell) => {
+        cell.tabIndex = +cell.dataset.x === cursor.x && +cell.dataset.y === cursor.y ? 0 : -1;
+      });
       update();
+      if (boardFocused) setCursor(cursor.x, cursor.y);
     }
   }
   function clickCell(x, y) {
     if (
-      battle.phase !== "player" ||
+      !["player", "deployment"].includes(battle.phase) ||
       enemyAnimating ||
       dialog?.open ||
       teamSelectionPending
@@ -529,6 +553,10 @@ export function createApp(root, options = {}) {
     cursor = { x, y };
     renderer.cursor = null;
     const unit = battle.unitAt(x, y);
+    if (battle.phase === "deployment") {
+      dispatch("deploy", { x, y });
+      return;
+    }
     if (
       battle.mode === "special" &&
       battle.selected?.element === "water" &&
@@ -582,6 +610,15 @@ export function createApp(root, options = {}) {
       restartMission(false, null, draftTeam);
     },
     select: (id) => selectUnit(id),
+    deploy: (p) => {
+      if (battle.deploy(p.x, p.y)) update();
+      else toast("Escolha uma casa azul transitável da área inicial.");
+    },
+    "confirm-deployment": () => {
+      if (!battle.confirmDeployment()) return;
+      holdEnemyMovement(effect());
+      update();
+    },
     mode: (mode) => {
       if (battle.setMode(mode)) {
         renderer.cursor = null;
@@ -950,6 +987,8 @@ export function createApp(root, options = {}) {
     $("#team-count").textContent =
       `${draftTeam.length} / 3 ninjas selecionados${draftTeam.length === 3 ? ". Desmarque um ninja para trocar por outro." : ". Escolha mais " + (3 - draftTeam.length) + "."}`;
     $("#team-start").disabled = draftTeam.length !== 3;
+    $("#team-start").innerHTML = `${battle.deploymentCells.length ? "Posicionar equipe" : "Iniciar missão"} ${icon("arrow")}`;
+    $(".team-restart-note").textContent = battle.deploymentCells.length ? "Ao confirmar, escolha as posições iniciais nas casas azuis do mesmo mapa." : "Ao confirmar, a missão começa no turno 1 no mesmo mapa.";
     $("#team-cancel").hidden = teamSelectionPending;
     if (focused)
       $("#team-options")

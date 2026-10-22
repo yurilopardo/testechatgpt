@@ -21,7 +21,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/editor.html");
 });
 
-test("all 28 tiles can be painted, keep their layers and disclose future effects", async ({
+test("all 29 tiles can be painted, keep their layers and disclose future effects", async ({
   page,
 }) => {
   const level = blankLevel();
@@ -44,6 +44,7 @@ test("all 28 tiles can be painted, keep their layers and disclose future effects
     ...file.ground.flat(),
     ...file.objects.flat(),
     ...file.effects.flat(),
+    ...file.deployment.flat(),
   ]);
   for (const t of TILE_CATALOG) expect(used.has(t.id)).toBe(true);
   expect(

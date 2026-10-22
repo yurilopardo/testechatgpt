@@ -238,6 +238,14 @@ TILE_CATALOG.push(
     "Água rasa com indicação elétrica; permite passagem.",
     "Dano por condução ainda em planejamento.",
   ),
+  tile(
+    "deployment",
+    "Área inicial",
+    "Efeitos e objetivos",
+    "deployment",
+    "#80d8ef",
+    "Permite posicionar os ninjas antes do combate. Marque pelo menos três casas transitáveis sem inimigos. Não substitui o chão nem os efeitos.",
+  ),
 );
 export const TILE_BY_ID = Object.fromEntries(
   TILE_CATALOG.map((t) => [t.id, t]),
@@ -279,6 +287,7 @@ export function blankLevel() {
     ground: grid("grass"),
     objects: grid(),
     effects: grid(),
+    deployment: grid(),
     directions: grid("east"),
     units: [
       { id: "fire", team: "ally", element: "fire", x: 1, y: 6 },
@@ -325,8 +334,8 @@ export function normalizeLevel(input) {
   )
     fail("A descrição deve ter até 1.000 caracteres.");
   result.description = input.description || "";
-  for (const layer of ["ground", "objects", "effects", "directions"]) {
-    const rows = input[layer] ?? (layer === "directions" ? grid("east") : null);
+  for (const layer of ["ground", "objects", "effects", "deployment", "directions"]) {
+    const rows = input[layer] ?? (layer === "directions" ? grid("east") : layer === "deployment" ? grid() : null);
     if (
       !Array.isArray(rows) ||
       rows.length !== 8 ||
@@ -433,6 +442,14 @@ export function validateLevel(input) {
       );
   if (!level.units.some((u) => u.team === "enemy") && !level.rules.waves.length)
     errors.push("Adicione pelo menos um inimigo ou uma onda de reforços.");
+  const marked = level.deployment.flat().filter(Boolean).length;
+  if (marked) {
+    const available = deploymentCells(level).length;
+    if (available < 3)
+      errors.push("A área inicial precisa de pelo menos três casas transitáveis sem inimigos.");
+    if (available < marked)
+      warnings.push(`${marked - available} casa(s) da área inicial estão bloqueadas ou ocupadas por inimigos e não podem receber ninjas.`);
+  }
   const future = usedFutureTiles(level);
   if (future.length)
     warnings.push(
@@ -471,6 +488,38 @@ export function levelTerrain(level) {
   );
 }
 
+// Deployment is a separate optional layer, so old v1 files keep fixed spawns.
+export function deploymentCells(level) {
+  return (level.deployment || grid()).flatMap((row, y) =>
+    row.flatMap((marker, x) =>
+      marker && canStand(level, x, y) &&
+      !level.units.some((u) => u.team === "enemy" && u.x === x && u.y === y)
+        ? [{ x, y }] : [],
+    ),
+  );
+}
+
+// A small, reproducible starting area around the generated allied formation.
+export function defaultDeploymentCells(terrain, allies, enemies, limit = 9) {
+  const cells = [], seen = new Set();
+  const add = ({ x, y }) => {
+    const key = `${x},${y}`;
+    if (!insideLevel(x, y) || seen.has(key) ||
+      SOLID_OBJECTS.includes(terrain[y][x]) ||
+      ["deep-water", "abyss"].includes(terrain[y][x]) ||
+      enemies.some((e) => e.x === x && e.y === y)) return;
+    seen.add(key);
+    cells.push({ x, y });
+  };
+  allies.forEach(add);
+  for (let i = 0; i < cells.length && cells.length < limit; i++)
+    for (const [dx, dy] of [[0,-1], [1,0], [0,1], [-1,0]]) {
+      if (cells.length >= limit) break;
+      add({ x: cells[i].x + dx, y: cells[i].y + dy });
+    }
+  return cells;
+}
+
 export function levelFromGenerated(map) {
   const level = blankLevel();
   level.name = `Terreno ${map.seed}`.slice(0, 80);
@@ -494,6 +543,10 @@ export function levelFromGenerated(map) {
       ...map.spawns[id],
     })),
   ];
+  for (const { x, y } of defaultDeploymentCells(map.terrain,
+    level.units.filter((u) => u.team === "ally"),
+    level.units.filter((u) => u.team === "enemy")))
+    level.deployment[y][x] = "deployment";
   return normalizeLevel(level);
 }
 

@@ -433,6 +433,8 @@ export function createTerrainCanvas(
         rect(ctx, px, py, 1, 64, "#31533632");
       }
       drawExtraGround(ctx, groundAt(x, y), px, py);
+      if (layers?.deployment?.[y]?.[x])
+        drawEffectTile(ctx, "deployment", px, py);
       if (type === "tree")
         tree(ctx, px, py, rng, structures.get(key(x, y))?.hp === 1);
       if (["rock", "hot-rock"].includes(type) && !omitRocks.has(key(x, y)))
@@ -662,6 +664,9 @@ export class BoardRenderer {
     ctx.imageSmoothingEnabled = false;
     ctx.clearRect(0, 0, 512, 512);
     ctx.drawImage(this.base, 0, 0);
+    if (b.phase === "deployment")
+      for (const p of b.deploymentCells)
+        drawEffectTile(ctx, "deployment", p.x * TILE, p.y * TILE);
     const targetCells = this.inputLocked ? [] : b.targets();
     const waveSelected =
       !this.inputLocked &&
@@ -826,7 +831,7 @@ export class BoardRenderer {
             ? "#c8b3ed"
             : "#ef9f8b"
           : ELEMENTS[unit.element].color;
-      if (selected && b.phase === "player") {
+      if (selected && ["player", "deployment"].includes(b.phase)) {
         ctx.strokeStyle = "#eef2bd";
         ctx.lineWidth = 2;
         ctx.strokeRect(x + 6, y + 12, 52, 44);

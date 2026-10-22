@@ -2821,3 +2821,27 @@ dialog > p {
 .isometric-unit-target:focus-visible {
   outline: none;
 }
+
+/* Initial placement is a separate step, before any combat actions are spent. */
+.deployment-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 0 0 26px;
+  padding: 22px 26px;
+  border: 1px solid #65b9d3;
+  border-left: 4px solid #9de5f7;
+  border-radius: 10px;
+  background: linear-gradient(120deg, #193d43, #162a30);
+  color: #d9f3f5;
+}
+.deployment-panel[hidden], .action-buttons[hidden] { display: none; }
+.deployment-panel h2 { margin: 5px 0 8px; font-size: 24px; }
+.deployment-panel p { max-width: 740px; margin: 0 0 10px; font-size: 14px; line-height: 1.6; }
+.deployment-panel strong { font-size: 12px; color: #b4eafa; }
+.deployment-panel .primary-btn { flex-shrink: 0; }
+.is-deploying .cell.deployment-cell:focus-visible { outline-color: #b6edff; }
+@media (max-width: 900px) {
+  .deployment-panel { align-items: stretch; flex-direction: column; padding: 18px; gap: 14px; }
+}

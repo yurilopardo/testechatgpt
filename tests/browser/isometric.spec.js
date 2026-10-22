@@ -5,6 +5,8 @@ const cell = (page, x, y) => page.getByTestId(`cell-${x}-${y}`);
 const unit = (page, id) =>
   page.locator(`.isometric-unit-target[data-unit-id="${id}"]`);
 async function ready(page) {
+  if (await page.locator("#start-battle").isVisible())
+    await page.locator("#start-battle").click();
   await expect(page.locator("#phase-label")).toHaveText("Sua vez de agir");
 }
 
@@ -73,6 +75,7 @@ test("an enemy advances and arms its attack without additional waves", async ({
   page,
 }) => {
   await page.goto("/isometrico.html");
+  await ready(page);
   await page.locator("#end-turn").click();
   await expect(page.locator("#round-number")).toHaveText("TURNO 02");
   await ready(page);

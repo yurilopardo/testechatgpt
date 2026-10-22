@@ -50,6 +50,7 @@ async function exerciseProceduralExport(page) {
   const battle = new Battle({ seed: exportSeed });
   await expect(page.locator("#team-dialog")).toBeVisible();
   await page.locator("#team-start").click();
+  await page.locator("#start-battle").click();
   await expect(page.locator("#phase-label")).toHaveText("Sua vez de agir");
   await expect(page.locator("#map-code")).toHaveText("export-test");
   await expect(page.locator(".cell")).toHaveCount(64);
@@ -129,6 +130,7 @@ async function exerciseProceduralExport(page) {
     .click();
   await page.getByRole("button", { name: "Reiniciar", exact: true }).click();
   battle.reset();
+  await page.locator("#start-battle").click();
   await expect(page.locator("#phase-label")).toHaveText("Sua vez de agir");
   await checkProceduralState(page, battle);
   await expect.poll(() => cellLabels(page)).toEqual(initialLabels);
@@ -137,6 +139,7 @@ async function exerciseProceduralExport(page) {
     .getByRole("button", { name: "Gerar novo mapa", exact: true })
     .click();
   await expect(page.locator("#map-code")).not.toHaveText("export-test");
+  await page.locator("#start-battle").click();
   await expect(page.locator("#phase-label")).toHaveText("Sua vez de agir");
   await expect(page.locator("#round-number")).toHaveText("TURNO 01");
   await expect(page.locator("#kill-count")).toHaveText("0 de 9 derrotados");

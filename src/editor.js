@@ -90,7 +90,7 @@ export function createEditor(root, options = {}) {
       )
       .join(
         "",
-      )}</select></label><label class="editor-field">Borracha remove<select id="editor-erase-layer"><option value="objects">Objetos</option><option value="effects">Efeitos e objetivos</option><option value="units">Personagens</option><option value="ground">Chão → grama</option><option value="all">Tudo na casa</option></select></label><p class="editor-key-help">Arraste para pintar. Enter ou Espaço pinta a casa em foco. Setas movem o cursor. Ctrl+Z desfaz.</p></aside>
+      )}</select></label><label class="editor-field">Borracha remove<select id="editor-erase-layer"><option value="objects">Objetos</option><option value="effects">Efeitos e objetivos</option><option value="deployment">Área inicial</option><option value="units">Personagens</option><option value="ground">Chão → grama</option><option value="all">Tudo na casa</option></select></label><p class="editor-key-help">Arraste para pintar. Enter ou Espaço pinta a casa em foco. Setas movem o cursor. Ctrl+Z desfaz.</p></aside>
     <section class="editor-stage"><div class="editor-stage-heading"><span id="editor-map-name"></span><span id="editor-hover">A1</span></div><div class="editor-board-wrap"><div class="editor-axis">${"ABCDEFGH"
       .split("")
       .map((c) => `<span>${c}</span>`)
@@ -101,7 +101,7 @@ export function createEditor(root, options = {}) {
       .map((c) => `<span>${c}</span>`)
       .join(
         "",
-      )}</div></div><div class="editor-stage-footer"><span id="editor-counts"></span><span>Chão + objetos + efeitos</span></div><div class="editor-message" id="editor-message" role="status" aria-live="polite">Pronto para criar. As alterações ficam no rascunho deste navegador.</div><section class="editor-validation" aria-label="Validação da fase"><h2>Conferência da fase</h2><div id="editor-validation"></div></section></section>
+      )}</div></div><div class="editor-stage-footer"><span id="editor-counts"></span><span>Chão + objetos + efeitos + área inicial</span></div><div class="editor-message" id="editor-message" role="status" aria-live="polite">Pronto para criar. As alterações ficam no rascunho deste navegador.</div><section class="editor-validation" aria-label="Validação da fase"><h2>Conferência da fase</h2><div id="editor-validation"></div></section></section>
     <aside class="editor-settings"><div class="editor-section-label">SUA FASE</div><label class="editor-field">Nome<input id="editor-name" maxlength="80"></label><label class="editor-field">Descrição<textarea id="editor-description" maxlength="1000" rows="2"></textarea></label><div class="editor-settings-row"><label class="editor-field">Limite de turnos<input id="editor-rounds" type="number" min="1" max="20"></label><button data-edit="save" class="editor-save">Salvar na biblioteca</button></div><div class="editor-rule-summary">Objetivo: eliminar todos os inimigos e reforços antes do prazo, mantendo um aliado vivo.</div><div class="editor-section-label">ONDAS DE REFORÇOS</div><div id="editor-waves"></div><button data-edit="add-wave" class="editor-wide">+ Adicionar onda</button><p class="editor-muted">Entram nos pontos de reforço marcados. Sem marcadores, usam as bordas livres.</p><div class="editor-section-label">BIBLIOTECA LOCAL</div><label class="editor-field">Fases salvas<select id="editor-library"><option value="">Escolha uma fase</option></select></label><div class="editor-inline-buttons"><button data-edit="duplicate">Duplicar</button><button data-edit="delete">Excluir salva</button></div><p class="editor-muted" id="editor-storage-note">Biblioteca salva neste navegador. Exporte os arquivos para guardar ou compartilhar.</p><div class="editor-section-label">PONTO DE PARTIDA</div><div class="editor-inline-buttons"><button data-edit="blank">Mapa limpo</button><button data-edit="generate">Gerar terreno</button></div><label class="editor-field">Código do terreno (opcional)<input id="editor-seed" maxlength="32" placeholder="Ex.: floresta-01"></label><button data-edit="export-html" class="editor-wide">↓ Baixar fase jogável (.html)</button><div class="editor-inspector" id="editor-inspector"></div></aside></div>
     <footer class="editor-footer"><span>ATELIÊ TRÍADE · FASES V1</span><span>Os tiles com ◇ têm efeitos especiais em planejamento. A regra disponível aparece na paleta.</span></footer>
     <dialog id="editor-json-dialog" class="editor-json-dialog"><div class="editor-dialog-heading"><h2>Arquivo da fase</h2><button data-edit="close-json" aria-label="Fechar JSON">×</button></div><p>Baixe o JSON ou copie o conteúdo. Para importar, escolha um arquivo ou cole uma fase no campo abaixo.</p><label class="editor-field">Importar arquivo JSON<input type="file" accept=".json,application/json" id="editor-import-file"></label><label class="editor-field">Conteúdo JSON<textarea id="editor-json" spellcheck="false" rows="14"></textarea></label><p id="editor-json-error" role="alert"></p><div class="editor-inline-buttons"><button data-edit="copy-json">Copiar JSON</button><button data-edit="export-json">Baixar JSON</button><button data-edit="apply-json" class="editor-primary">Carregar texto</button></div></dialog>
@@ -245,7 +245,7 @@ export function createEditor(root, options = {}) {
       const u = level.units.find((u) => u.x === x && u.y === y);
       brush = u
         ? `unit:${u.team === "ally" ? u.element : u.kind}`
-        : level.effects[y][x] || level.objects[y][x] || level.ground[y][x];
+        : level.deployment[y][x] || level.effects[y][x] || level.objects[y][x] || level.ground[y][x];
       category = u ? "Personagens" : TILE_BY_ID[brush].category;
       mode = "paint";
       renderPalette();
@@ -260,7 +260,7 @@ export function createEditor(root, options = {}) {
           candidate.units = candidate.units.filter(
             (u) => u.x !== x || u.y !== y,
           );
-        for (const target of ["ground", "objects", "effects"])
+        for (const target of ["ground", "objects", "effects", "deployment"])
           if (layer === target || layer === "all")
             candidate[target][y][x] = target === "ground" ? "grass" : null;
       } else if (brush.startsWith("unit:")) {
@@ -368,7 +368,7 @@ export function createEditor(root, options = {}) {
       u = level.units.find((u) => u.x === x && u.y === y);
     $("#editor-hover").textContent = cellName(x, y);
     $("#editor-inspector").innerHTML =
-      `<strong>CASA ${cellName(x, y)}</strong><span>Chão: ${escape(TILE_BY_ID[level.ground[y][x]].name)}</span><span>Objeto: ${escape(TILE_BY_ID[level.objects[y][x]]?.name || "nenhum")}</span><span>Efeito: ${escape(TILE_BY_ID[level.effects[y][x]]?.name || "nenhum")}</span><span>Personagem: ${escape(u ? unitName(u) : "nenhum")}</span>`;
+      `<strong>CASA ${cellName(x, y)}</strong><span>Chão: ${escape(TILE_BY_ID[level.ground[y][x]].name)}</span><span>Objeto: ${escape(TILE_BY_ID[level.objects[y][x]]?.name || "nenhum")}</span><span>Efeito: ${escape(TILE_BY_ID[level.effects[y][x]]?.name || "nenhum")}</span><span>Área inicial: ${level.deployment[y][x] ? "sim" : "não"}</span><span>Personagem: ${escape(u ? unitName(u) : "nenhum")}</span>`;
   }
   function render() {
     $("#editor-name").value = level.name;
@@ -401,11 +401,11 @@ export function createEditor(root, options = {}) {
         u = level.units.find((u) => u.x === x && u.y === y);
       c.setAttribute(
         "aria-label",
-        `${cellName(x, y)}, ${TILE_BY_ID[level.ground[y][x]].name}${level.objects[y][x] ? `, ${TILE_BY_ID[level.objects[y][x]].name}` : ""}${level.effects[y][x] ? `, ${TILE_BY_ID[level.effects[y][x]].name}` : ""}${u ? `, ${unitName(u)}` : ""}`,
+        `${cellName(x, y)}, ${TILE_BY_ID[level.ground[y][x]].name}${level.objects[y][x] ? `, ${TILE_BY_ID[level.objects[y][x]].name}` : ""}${level.effects[y][x] ? `, ${TILE_BY_ID[level.effects[y][x]].name}` : ""}${level.deployment[y][x] ? ", Área inicial" : ""}${u ? `, ${unitName(u)}` : ""}`,
       );
     }
     $("#editor-counts").textContent =
-      `${level.units.filter((u) => u.team === "ally").length}/3 aliados · ${level.units.filter((u) => u.team === "enemy").length} inimigos · ${level.rules.waves.reduce((n, w) => n + w.kinds.length, 0)} reforços`;
+      `${level.units.filter((u) => u.team === "ally").length}/3 aliados · ${level.units.filter((u) => u.team === "enemy").length} inimigos · ${level.rules.waves.reduce((n, w) => n + w.kinds.length, 0)} reforços · ${level.deployment.flat().filter(Boolean).length} casas de início`;
     const report = validateLevel(level);
     $("#editor-validation").innerHTML =
       report.errors

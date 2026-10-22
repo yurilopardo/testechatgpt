@@ -1,6 +1,9 @@
 // Pure, deterministic battle rules. Coordinates are zero-based; movement is orthogonal.
 import { generateMap, normalizeSeed, randomSeed } from "./maps.js";
-import { normalizeLevel, validateLevel, levelTerrain } from "./levels.js";
+import {
+  normalizeLevel, validateLevel, levelTerrain,
+  deploymentCells, defaultDeploymentCells,
+} from "./levels.js";
 import { ELEMENTS, DEFAULT_TEAM, normalizeTeam, createAlly } from "./roster.js";
 
 export const SIZE = 8;
@@ -74,6 +77,7 @@ export class Battle {
     this.options = {
       waves: options.waves !== false,
       team: normalizeTeam(options.team),
+      deployment: options.deployment === true,
       maxRounds:
         options.maxRounds === undefined ? MAX_ROUNDS : options.maxRounds,
       seed: normalizeSeed(options.seed ?? randomSeed()),
@@ -217,11 +221,67 @@ export class Battle {
     this.log = [];
     this.lastEffect = null;
     this.visualEvents = [];
-    this.prepareEnemies(!level);
-    this.addLog(
-      `Missão iniciada.${this.maxRounds ? ` Elimine todas as ondas até o turno ${this.maxRounds}.` : " Observe as intenções inimigas."}`,
-      "info",
-    );
+    this.deploymentCells = level
+      ? deploymentCells(level)
+      : this.options.deployment
+        ? defaultDeploymentCells(this.terrain, this.allies, this.enemies)
+        : [];
+    if (this.deploymentCells.length) {
+      // Keep valid author positions, then place remaining heroes in free slots.
+      const reserved = new Set(
+        this.allies.filter((u) => this.inDeploymentArea(u.x, u.y))
+          .map((u) => key(u.x, u.y)),
+      );
+      for (const ally of this.allies) {
+        if (this.inDeploymentArea(ally.x, ally.y)) continue;
+        const slot = this.deploymentCells.find(
+          (p) => !reserved.has(key(p.x, p.y)),
+        );
+        if (!slot) throw new Error("A área inicial não comporta o esquadrão.");
+        Object.assign(ally, slot);
+        reserved.add(key(slot.x, slot.y));
+      }
+      this.phase = "deployment";
+      this.addLog("Posicione seu esquadrão nas casas azuis e confirme para começar o combate.");
+    } else this.startCombat();
+  }
+
+  inDeploymentArea(x, y) {
+    return this.deploymentCells.some((p) => p.x === x && p.y === y);
+  }
+
+  deploy(x, y) {
+    const unit = this.selected;
+    if (
+      this.phase !== "deployment" || !unit ||
+      !Number.isInteger(x) || !Number.isInteger(y) ||
+      !this.inDeploymentArea(x, y) || this.obstacle(x, y)
+    ) return false;
+    const occupant = this.unitAt(x, y);
+    if (occupant?.team === "enemy") return false;
+    if (occupant && occupant !== unit) {
+      if (!this.inDeploymentArea(unit.x, unit.y)) return false;
+      Object.assign(occupant, { x: unit.x, y: unit.y });
+    }
+    Object.assign(unit, { x, y });
+    return true;
+  }
+
+  confirmDeployment() {
+    if (
+      this.phase !== "deployment" || this.allies.length !== 3 ||
+      this.allies.some((u) => !this.inDeploymentArea(u.x, u.y) || this.obstacle(u.x, u.y)) ||
+      new Set(this.units.map((u) => key(u.x, u.y))).size !== this.units.length
+    ) return false;
+    this.startCombat();
+    return true;
+  }
+
+  startCombat() {
+    this.phase = "player";
+    this.mode = "move";
+    this.prepareEnemies(!this.options.level);
+    this.addLog(`Missão iniciada.${this.maxRounds ? ` Elimine todas as ondas até o turno ${this.maxRounds}.` : " Observe as intenções inimigas."}`, "info");
   }
 
   newMap(seed = randomSeed()) {
@@ -423,7 +483,7 @@ export class Battle {
   // 2. Seleção de unidades
   select(id) {
     const unit = this.units.find((u) => u.id === id && u.team === "ally");
-    if (this.phase !== "player" || !unit) return false;
+    if (!["player", "deployment"].includes(this.phase) || !unit) return false;
     this.selectedId = id;
     this.mode = unit.moved && !unit.acted ? "punch" : "move";
     return true;

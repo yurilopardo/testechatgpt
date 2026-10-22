@@ -91,6 +91,8 @@ test("the fixed scene uses existing movement, lethal impact, structure damage, v
     before = structuredClone(b.terrain);
   assert.equal(b.totalEnemies, 1);
   assert.equal(b.pendingReinforcements, 0);
+  assert.equal(b.phase, "deployment");
+  assert.ok(b.confirmDeployment());
   assert.ok(b.move(3, 4));
   const preview = b.previewAction(4, 4, "punch");
   assert.equal(preview.units[0].damage, 2);
@@ -104,6 +106,7 @@ test("the fixed scene uses existing movement, lethal impact, structure damage, v
   assert.equal(b.structureAt(5, 4).hp, 2);
   assert.equal(b.enemies.length, 1);
   assert.equal(b.pendingReinforcements, 0);
+  assert.ok(b.confirmDeployment());
   b.beginEnemyTurn();
   b.resolveEnemyTurn();
   assert.equal(b.enemies.length, 1);

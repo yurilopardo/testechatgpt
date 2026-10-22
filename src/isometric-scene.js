@@ -38,6 +38,8 @@ export function isometricTestLevel() {
     { id: "enemy-1", kind: "melee", team: "enemy", x: 4, y: 4 },
   ];
   level.rules = { maxRounds: 5, waves: [] };
+  for (const [x, y] of [[2, 4], [2, 5], [1, 5], [1, 4], [1, 6], [2, 6]])
+    level.deployment[y][x] = "deployment";
   return level;
 }
 

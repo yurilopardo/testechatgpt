@@ -13,8 +13,8 @@ import {
 } from "../src/levels.js";
 import { generateMap } from "../src/maps.js";
 
-test("level files round-trip all 28 tiles, layers and directions without sharing caller data", () => {
-  assert.equal(TILE_CATALOG.length, 28);
+test("level files round-trip all 29 tiles, layers and directions without sharing caller data", () => {
+  assert.equal(TILE_CATALOG.length, 29);
   const level = blankLevel();
   level.units = [];
   for (const [i, t] of TILE_CATALOG.entries()) {

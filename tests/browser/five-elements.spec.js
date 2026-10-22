@@ -50,6 +50,7 @@ test("initial selection builds exactly three of the five ninjas and keyboard sho
   await page.locator('.team-option[data-unit="water"]').click();
   await page.locator('.team-option[data-unit="wind"]').click();
   await page.locator("#team-start").click();
+  await page.locator("#start-battle").click();
   await expect(page.locator("#team-dialog")).not.toBeVisible();
   await expect(page.locator(".squad-card")).toHaveCount(3);
   await expect(page.locator("#phase-label")).toHaveText("Sua vez de agir");
@@ -247,6 +248,7 @@ test("selection remains usable within a narrow viewport", async ({ page }) => {
   await page.locator('.team-option[data-unit="earth"]').click();
   await page.locator('.team-option[data-unit="wind"]').click();
   await page.locator("#team-start").click();
+  await page.locator("#start-battle").click();
   await expect(page.locator(".squad-card")).toHaveCount(3);
   const size = await page.evaluate(() => ({
     width: document.documentElement.clientWidth,
@@ -266,6 +268,7 @@ test("offline HTML selects and plays lightning and wind with no network access",
   await page.locator('.team-option[data-unit="water"]').click();
   await page.locator('.team-option[data-unit="wind"]').click();
   await page.locator("#team-start").click();
+  await page.locator("#start-battle").click();
   await expect(page.locator("#phase-label")).toHaveText("Sua vez de agir");
   const battle=new Battle({seed:"offline-five",team:["earth","lightning","wind"]});
   battle.select("lightning");
