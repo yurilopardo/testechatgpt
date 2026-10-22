@@ -15,7 +15,7 @@ Em **Efeitos → Área inicial**, pinte os locais permitidos. A marcação perte
 
 São necessárias pelo menos três casas transitáveis sem inimigos. Casas marcadas sobre obstáculos ou inimigos não servem de destino e geram um aviso. Com menos de três destinos válidos, Testar fase e exportação jogável informam o problema; rascunhos e JSON ainda podem ser salvos.
 
-Os três ninjas colocados pelo autor definem o trio. Casas iniciais já dentro da área são mantidas como sugestão; quem estiver fora dela é acomodado nas casas livres restantes quando o jogador abre a fase. O arquivo do autor não é alterado pelo teste.
+Os ninjas colocados pelo autor são opcionais quando existe Área inicial. É possível salvar e testar uma fase só com terreno, área, inimigos e/ou ondas. Com zero, um ou dois ninjas sugeridos, o jogador escolhe o trio antes de posicionar; com três, a formação sugerida é mantida e pode ser alterada em Trocar equipe. Os ninjas escolhidos são criados somente no jogo e não são adicionados ao JSON do editor. Reiniciar mantém o trio escolhido e reabre o posicionamento.
 
 Biblioteca, histórico, importação/exportação JSON e HTML independente preservam a área. Fases sem marcadores, inclusive arquivos antigos v1, continuam com início imediato e posições fixas. Consulte [o formato das fases](formato-fases.md).
 

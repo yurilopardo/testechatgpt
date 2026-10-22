@@ -8,6 +8,7 @@ import {
   normalizeLevel,
   validateLevel,
   usedFutureTiles,
+  levelNeedsTeamSelection,
 } from "./levels.js";
 
 const paths = {
@@ -82,8 +83,9 @@ export function createApp(root, options = {}) {
             }),
   );
   let teamSelectionPending =
-    options.teamSelection ??
-    (!visualTest && !options.battleOptions && !globalThis.__TRIADE_LEVEL__);
+    levelNeedsTeamSelection(battle.options.level) ||
+    (options.teamSelection ??
+      (!visualTest && !options.battleOptions && !globalThis.__TRIADE_LEVEL__));
   let draftTeam = battle.team.slice();
   const controller = new AbortController();
   const { signal } = controller;
@@ -527,8 +529,17 @@ export function createApp(root, options = {}) {
     $("#hover-coordinate").textContent = "—";
     $("#toast").hidden = true;
     holdEnemyMovement(renderer.consumeEvents());
+    // A new imported level may require choosing its team. Release the previous
+    // mandatory dialog before opening the new one, without skipping selection.
+    teamSelectionPending = false;
     closeDialog();
+    teamSelectionPending = !!level && levelNeedsTeamSelection(battle.options.level);
     update();
+    if (teamSelectionPending) {
+      draftTeam = battle.team.slice();
+      renderTeamSelection();
+      openDialog("team-dialog");
+    }
   }
   function selectUnit(id) {
     if (battle.select(id)) {

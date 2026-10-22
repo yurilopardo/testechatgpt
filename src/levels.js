@@ -1,4 +1,4 @@
-import { ELEMENTS } from "./roster.js";
+import { ELEMENTS, DEFAULT_TEAM } from "./roster.js";
 // Versioned level files are shared by the editor, game and standalone exports.
 export const LEVEL_SIZE = 8;
 const tile = (id, name, category, layer, color, rule, future = "") => ({
@@ -431,10 +431,14 @@ export function validateLevel(input) {
   }
   const errors = [],
     warnings = [];
-  if (level.units.filter((u) => u.team === "ally").length !== 3)
+  const marked = level.deployment.flat().filter(Boolean).length;
+  const allyCount = level.units.filter((u) => u.team === "ally").length;
+  if (!marked && allyCount !== 3)
     errors.push(
-      "Posicione exatamente três ninjas de elementos diferentes para testar a fase.",
+      "Posicione exatamente três ninjas de elementos diferentes ou marque uma área inicial para o jogador escolher o trio.",
     );
+  if (marked && allyCount > 3)
+    errors.push("Indique até três ninjas como sugestão ou remova-os para o jogador escolher o trio.");
   for (const u of level.units)
     if (!canStand(level, u.x, u.y))
       errors.push(
@@ -442,7 +446,6 @@ export function validateLevel(input) {
       );
   if (!level.units.some((u) => u.team === "enemy") && !level.rules.waves.length)
     errors.push("Adicione pelo menos um inimigo ou uma onda de reforços.");
-  const marked = level.deployment.flat().filter(Boolean).length;
   if (marked) {
     const available = deploymentCells(level).length;
     if (available < 3)
@@ -497,6 +500,21 @@ export function deploymentCells(level) {
         ? [{ x, y }] : [],
     ),
   );
+}
+
+export function levelNeedsTeamSelection(level) {
+  return !!level && deploymentCells(level).length >= 3 &&
+    level.units.filter((u) => u.team === "ally").length < 3;
+}
+
+// Authored heroes are optional suggestions when a level has a starting area.
+// Keep this runtime choice separate from the level file stored by the author.
+export function suggestedLevelTeam(level, fallback = DEFAULT_TEAM) {
+  return [...new Set([
+    ...level.units.filter((u) => u.team === "ally").map((u) => u.element),
+    ...fallback,
+    ...DEFAULT_TEAM,
+  ])].slice(0, 3);
 }
 
 // A small, reproducible starting area around the generated allied formation.

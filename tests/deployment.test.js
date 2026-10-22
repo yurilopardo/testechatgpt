@@ -155,3 +155,95 @@ test('generated editor maps and standalone HTML preserve their separate deployme
   assert.equal(battle.phase,'deployment');
   assert.deepEqual(serialized.deployment,level.deployment);
 });
+
+function playerSelectedLevel() {
+  const level = scenario();
+  level.units = level.units.filter(u => u.team === 'enemy');
+  return level;
+}
+
+test('a marked level with no authored heroes is playable and does not insert them into the saved JSON', () => {
+  const level = playerSelectedLevel();
+  const original = structuredClone(level);
+  assert.deepEqual(validateLevel(level).errors, []);
+  const battle = new Battle({level});
+  assert.equal(battle.phase, 'deployment');
+  assert.equal(battle.allies.length, 3);
+  assert.ok(battle.allies.every(u => battle.inDeploymentArea(u.x,u.y) && u.hp === 3));
+  assert.deepEqual(level, original);
+  assert.deepEqual(battle.options.level, original);
+  const html = exportPlayableHtml('<head></head><script>Triade.createApp()</script>', level);
+  const saved = JSON.parse(html.match(/window\.__TRIADE_LEVEL__=(.*?);<\/script>/)[1]);
+  assert.equal(saved.units.filter(u => u.team === 'ally').length, 0);
+  assert.ok(battle.confirmDeployment());
+  assert.ok(battle.enemies.every(u => u.intent));
+});
+
+test('all ten player-selected teams can deploy on a level without authored heroes and survive resets', () => {
+  const level = playerSelectedLevel();
+  const elements = ['fire','water','earth','lightning','wind'];
+  const battle = new Battle({level});
+  for(let a=0;a<3;a++) for(let b=a+1;b<4;b++) for(let c=b+1;c<5;c++) {
+    const team = [elements[a],elements[b],elements[c]];
+    assert.ok(battle.setTeam(team));
+    assert.deepEqual(battle.team, team);
+    assert.equal(battle.allies.length, 3);
+    assert.ok(battle.allies.every(u => battle.inDeploymentArea(u.x,u.y)));
+    assert.equal(new Set(battle.units.map(u => key(u.x,u.y))).size, battle.units.length);
+    assert.ok(battle.confirmDeployment());
+    battle.reset();
+    assert.equal(battle.phase,'deployment');
+    assert.deepEqual(battle.team,team);
+    assert.deepEqual(battle.options.level, level);
+  }
+});
+
+test('one or two optional authored heroes prefill a valid trio without overlapping starting slots', () => {
+  for(const count of [1,2]) {
+    const level = scenario();
+    level.units = [...level.units.filter(u=>u.team==='ally').slice(0,count), ...level.units.filter(u=>u.team==='enemy')];
+    assert.deepEqual(validateLevel(level).errors, []);
+    const battle = new Battle({level});
+    assert.equal(battle.allies.length,3);
+    assert.equal(new Set(battle.team).size,3);
+    assert.deepEqual(battle.team.slice(0,count),level.units.filter(u=>u.team==='ally').map(u=>u.element));
+    assert.ok(battle.allies.every(u=>battle.inDeploymentArea(u.x,u.y)));
+    assert.equal(new Set(battle.units.map(u=>key(u.x,u.y))).size,battle.units.length);
+    battle.setTeam(['wind','lightning','earth']);
+    assert.deepEqual(battle.options.level,level);
+    assert.ok(battle.confirmDeployment());
+  }
+});
+
+test('a map without heroes still needs three legal starting cells and an enemy or reinforcement wave', () => {
+  const level = playerSelectedLevel();
+  level.deployment = grid();
+  assert.match(validateLevel(level).errors.join(' '), /três ninjas/);
+  assert.throws(()=>new Battle({level}),/três ninjas/);
+  level.deployment[5][0]='deployment';level.deployment[5][1]='deployment';
+  assert.match(validateLevel(level).errors.join(' '),/três casas/);
+  level.deployment[5][2]='deployment';
+  level.units=[];
+  assert.match(validateLevel(level).errors.join(' '),/inimigo ou uma onda/);
+  level.rules.waves=[{round:2,kinds:['ranged']}];
+  assert.deepEqual(validateLevel(level).errors,[]);
+  const battle=new Battle({level});
+  assert.equal(battle.allies.length,3);
+  assert.equal(battle.enemies.length,0);
+  assert.ok(battle.confirmDeployment());
+  battle.beginEnemyTurn();battle.resolveEnemyTurn();
+  assert.equal(battle.phase,'player');
+  assert.equal(battle.enemies.length,1);
+});
+
+test('importing a hero-free level keeps the selected trio; importing a fixed level uses its authored trio', () => {
+  const battle = new Battle({team:['lightning','wind','earth'],seed:'optional-team'});
+  const level = playerSelectedLevel();
+  battle.loadLevel(level);
+  assert.deepEqual(battle.team,['lightning','wind','earth']);
+  assert.deepEqual(battle.options.level,level);
+  assert.ok(battle.confirmDeployment());
+  battle.loadLevel(blankLevel());
+  assert.equal(battle.phase,'player');
+  assert.deepEqual(battle.team,['fire','water','earth']);
+});

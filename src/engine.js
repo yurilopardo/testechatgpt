@@ -2,7 +2,7 @@
 import { generateMap, normalizeSeed, randomSeed } from "./maps.js";
 import {
   normalizeLevel, validateLevel, levelTerrain,
-  deploymentCells, defaultDeploymentCells,
+  deploymentCells, defaultDeploymentCells, suggestedLevelTeam,
 } from "./levels.js";
 import { ELEMENTS, DEFAULT_TEAM, normalizeTeam, createAlly } from "./roster.js";
 
@@ -74,16 +74,17 @@ export function initialTerrain() {
 
 export class Battle {
   constructor(options = {}) {
+    const level = options.level ? normalizeLevel(options.level) : null;
     this.options = {
       waves: options.waves !== false,
-      team: normalizeTeam(options.team),
+      team: normalizeTeam(options.team === undefined ? (level ? suggestedLevelTeam(level) : DEFAULT_TEAM) : options.team),
       deployment: options.deployment === true,
       maxRounds:
         options.maxRounds === undefined ? MAX_ROUNDS : options.maxRounds,
       seed: normalizeSeed(options.seed ?? randomSeed()),
       ...(options.terrain ? { terrain: structuredClone(options.terrain) } : {}),
       ...(options.spawns ? { spawns: structuredClone(options.spawns) } : {}),
-      ...(options.level ? { level: normalizeLevel(options.level) } : {}),
+      ...(level ? { level } : {}),
     };
     if (this.options.level && validateLevel(this.options.level).errors.length)
       throw new Error(validateLevel(this.options.level).errors.join(" "));
@@ -125,10 +126,7 @@ export class Battle {
     this.terrain.forEach((row, y) =>
       row.forEach((_, x) => this.structureAt(x, y)),
     );
-    this.team = level
-      ? level.units.filter((u) => u.team === "ally").map((u) => u.element)
-      : this.options.team.slice();
-    this.options.team = this.team.slice();
+    this.team = this.options.team.slice();
     const startingSlots = DEFAULT_TEAM.map(
       (id, i) =>
         generated.spawns[id] ||
@@ -183,19 +181,24 @@ export class Battle {
     }));
     if (level) {
       const templates = this.units;
-      this.units = level.units.map((u) => ({
-        ...(u.team === "ally"
-          ? createAlly(u.element, u)
-          : templates.find((t) => t.kind === u.kind)),
-        ...u,
-        name:
-          u.team === "ally"
-            ? ELEMENTS[u.element].character
-            : `${u.kind === "ranged" ? "Besteiro" : "Sentinela"} ${u.id.slice(6)}`,
-        moved: false,
-        acted: false,
-        intent: null,
-      }));
+      const authoredSlots = level.units.filter((u) => u.team === "ally")
+        .map(({ x, y }) => ({ x, y }));
+      const slots = [
+        ...authoredSlots,
+        ...deploymentCells(level).filter((p) =>
+          !authoredSlots.some((s) => s.x === p.x && s.y === p.y)),
+      ];
+      this.units = [
+        ...this.team.map((element, i) => createAlly(element, slots[i])),
+        ...level.units.filter((u) => u.team === "enemy").map((u) => ({
+          ...templates.find((t) => t.kind === u.kind),
+          ...u,
+          name: `${u.kind === "ranged" ? "Besteiro" : "Sentinela"} ${u.id.slice(6)}`,
+          moved: false,
+          acted: false,
+          intent: null,
+        })),
+      ];
     }
     this.round = 1;
     this.maxRounds = level ? level.rules.maxRounds : this.options.maxRounds;
@@ -298,6 +301,7 @@ export class Battle {
       report = validateLevel(level);
     if (report.errors.length) throw new Error(report.errors.join(" "));
     this.options.level = level;
+    this.options.team = suggestedLevelTeam(level, this.options.team);
     delete this.options.terrain;
     delete this.options.spawns;
     this.reset();
@@ -306,19 +310,6 @@ export class Battle {
 
   setTeam(team) {
     const chosen = normalizeTeam(team);
-    if (this.options.level) {
-      const slots = this.options.level.units.filter((u) => u.team === "ally");
-      this.options.level.units = [
-        ...chosen.map((id, i) => ({
-          id,
-          team: "ally",
-          element: id,
-          x: slots[i].x,
-          y: slots[i].y,
-        })),
-        ...this.options.level.units.filter((u) => u.team === "enemy"),
-      ];
-    }
     this.options.team = chosen;
     this.reset();
     return true;

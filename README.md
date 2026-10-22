@@ -20,7 +20,7 @@ Depois de escolher o trio, selecione um ninja no painel e clique em uma **casa a
 
 O jogo procedural delimita até nove casas próximas à formação inicial. O teste isométrico fixo oferece seis casas. Reiniciar missão e trocar equipe retornam ao posicionamento; Novo mapa gera outra área junto com o terreno.
 
-No editor, escolha **Efeitos → Área inicial** e pinte pelo menos três casas transitáveis sem inimigos. A marcação tem camada própria: não substitui chão, objetos ou efeitos. A borracha oferece **Área inicial** para remover só essa marcação. O teste, a biblioteca, o JSON importado e o HTML jogável preservam a área. Sem marcações, a fase mantém as posições fixas colocadas pelo autor, inclusive nos arquivos antigos.
+No editor, escolha **Efeitos → Área inicial** e pinte pelo menos três casas transitáveis sem inimigos. A marcação tem camada própria: não substitui chão, objetos ou efeitos. A borracha oferece **Área inicial** para remover só essa marcação. O teste, a biblioteca, o JSON importado e o HTML jogável preservam a área. Com a área marcada, os ninjas no editor são opcionais: a fase pode conter apenas inimigos e/ou ondas. Com menos de três sugestões, o jogador escolhe o trio antes de posicionar, inclusive no teste, na importação JSON e no HTML exportado. O arquivo do autor permanece sem os ninjas criados durante o jogo. Sem marcações, a fase mantém as posições fixas colocadas pelo autor, inclusive nos arquivos antigos.
 
 Detalhes e capturas em [docs/posicionamento-inicial.md](docs/posicionamento-inicial.md).
 
@@ -48,7 +48,7 @@ Abra **[editor-offline.html](editor-offline.html)** para criar fases sem instala
 
 - Tabuleiro 8×8 com **29 tiles**: os 24 terrenos/objetos/efeitos sugeridos, vapor, pedra incandescente, selo elétrico, água eletrizada e Área inicial.
 - Camadas independentes de chão, objetos, efeitos e área inicial. Pincel com arraste, balde de chão, borracha por camada, conta-gotas, orientação e até 100 passos de desfazer/refazer. Troncos pintam dois segmentos fixos, na horizontal ou vertical.
-- Posição de três ninjas à escolha entre os cinco elementos; múltiplos Sentinelas e Besteiros; prazo de 1 a 20 turnos e ondas configuráveis. Sem Área inicial, os personagens começam exatamente nas casas escolhidas. Com a marcação, o jogador escolhe a formação antes do combate.
+- Ninjas opcionais quando há Área inicial, ou três posições fixas escolhidas entre os cinco elementos; múltiplos Sentinelas e Besteiros; prazo de 1 a 20 turnos e ondas configuráveis. Sem Área inicial, os personagens começam exatamente nas casas escolhidas. Com a marcação, o jogador escolhe a formação antes do combate.
 - **Testar fase** abre o jogo dentro do editor. Voltar preserva o rascunho. A validação indica personagens ausentes, casas bloqueadas e efeitos em planejamento; não garante que a fase seja vencível.
 - Biblioteca local com salvar, carregar, duplicar e excluir. Ela pertence ao navegador e não é um backup: use **Baixar fase** para guardar o JSON. Também é possível copiar e colar JSON em **Importar / JSON**.
 - **Baixar fase jogável (.html)** cria um arquivo independente, com jogo e mapa embutidos, que funciona offline. O jogo normal importa arquivos de fase pelo botão **Fase**.

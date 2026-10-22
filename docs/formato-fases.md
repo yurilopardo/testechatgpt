@@ -18,7 +18,7 @@ O catálogo e as regras disponíveis ficam em `src/levels.js`. Um arquivo não p
 ]
 ```
 
-Escolha exatamente três aliados distintos entre `fire`, `water`, `earth`, `lightning` e `wind`. Cada aliado tem `id` igual a `element`. Todos começam com 3 PV e caminhada de 3 casas. Inimigos usam `enemy-N`, com N de 1 a 9999. Não pode haver IDs duplicados nem duas unidades na mesma casa. Vida e habilidades vêm das regras do jogo, sem parâmetros arbitrários nos arquivos de fase.
+Sem Área inicial, coloque exatamente três aliados distintos entre `fire`, `water`, `earth`, `lightning` e `wind`. Com Área inicial, os aliados em `units` são opcionais: a lista pode conter apenas inimigos, ou ficar vazia se houver ondas. O trio de três ninjas é criado em tempo de execução após a escolha do jogador. Um ou dois aliados colocados no editor servem de sugestão para a seleção; três mantêm o trio sugerido, que pode ser alterado em Trocar equipe. Cada aliado tem `id` igual a `element`. Todos começam com 3 PV e caminhada de 3 casas. Inimigos usam `enemy-N`, com N de 1 a 9999. Não pode haver IDs duplicados nem duas unidades na mesma casa. Vida e habilidades vêm das regras do jogo, sem parâmetros arbitrários nos arquivos de fase.
 
 As regras da missão são:
 
@@ -34,15 +34,15 @@ As regras da missão são:
 
 `maxRounds` vai de 1 a 20. Cada onda usa um turno único entre 2 e o prazo e contém de 1 a 8 inimigos. Uma lista vazia desativa os reforços. Marcadores `reinforcement` escolhem as entradas; sem marcadores, o jogo usa as bordas livres. Entradas ocupadas adiam o reforço. O total do objetivo soma os inimigos iniciais e os das ondas.
 
-Rascunhos incompletos podem ser salvos e exportados. Para jogar, são necessários exatamente três aliados de elementos distintos sobre casas transitáveis e pelo menos um inimigo inicial ou onda. Fases inválidas não substituem a partida em andamento. Objetos ocupam uma casa por segmento; o pincel de tronco pinta dois segmentos, com vida independente.
+Rascunhos incompletos podem ser salvos e exportados. Para jogar, são necessários pelo menos um inimigo inicial ou onda e uma Área inicial com três destinos válidos, ou três aliados de elementos distintos sobre casas transitáveis quando a fase não tiver essa área. Fases inválidas não substituem a partida em andamento. Objetos ocupam uma casa por segmento; o pincel de tronco pinta dois segmentos, com vida independente.
 
 ## Área inicial
 
 O tile **Área inicial** pertence à camada `deployment`, independente das demais. Ele não substitui o chão nem outro efeito na mesma casa. Para habilitar o posicionamento, marque ao menos três casas transitáveis sem inimigos. Marcações sobre obstáculos, água profunda sem ponte, abismo ou inimigos são ignoradas como destinos e geram aviso; se restarem menos de três destinos, a fase não pode ser iniciada.
 
-Os três ninjas continuam obrigatórios em `units`, definindo o elenco e a formação sugerida. Posições já dentro da área são preservadas. Ninjas fora dela são colocados nas casas válidas restantes, sem alterar o JSON do autor. Antes do combate, o jogador pode mudar a formação livremente e trocar aliados de lugar; ainda não há ataques preparados. **Confirmar posicionamento** inicia o turno 1 sem gastar movimento ou ação e prepara os inimigos. Em fases autorais, os inimigos não avançam nessa preparação inicial.
+Os ninjas são opcionais em `units`. Se houver menos de três sugestões, o jogo abre a seleção de equipe antes do posicionamento, tanto no teste do editor quanto na importação JSON e no HTML exportado. As posições sugeridas pelo autor são usadas quando possível; os demais ninjas são acomodados nas casas válidas da área. Escolher ou trocar o trio não insere aliados no arquivo do autor nem altera seus dados. Antes do combate, o jogador pode mudar a formação livremente e trocar aliados de lugar; ainda não há ataques preparados. **Confirmar posicionamento** inicia o turno 1 sem gastar movimento ou ação e prepara os inimigos. Em fases autorais, os inimigos não avançam nessa preparação inicial.
 
-O posicionamento é preservado na biblioteca, importação/exportação JSON e HTML independente. A borracha de Área inicial só limpa essa camada. Arquivos antigos ou sem casas marcadas mantêm o início imediato nas posições fixas. Reiniciar volta à etapa de posicionamento e à formação sugerida do autor.
+O posicionamento é preservado na biblioteca, importação/exportação JSON e HTML independente. A borracha de Área inicial só limpa essa camada. Arquivos antigos ou sem casas marcadas mantêm o início imediato nas posições fixas. Reiniciar mantém o trio escolhido e volta à etapa de posicionamento, restaurando as posições sugeridas ou a distribuição inicial na área.
 
 O teste clona os dados da fase. Reiniciar restaura o mesmo mapa e posições; Novo mapa sai da fase personalizada e retorna à missão procedural. A preparação inicial arma os inimigos sem mover suas posições colocadas no editor. Nos turnos seguintes, eles seguem a movimentação e os ataques direcionais normais.
 
