@@ -1,0 +1,289 @@
+BANCO DE IDEIAS — JOGO TÁTICO DE NINJAS
+Criado em: 16/10/2026
+Última atualização: 18/10/2026
+
+FINALIDADE
+Registrar ideias para consultar, comparar e desenvolver futuramente.
+Este arquivo reúne propostas de design; registrar uma ideia não significa
+implementar a funcionalidade no protótipo.
+
+COMO MANTER ESTE BANCO
+- Acrescentar novas ideias com identificador estável, origem e status.
+- Preservar o histórico das ideias existentes; registrar mudanças de decisão.
+- Status possíveis: ideia, em discussão, aprovada para implementar,
+  implementada ou descartada.
+- Anotar dúvidas e alternativas antes de fechar números e regras.
+- Números sugeridos abaixo são hipóteses iniciais de balanceamento.
+
+======================================================================
+1. DIREÇÃO ELEMENTAL
+======================================================================
+
+ELM-001 — Cinco elementos de chakra como referência
+Origem: usuário.
+Status: ideia / direção de design registrada.
+
+Fogo (Katon)
+  Cria ou manipula chamas. Pode causar dano e criar terrenos perigosos.
+
+Vento (Fūton)
+  Corta e empurra. Pode alterar posições e ampliar efeitos direcionais.
+
+Relâmpago / Raio (Raiton)
+  Gera eletricidade para perfurar e paralisar. Pode explorar alinhamento
+  e condução elétrica pela água.
+
+Terra (Doton)
+  Controla pedras, solo e lama. Pode criar obstáculos, mover estruturas
+  e alterar a circulação pelo mapa.
+
+Água (Suiton)
+  Manipula água e cria jutsus aquáticos. Pode formar terreno e correntes,
+  deslocar unidades e preparar combinações.
+
+Os cinco elementos são a referência temática. As combinações abaixo são
+propostas de regras para este jogo, com foco no tabuleiro e nos empurrões.
+
+======================================================================
+2. COMBINAÇÕES DOS CINCO ELEMENTOS
+======================================================================
+
+COMB-001 — Água + Terra = Lama
+Origem: usuário; detalhamento sugerido pelo assistente.
+Status: planejada no cronograma; regras e números sujeitos a testes.
+Ideia principal: combinar os poderes cria um tile de lama que deixa o
+movimento mais lento.
+Hipótese inicial: entrar em lama custa 2 pontos de movimento em vez de 1.
+Uso tático: atrasar aproximações, proteger um corredor e dificultar que
+um inimigo volte a uma posição vantajosa após um empurrão.
+Limites sugeridos: afeta aliados e inimigos; empurrões não gastam pontos
+de movimento e continuam atravessando a lama normalmente.
+Visual: solo marrom úmido, poças e pegadas; indicar custo 2 na prévia.
+Em aberto: lama permanente no editor ou temporária quando criada em jogo?
+
+COMB-002 — Fogo + Vento = Frente de Chamas
+Origem: sugestão do assistente.
+Status: planejada no cronograma; regras e números sujeitos a testes.
+Efeito: uma rajada leva o fogo em linha reta, empurra o primeiro personagem
+uma casa e deixa brasa na casa atingida.
+Uso tático: tirar um inimigo de uma posição e tornar seu retorno perigoso.
+Limites sugeridos: alcance curto; brasa causa 1 PV ao terminar o turno
+sobre ela e dura 1 turno; o empurrão conserva as regras de colisão.
+Visual: seta laranja com partículas na direção do vento.
+Em aberto: deve haver dano direto ou apenas brasa e colisão?
+
+COMB-003 — Fogo + Água = Vapor
+Origem: sugestão do assistente.
+Status: planejada no cronograma; regras e números sujeitos a testes.
+Efeito: cria uma nuvem de vapor que bloqueia a linha de visão de ataques
+à distância, mas permite a passagem de personagens.
+Uso tático: proteger aliados de Besteiros e criar corredores de avanço.
+Limites sugeridos: duração de 1 turno; também bloqueia projéteis aliados;
+não causa dano e não impede ataques corpo a corpo.
+Visual: nuvem clara translúcida que mantém unidades e grid reconhecíveis.
+Em aberto: tamanho da nuvem e interação com vento posterior.
+
+COMB-004 — Fogo + Terra = Pedra Incandescente
+Origem: sugestão do assistente.
+Status: planejada no cronograma; regras e números sujeitos a testes.
+Efeito: aquece uma pedra móvel. Quando empurrada, ela deixa brasa na casa
+de origem, além de continuar servindo como obstáculo e alvo de colisões.
+Uso tático: mover cobertura enquanto transforma o caminho em uma ameaça.
+Limites sugeridos: a pedra mantém seus PV atuais; não recupera vida;
+colisão mantém o dano normal; não cria brasa sobre água.
+Visual: fissuras alaranjadas na pedra e chão marcado onde ela passou.
+Em aberto: quantos deslocamentos a carga de calor pode durar?
+
+COMB-005 — Fogo + Raio = Detonação
+Origem: sugestão do assistente.
+Status: planejada no cronograma; regras e números sujeitos a testes.
+Efeito: explosão localizada causa 1 PV no alvo central e empurra os
+personagens das quatro casas vizinhas para fora da área.
+Uso tático: dispersar grupos e provocar colisões contra o cenário.
+Limites sugeridos: os vizinhos recebem apenas dano de colisão; afeta
+aliados; não cria empurrões em cadeia; exige duas preparações elementais.
+Visual: clarão breve e setas radiais, com prévia separando dano e empurrão.
+Em aberto: limitar a frequência para não substituir a Onda Circular.
+
+COMB-006 — Vento + Água = Correnteza
+Origem: sugestão do assistente.
+Status: planejada no cronograma; regras e números sujeitos a testes.
+Efeito: cria tiles de água com direção definida. No final do turno,
+empurram o ocupante uma casa na direção da corrente.
+Uso tático: montar rotas de transporte ou deslocar inimigos para mudar
+as casas que seus ataques ameaçam, mantendo a direção desses ataques.
+Limites sugeridos: uma ativação por unidade por turno; colisões seguem
+a regra de 1 PV em cada envolvido; sem ciclos de ativação entre correntes.
+Visual: água com seta permanente e animação de fluxo.
+Em aberto: resolver a corrente antes ou depois dos ataques inimigos?
+A ordem escolhida precisa aparecer na prévia antes de confirmar a ação.
+
+COMB-007 — Vento + Terra = Estilhaços
+Origem: sugestão do assistente.
+Status: planejada no cronograma; regras e números sujeitos a testes.
+Efeito: usa uma pedra como origem de um disparo de fragmentos em linha
+reta, atingindo o primeiro personagem no caminho.
+Hipótese inicial: alcance de 2 casas, 1 PV no alvo e custo de 1 PV na pedra.
+Uso tático: posicionar pedras móveis como pontos de ataque e dar à Terra
+uma função ofensiva que depende do cenário.
+Limites sugeridos: personagens e estruturas bloqueiam o disparo;
+não atravessa aliados; uma pedra com 1 PV se desfaz ao lançar os fragmentos.
+Visual: trajetória de pequenos fragmentos, distinta do projétil de Fogo.
+Em aberto: permitir usar muralhas como origem ou restringir às pedras?
+
+COMB-008 — Vento + Raio = Lança Elétrica
+Origem: sugestão do assistente.
+Status: planejada no cronograma; regras e números sujeitos a testes.
+Efeito: projétil em linha reta pode atravessar o primeiro personagem e
+atingir um segundo personagem alinhado, causando 1 PV em cada um.
+Uso tático: empurrar inimigos para alinhá-los antes de usar a combinação.
+Limites sugeridos: alcance de até 3 casas; estruturas interrompem o raio;
+pode atingir aliados; no máximo dois personagens por disparo.
+Visual: linha fina elétrica, com os dois possíveis impactos destacados.
+Em aberto: manter apenas perfuração ou acrescentar lentidão temporária?
+
+COMB-009 — Raio + Terra = Selo Elétrico
+Origem: sugestão do assistente.
+Status: planejada no cronograma; regras e números sujeitos a testes.
+Efeito: coloca uma armadilha no chão. O primeiro personagem que entrar
+na casa sofre 1 PV e perde o próximo deslocamento voluntário.
+Uso tático: empurrar um inimigo sobre o selo ou proteger uma passagem.
+Limites sugeridos: uso único; afeta aliados; não cancela um ataque já
+armado e não impede empurrões. Distinguir paralisia de derrota.
+Visual: selo amarelo no solo, visível antes de ser acionado.
+Em aberto: poder mover o selo com uma pedra ou mantê-lo preso ao chão?
+
+COMB-010 — Raio + Água = Condução Elétrica
+Origem: sugestão do assistente.
+Status: planejada no cronograma; regras e números sujeitos a testes.
+Efeito: a descarga percorre uma região conectada de água, causando 1 PV
+aos personagens que ocupam as casas afetadas no momento da ativação.
+Uso tático: aproveitar rios e lagos ou criar água para preparar uma área
+de ataque; empurrar inimigos para dentro da região antes da descarga.
+Limites sugeridos: até 4 casas conectadas por ativação, sem diagonais;
+afeta aliados; cada personagem recebe dano apenas uma vez por descarga.
+Visual: contorno elétrico em todas as casas que serão atingidas.
+Em aberto: como escolher as 4 casas em ramificações? A seleção precisa
+ser determinística e integralmente visível na prévia.
+
+======================================================================
+3. REGRAS GERAIS A DISCUTIR
+======================================================================
+
+REG-001 — Como ativar uma combinação
+Status: ideia.
+Proposta inicial: um elemento prepara uma casa ou objeto; o segundo
+transforma essa preparação. Exemplo: molhar uma casa e depois aplicar
+Terra nela cria lama. Mostrar o resultado antes de gastar a segunda ação.
+Alternativas: habilidades conjuntas de dois personagens ou seleção
+direta de uma habilidade combinada com recurso próprio.
+Em aberto: preparação pode durar entre turnos? O inimigo pode aproveitá-la?
+
+REG-002 — Clareza e balanceamento
+Status: ideia.
+- Usar os mesmos efeitos para aliados e inimigos quando possível.
+- Manter direção dos ataques preparados quando personagens são empurrados.
+- Mostrar custo de movimento, dano, colisões e duração antes de confirmar.
+- Evitar dano recorrente oculto e múltiplos gatilhos na mesma ação.
+- Dar ícone e contador aos efeitos temporários.
+- Combinações devem abrir escolhas de posição e terreno, em vez de
+  simplesmente causar mais dano que todas as habilidades básicas.
+
+REG-003 — Primeiras combinações para experimentar
+Status: ordem de experimentação incorporada ao cronograma em 18/10/2026.
+As combinações estão planejadas; ativação e números serão testados.
+1. Lama: explora o custo de movimento e valoriza o terreno.
+2. Vapor: cria proteção tática sem dano adicional.
+3. Condução Elétrica: conecta os novos elementos aos rios e lagos.
+4. Estilhaços: torna as pedras móveis úteis para ataques posicionais.
+
+======================================================================
+4. IDEIAS PARA O EDITOR DE MAPAS
+======================================================================
+
+ED-001 — Editor de fases separado
+Origem: conversa com o usuário; implementação solicitada em 17/10/2026.
+Status: implementada a primeira versão.
+Tabuleiro 8x8, pincel de tiles, posicionamento de aliados e inimigos,
+salvar/carregar JSON, duplicar fase e testar o cenário no jogo.
+Atualização de 17/10/2026: editor-offline.html inclui pintura, camadas,
+histórico, biblioteca local, importação/exportação JSON, teste dentro do
+editor, HTML jogável, posições, ondas e limite de turnos. O objetivo
+continua sendo eliminar todos os inimigos antes do prazo.
+
+ED-002 — Separar chão, objetos e efeitos
+Origem: sugestão do assistente.
+Status: implementada a separação em três camadas no editor.
+Permitir uma pedra sobre água rasa, uma ponte sobre rio e um efeito
+elétrico sobre água sem apagar o terreno original.
+Lama, vapor e correnteza podem ter versões permanentes para o editor
+e temporárias para efeitos criados por habilidades.
+
+ED-003 — Catálogo de terrenos e objetos sugeridos anteriormente
+Origem: sugestões do assistente para discussão futura.
+Status: catálogo disponível no editor; mecânicas especiais parcialmente implementadas.
+Chão: grama, terra batida, caminho de pedra, água rasa, água profunda,
+areia, lama e gelo.
+Objetos: árvore, pedra, muralha em ruínas, arbusto, tronco caído,
+caixa de madeira, pilar e ponte.
+Efeitos e objetivos: espinhos, abismo, correnteza, brasa, solo rachado,
+placa de pressão, santuário e ponto de reforço.
+Possíveis primeiros acréscimos: ponte, água profunda, lama, gelo,
+espinhos e placa de pressão.
+
+======================================================================
+5. PRÓXIMAS ANOTAÇÕES
+======================================================================
+
+Adicionar novas entradas aqui ou na seção correspondente, mantendo os IDs.
+Próximos identificadores: ELM-002, COMB-011, REG-005, ED-004 e NAR-002.
+
+ATUALIZAÇÃO DE 17/10/2026 — CATÁLOGO DO EDITOR
+28 tiles disponíveis: os 24 sugeridos originalmente e vapor, pedra
+incandescente, selo elétrico e água eletrizada. Lama já custa 2 de
+movimento; vapor bloqueia projéteis. A pedra incandescente é móvel,
+mas ainda não deixa brasa. Os tiles com símbolo ◇ explicam os efeitos
+que permanecem em planejamento. A criação por combinação elemental
+continua como ideia; a presença do tile no editor não implementa o jutsu.
+
+ATUALIZAÇÃO DE 18/10/2026 — CINCO NINJAS E EQUIPES
+Implementados os ninjas de Raio (Rai) e Vento (Sora), com Soco e um poder
+individual. Dash Relâmpago: avança até um inimigo ou estrutura, causa
+1 PV, empurra e custa 1 PV ao usuário. Rajada de Vento: mira uma casa
+e empurra as quatro vizinhas, sobrevoando personagens, sem dano direto.
+Tela de seleção permite equipes de três entre os cinco elementos.
+Todos caminham 3 casas; Terra perde o bônus anterior de movimento.
+Editor aceita o trio escolhido entre os cinco. Combinações de chakra
+continuam apenas como ideias, conforme solicitação do usuário.
+
+ATUALIZAÇÃO DE 18/10/2026 — COMBINAÇÕES E HISTÓRIA NO CRONOGRAMA
+Decisão posterior do usuário: incluir combinações de chakra e uma história
+provisória para guiar o progresso. Isso atualiza o planejamento anterior,
+que reservava as combinações para depois da demo. Não altera o estado
+atual do jogo: as combinações e a campanha ainda não foram implementadas.
+O cronograma revisado prevê aproximadamente 24 semanas, com as dez
+combinações em dois lotes, seis fases ligadas por uma história curta e
+artes finais na última etapa. Consulte cronograma-de-producao.md.
+
+REG-004 — Combinações como parte da próxima demo
+Origem: solicitação do usuário; organização sugerida pelo assistente.
+Status: incluída no planejamento; implementação futura.
+Primeiro lote: Lama, Vapor, Condução Elétrica e Estilhaços, envolvendo
+os cinco elementos. Segundo lote: as seis combinações restantes.
+Testar ativação e custo antes de ampliar o sistema; atualizar prévias,
+efeitos, editor e balanceamento para as dez equipes possíveis.
+Hipótese inicial: ação conjunta consumindo a ação dos dois ninjas.
+Comparar com a preparação de casas/objetos já registrada em REG-001.
+As regras detalhadas de cada COMB continuam sendo hipóteses de design.
+
+NAR-001 — História de marcação para orientar as missões
+Origem: solicitação do usuário; argumento provisório do assistente.
+Status: incluída no planejamento; argumento sujeito a revisão.
+Proposta: Tríade — Os Selos do Rio. Um grupo mascarado ataca os selos
+que protegem o rio e isolam as aldeias. O esquadrão investiga a ofensiva,
+atravessa ruínas e postos ocupados e protege o selo da nascente.
+Seis missões conectadas por briefings, textos de resultado e desbloqueio
+local. A narração deve funcionar com diferentes equipes de três ninjas.
+Sem produção de dublagem ou cenas animadas nesta primeira versão.
+Título, nomes, facção e falas são provisórios, não roteiro definitivo.
+Consulte historia-provisoria.md e cronograma-de-producao.md.

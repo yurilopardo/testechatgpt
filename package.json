@@ -1,0 +1,22 @@
+{
+  "name": "triade-tatica",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Uma missão tática 2D de fogo, água e terra.",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "node scripts/generate-gdevelop.mjs && vite build && node scripts/package-offline.mjs",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test tests/*.test.js",
+    "test:e2e": "npm run gdevelop && playwright test",
+    "gdevelop": "node scripts/generate-gdevelop.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "vite": "^8.0.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

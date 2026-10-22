@@ -1,0 +1,678 @@
+{
+  "board_name": "Into The Sinobi - Roadmap",
+  "prepared_on": "2026-10-20",
+  "state": "Proposta local pronta; board não consultado nem alterado por ausência de conexão Trello nesta sessão.",
+  "lists": [
+    "00 · Base existente e referências",
+    "01 · Decidir durante a prototipação",
+    "02 · Experimentos a preparar",
+    "03 · Em teste",
+    "04 · Decisões validadas",
+    "05 · Depois da validação",
+    "06 · Artes finais e entrega"
+  ],
+  "cards": [
+    {
+      "id": "BASE-01",
+      "list": "00 · Base existente e referências",
+      "title": "Registrar o combate que já funciona",
+      "area": "Referência",
+      "priority": "Referência",
+      "status": "Implementado no protótipo; equilíbrio em avaliação",
+      "question": "Qual é a base real disponível para testar novas ideias?",
+      "deliverable": "Inventário curto das regras implementadas, com links para fontes e versão de teste.",
+      "acceptance": "As tarefas futuras reaproveitam a base existente e não tratam ideias como funcionalidades prontas.",
+      "checklist": [
+        "Registrar tabuleiro 8×8, três ninjas por equipe escolhidos entre cinco, caminhada de três casas e uma ação por turno.",
+        "Registrar Soco, cinco especiais, empurrões, colisões, dano em aliados/estruturas e impacto de ataques letais.",
+        "Registrar Sentinela e Besteiro, ataques anunciados e direção preservada após empurrão.",
+        "Registrar prévias e desfazer caminhada antes da ação.",
+        "Distinguir a missão atual de eliminação em cinco turnos de futuros objetivos de campanha."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "BASE-02",
+      "list": "00 · Base existente e referências",
+      "title": "Registrar editor e limitações do catálogo de terrenos",
+      "area": "Referência",
+      "priority": "Referência",
+      "status": "Editor implementado; catálogo com efeitos parciais",
+      "question": "O que o editor já permite criar e quais tiles ainda são marcadores?",
+      "deliverable": "Lista de ferramentas existentes e comportamentos efetivamente ativos.",
+      "acceptance": "Cada tile está identificado como regra ativa, comportamento parcial ou proposta.",
+      "checklist": [
+        "Registrar 28 tiles, camadas, pincel, biblioteca local, histórico e importação/exportação JSON.",
+        "Registrar teste de fases e exportação HTML offline.",
+        "Distinguir lama com custo 2 e vapor que bloqueia tiro das combinações de chakra que ainda não existem.",
+        "Listar efeitos pendentes, incluindo correnteza, brasa e selo elétrico.",
+        "Preservar compatibilidade das fases existentes ao propor novos campos."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "BASE-03",
+      "list": "00 · Base existente e referências",
+      "title": "Registrar o ensaio isométrico separado",
+      "area": "Referência",
+      "priority": "Referência",
+      "status": "Ensaio implementado; decisão de câmera pendente",
+      "question": "O teste visual já resolve a câmera para todo o jogo?",
+      "deliverable": "Referência do ensaio fixo com trio inicial e um inimigo.",
+      "acceptance": "O board distingue ensaio técnico, revisão visual e adoção definitiva da perspectiva.",
+      "checklist": [
+        "Registrar teste-isometrico.html: mapa fixo, três ninjas, um inimigo e nenhuma onda adicional.",
+        "Registrar que o jogo completo e o editor ainda usam a vista superior.",
+        "Registrar seleção, prévias e ordenação de sprites já exercitadas no ensaio.",
+        "Avaliar células encobertas por sprites e escala antes de decidir a câmera final.",
+        "Manter arte provisória e evitar assumir produção completa de spritesheets."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "BASE-04",
+      "list": "00 · Base existente e referências",
+      "title": "Separar propostas narrativas, de missão e de combinação",
+      "area": "Referência",
+      "priority": "Referência",
+      "status": "Direções e propostas; funcionalidades futuras",
+      "question": "Quais ideias desta conversa ainda precisam de decisão?",
+      "deliverable": "Registro de intenções e hipóteses, com histórico das mudanças de direção.",
+      "acceptance": "Nenhum cartão afirma que campanha, ranks, combinações ou resgate já estão implementados.",
+      "checklist": [
+        "Registrar história Os Selos do Rio e Ordem do Véu como propostas de marcação.",
+        "Registrar dez combinações desejadas; ativação, custos e equilíbrio ainda precisam de experimentos.",
+        "Registrar missão como operação de 4–5 levels, classificada por rank e tipo, com terreno predominante.",
+        "Registrar resgate, infiltração e defesa como tipos em discussão, sem pressupor implementação de todos.",
+        "Tratar seis fases e 24 semanas do documento anterior como estimativas a revisar."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "DEC-01",
+      "list": "01 · Decidir durante a prototipação",
+      "title": "Definir o objetivo geral e a experiência desejada",
+      "area": "Design",
+      "priority": "P0",
+      "status": "Proposta para revisão",
+      "question": "Qual experiência o jogo deve entregar e o que fará uma partida valer a pena?",
+      "deliverable": "Uma página com proposta central, três pilares e limites do projeto.",
+      "acceptance": "É possível explicar o jogo em duas frases e usar os pilares para aceitar ou recusar novas ideias.",
+      "checklist": [
+        "Definir público, PC como alvo inicial e duração desejada de level, missão e sessão.",
+        "Escolher o peso de quebra-cabeça tático, combate, narrativa e rejogabilidade.",
+        "Definir papel de empurrões, informação antecipada e cooperação elemental.",
+        "Definir como o jogador percebe progresso e o que representa concluir o jogo.",
+        "Registrar explicitamente recursos fora do recorte inicial."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "DEC-02",
+      "list": "01 · Decidir durante a prototipação",
+      "title": "Definir objetivo geral da história e arco provisório",
+      "area": "Narrativa",
+      "priority": "P0",
+      "status": "Proposta para revisão",
+      "question": "Quem somos, o que queremos impedir ou alcançar e por que cada missão existe?",
+      "deliverable": "Sinopse de marcação, conflito central, motivação do esquadrão e arco inicial.",
+      "acceptance": "O jogador consegue explicar o objetivo narrativo e a ligação entre duas operações.",
+      "checklist": [
+        "Revisar a proposta dos selos, facção inimiga e consequências para as aldeias.",
+        "Definir situação inicial, conflito, mudança esperada e desfecho do recorte.",
+        "Definir relação e papel dos cinco ninjas, permitindo formar diferentes trios.",
+        "Escolher formato mínimo: briefing, objetivo consultável e texto de resultado.",
+        "Distinguir nomes/falas provisórios de decisões consolidadas."
+      ],
+      "dependencies": [
+        "DEC-01"
+      ]
+    },
+    {
+      "id": "DEC-03",
+      "list": "01 · Decidir durante a prototipação",
+      "title": "Delimitar as mecânicas essenciais do protótipo",
+      "area": "Mecânicas",
+      "priority": "P0",
+      "status": "Proposta para revisão",
+      "question": "Quais mecânicas são indispensáveis para provar que o jogo funciona?",
+      "deliverable": "Matriz manter / experimentar agora / avaliar depois / fora do recorte.",
+      "acceptance": "Existe um conjunto mínimo de regras para testar, sem exigir completar todo o catálogo de ideias.",
+      "checklist": [
+        "Reaproveitar movimentação, orçamento de ações, Soco, empurrões e prévias existentes.",
+        "Definir informação pública, dano em aliados, colisões, bordas e ordem de resolução.",
+        "Definir papel dos especiais individuais e das combinações.",
+        "Escolher quais objetivos e estados serão realmente necessários ao primeiro experimento.",
+        "Separar delimitação do protótipo do desejo de desenvolver as dez combinações no futuro."
+      ],
+      "dependencies": [
+        "DEC-01"
+      ]
+    },
+    {
+      "id": "DEC-04",
+      "list": "01 · Decidir durante a prototipação",
+      "title": "Definir vitória, derrota e significado das perdas",
+      "area": "Design",
+      "priority": "P0",
+      "status": "Proposta para revisão",
+      "question": "Vencer é eliminar todos, proteger algo, retirar alguém ou cumprir outra condição?",
+      "deliverable": "Contrato de objetivo principal, objetivos opcionais e condições de derrota por tipo de missão.",
+      "acceptance": "Antes de jogar, a pessoa sabe o que precisa fazer, o que pode sacrificar e o que encerra a partida.",
+      "checklist": [
+        "Reavaliar se cinco turnos é regra geral ou parâmetro de cada level.",
+        "Distinguir derrota do esquadrão, perda do alvo e prazo esgotado.",
+        "Prototipar objetivo de proteção como alternativa à eliminação.",
+        "Decidir se vitórias parciais e bônus têm lugar no recorte.",
+        "Avaliar integridade regional como hipótese, evitando criar uma economia de campanha prematuramente."
+      ],
+      "dependencies": [
+        "DEC-01",
+        "DEC-03"
+      ]
+    },
+    {
+      "id": "DEC-05",
+      "list": "01 · Decidir durante a prototipação",
+      "title": "Definir a estrutura missão → levels → turnos",
+      "area": "Missões e mapas",
+      "priority": "P0",
+      "status": "Proposta para revisão",
+      "question": "Como uma operação de 4–5 levels começa, evolui e termina?",
+      "deliverable": "Modelo de missão com briefing, seleção de trio, sequência de levels, resultado e repetição.",
+      "acceptance": "Missão, level e mapa têm significados distintos e o fluxo entre eles está documentado.",
+      "checklist": [
+        "Definir aproximação, obstáculo, objetivo central e consequência/retirada como estrutura de teste.",
+        "Decidir quando usar quatro ou cinco levels sem atrelar quantidade apenas ao rank.",
+        "Decidir quando o trio pode ser trocado e como uma missão é retomada.",
+        "Definir quais estados atravessam levels: PV, ninjas caídos, efeitos e objetivos.",
+        "Definir comportamento de derrota, repetição de level e repetição de missão."
+      ],
+      "dependencies": [
+        "DEC-02",
+        "DEC-04"
+      ]
+    },
+    {
+      "id": "DEC-06",
+      "list": "01 · Decidir durante a prototipação",
+      "title": "Definir ranks D, C, B, A e S",
+      "area": "Missões e mapas",
+      "priority": "P1",
+      "status": "Proposta para revisão",
+      "question": "O que diferencia o risco e a complexidade de cada rank?",
+      "deliverable": "Rubrica de classificação com exemplos de uma mesma tarefa em ranks diferentes.",
+      "acceptance": "Cada rank é explicado por desafios e consequências, com requisitos visíveis para o jogador.",
+      "checklist": [
+        "Definir critérios: pressão de tempo, objetivos simultâneos, oposição e exigência de coordenação.",
+        "Distinguir rank narrativo, dificuldade escolhida e complexidade da equipe.",
+        "Evitar depender apenas de mais PV ou mais dano.",
+        "Classificar exemplos de resgate, infiltração e defesa.",
+        "Escolher quais ranks precisam aparecer no primeiro recorte."
+      ],
+      "dependencies": [
+        "DEC-04",
+        "DEC-05"
+      ]
+    },
+    {
+      "id": "DEC-07",
+      "list": "01 · Decidir durante a prototipação",
+      "title": "Escolher os tipos de missão para experimentar primeiro",
+      "area": "Missões e mapas",
+      "priority": "P0",
+      "status": "Proposta para revisão",
+      "question": "Quais tarefas testarão melhor a proposta sem exigir muitos sistemas novos?",
+      "deliverable": "Catálogo inicial com objetivo, ações necessárias e critérios de sucesso por tipo.",
+      "acceptance": "Há uma seleção pequena de experimentos prioritários e uma lista separada de tipos futuros.",
+      "checklist": [
+        "Comparar defesa, resgate e infiltração com a eliminação já existente.",
+        "Listar necessidade de alvo protegido, personagem de resgate, extração ou alerta.",
+        "Escolher um tipo principal e um segundo tipo para comparação em cenários curtos.",
+        "Manter escolta, captura, sabotagem, evacuação e demais tarefas no backlog até seleção explícita.",
+        "Definir como cada tipo contribui para a história."
+      ],
+      "dependencies": [
+        "DEC-02",
+        "DEC-03",
+        "DEC-04"
+      ]
+    },
+    {
+      "id": "DEC-08",
+      "list": "01 · Decidir durante a prototipação",
+      "title": "Definir quantidade de mapas e orçamento de conteúdo",
+      "area": "Missões e mapas",
+      "priority": "P0",
+      "status": "Proposta para revisão",
+      "question": "Quantos cenários precisamos para o próximo teste, a primeira missão e uma futura demo?",
+      "deliverable": "Tabela de quantidades separando cenários de teste, levels, layouts únicos e variações.",
+      "acceptance": "O recorte tem quantidade explícita e justificada; nenhuma hipótese antiga é tratada como compromisso.",
+      "checklist": [
+        "Contar o cenário procedural atual e o ensaio fixo separadamente de uma campanha pronta.",
+        "Propor poucos cenários isolados para testar hipóteses antes de uma operação completa.",
+        "Escolher o tamanho da primeira missão de 4–5 levels.",
+        "Calcular operações × levels por operação e distinguir reutilização de geometria de conteúdo novo.",
+        "Decidir tamanho de demo/campanha apenas depois de medir o trabalho do primeiro recorte."
+      ],
+      "dependencies": [
+        "DEC-05",
+        "DEC-07"
+      ]
+    },
+    {
+      "id": "DEC-09",
+      "list": "01 · Decidir durante a prototipação",
+      "title": "Definir desafios e aprendizado de cada mapa",
+      "area": "Missões e mapas",
+      "priority": "P0",
+      "status": "Proposta para revisão",
+      "question": "Que decisão tática específica cada level apresenta?",
+      "deliverable": "Ficha de level com objetivo, problema central, terreno, inimigos, restrições e soluções de referência.",
+      "acceptance": "Cada mapa tem uma razão para existir e oferece oportunidades de resposta compreensíveis.",
+      "checklist": [
+        "Definir um problema central e uma complicação opcional por cenário de teste.",
+        "Relacionar desafio a empurrão, colisão, linha de tiro, proteção, custo de movimento ou extração.",
+        "Registrar entrada/saída, objetivos, posições iniciais, ondas e prazo.",
+        "Procurar mais de uma solução útil quando possível e distinguir perdas parciais de bloqueio inevitável.",
+        "Testar os mapas com formações diferentes e registrar restrições de equipe quando forem necessárias."
+      ],
+      "dependencies": [
+        "DEC-04",
+        "DEC-07",
+        "DEC-08"
+      ]
+    },
+    {
+      "id": "DEC-10",
+      "list": "01 · Decidir durante a prototipação",
+      "title": "Definir terrenos e a matriz de rejogabilidade",
+      "area": "Missões e mapas",
+      "priority": "P1",
+      "status": "Proposta para revisão",
+      "question": "Como mudar o terreno altera uma missão de verdade?",
+      "deliverable": "Matriz tipo de missão × terreno × rank com uma diferença tática por combinação escolhida.",
+      "acceptance": "As variações mudam decisões, rotas ou prioridades e não apenas as cores do cenário.",
+      "checklist": [
+        "Usar floresta ribeirinha como base disponível; escolher um segundo terreno apenas para comparação.",
+        "Definir bioma predominante por operação e subáreas dos seus levels.",
+        "Separar bioma de regras de tile: rio, lama, pedra, árvore e muralha.",
+        "Comparar dois tipos no mesmo terreno e um mesmo tipo em terrenos diferentes.",
+        "Delimitar autoria manual, variações controladas e papel da geração procedural."
+      ],
+      "dependencies": [
+        "DEC-07",
+        "DEC-09"
+      ]
+    },
+    {
+      "id": "DEC-11",
+      "list": "01 · Decidir durante a prototipação",
+      "title": "Definir ativação, custo e limites das combinações de chakra",
+      "area": "Mecânicas",
+      "priority": "P0",
+      "status": "Proposta para revisão",
+      "question": "Como uma combinação cria uma boa decisão dentro de um turno com três ninjas?",
+      "deliverable": "Regras comparadas de ativação e escolha de um ou dois pares para o primeiro experimento.",
+      "acceptance": "O custo é legível, a combinação tem utilidade e seu resultado cabe numa prévia confiável.",
+      "checklist": [
+        "Comparar ação conjunta de dois ninjas com preparação de casa/objeto em duas ações.",
+        "Definir participantes, alcance, origem, custo, duração, ordem dos gatilhos e dano em aliados.",
+        "Selecionar pares simples, como Lama e Vapor, para testar controle de terreno e cobertura.",
+        "Comparar o benefício com as duas ações individuais que a combinação substitui.",
+        "Manter os dez pares desejados no horizonte; delimitar lote e quantidade da primeira entrega após os testes."
+      ],
+      "dependencies": [
+        "DEC-03",
+        "DEC-04"
+      ]
+    },
+    {
+      "id": "DEC-12",
+      "list": "01 · Decidir durante a prototipação",
+      "title": "Decidir perspectiva e requisitos visuais do protótipo",
+      "area": "Arte e UX",
+      "priority": "P1",
+      "status": "Proposta para revisão",
+      "question": "Isometria melhora a leitura e a interação o suficiente para ser adotada?",
+      "deliverable": "Comparação documentada entre vista superior e ensaio isométrico.",
+      "acceptance": "Há decisão sobre câmera e requisitos de interação antes de produzir arte final.",
+      "checklist": [
+        "Comparar legibilidade de unidades, terreno, seleções e ameaças nas duas vistas.",
+        "Avaliar células encobertas, clique em sprites, redimensionamento e teclado.",
+        "Definir escala, âncoras e ordem de desenho caso a isometria avance.",
+        "Manter sprites e efeitos provisórios durante a avaliação.",
+        "Estimar expansão para jogo completo e editor somente depois da decisão."
+      ],
+      "dependencies": [
+        "BASE-03",
+        "DEC-03"
+      ]
+    },
+    {
+      "id": "EXP-01",
+      "list": "02 · Experimentos a preparar",
+      "title": "Distribuir uma versão identificada e coletar problemas",
+      "area": "Técnico",
+      "priority": "P0",
+      "status": "Proposta para revisão",
+      "question": "As pessoas conseguem abrir e jogar a mesma versão?",
+      "deliverable": "Canal confiável de teste com versão, instruções curtas e registro de problemas.",
+      "acceptance": "Três pessoas abrem a versão e conseguem devolver um problema reproduzível.",
+      "checklist": [
+        "Conferir o HTML offline e o fluxo de envio que já causou dificuldades de download.",
+        "Definir hospedagem para testes e conferir o link com outra pessoa quando disponível.",
+        "Identificar versão, cenário/mapa, equipe e passos ao registrar um problema.",
+        "Conservar o ensaio isométrico separado do protótipo completo.",
+        "Definir como guardar observações sem exigir contas ou sistemas adicionais."
+      ],
+      "dependencies": [
+        "BASE-01",
+        "BASE-03"
+      ]
+    },
+    {
+      "id": "EXP-02",
+      "list": "02 · Experimentos a preparar",
+      "title": "Comparar papéis dos cinco ninjas em desafios controlados",
+      "area": "Mecânicas",
+      "priority": "P0",
+      "status": "Proposta para revisão",
+      "question": "Cada ninja cria uma vantagem e um custo reconhecíveis?",
+      "deliverable": "Relato de cenários comparáveis com as dez formações e ajustes propostos.",
+      "acceptance": "Água e Vento têm papéis próprios; a barreira de Terra demonstra utilidade; o custo do dash é compreendido.",
+      "checklist": [
+        "Reaproveitar os cinco ninjas existentes e suas regras atuais.",
+        "Comparar Água e Vento em deslocamento e proteção.",
+        "Avaliar barreira de Terra em corredores e bloqueio de tiros.",
+        "Avaliar quando perder um PV no dash de Rai vale a pena.",
+        "Registrar escolhas, alternativas e casos de poder dominante antes de alterar números."
+      ],
+      "dependencies": [
+        "DEC-03",
+        "DEC-09"
+      ]
+    },
+    {
+      "id": "EXP-03",
+      "list": "02 · Experimentos a preparar",
+      "title": "Prototipar defesa de um alvo fixo",
+      "area": "Mecânicas",
+      "priority": "P0",
+      "status": "Proposta para revisão",
+      "question": "Proteger algo torna empurrões e posicionamento mais interessantes?",
+      "deliverable": "Um cenário curto com objetivo protegido, intenção inimiga legível e resultado próprio.",
+      "acceptance": "O jogador entende o que protege e consegue comparar eliminar, deslocar, bloquear ou aceitar dano.",
+      "checklist": [
+        "Usar o mapa/editor existentes e arte provisória.",
+        "Fazer inimigos anunciarem ataques contra o objetivo e resolver o dano de verdade.",
+        "Definir a vitória por proteção e a derrota pela perda do alvo.",
+        "Mostrar dano colateral e efeito de colisões nas prévias.",
+        "Comparar com a missão atual de eliminação e registrar o que mudou nas decisões."
+      ],
+      "dependencies": [
+        "DEC-04",
+        "DEC-07",
+        "DEC-09"
+      ]
+    },
+    {
+      "id": "EXP-04",
+      "list": "02 · Experimentos a preparar",
+      "title": "Prototipar um segundo tipo: resgate ou infiltração",
+      "area": "Missões e mapas",
+      "priority": "P1",
+      "status": "Proposta para revisão",
+      "question": "A mesma base tática sustenta outra tarefa sem excesso de regras?",
+      "deliverable": "Um cenário isolado do tipo escolhido, com ações e vitória verificáveis.",
+      "acceptance": "A tarefa gera decisões diferentes da defesa e é compreendida durante o jogo.",
+      "checklist": [
+        "Escolher somente um segundo tipo para esse teste.",
+        "Se resgate: definir libertação, comportamento do resgatado e ponto de extração.",
+        "Se infiltração: definir detecção, alerta e retirada com regras visíveis.",
+        "Evitar introduzir todos os tipos de missão ao mesmo tempo.",
+        "Avaliar como a tarefa muda em uma variação de terreno."
+      ],
+      "dependencies": [
+        "DEC-07",
+        "DEC-09",
+        "DEC-10"
+      ]
+    },
+    {
+      "id": "EXP-05",
+      "list": "02 · Experimentos a preparar",
+      "title": "Testar uma combinação e sua prévia completa",
+      "area": "Mecânicas",
+      "priority": "P0",
+      "status": "Proposta para revisão",
+      "question": "O jogador entende e utiliza uma combinação melhor que duas ações individuais?",
+      "deliverable": "Experimento com um par elemental e comparação de ativação/custo.",
+      "acceptance": "Participantes, ações consumidas, área, duração e riscos ficam claros antes da confirmação.",
+      "checklist": [
+        "Reaproveitar lama/vapor já suportados pelo terreno quando o par escolhido permitir.",
+        "Implementar um par inicial e medir o esforço antes de ampliar o lote.",
+        "Cobrir interação com aliados, inimigos, estruturas móveis e terreno.",
+        "Comparar previsão e execução e definir a ordem dos efeitos.",
+        "Registrar manter, ajustar ou descartar a regra de ativação testada."
+      ],
+      "dependencies": [
+        "DEC-11",
+        "DEC-09"
+      ]
+    },
+    {
+      "id": "EXP-06",
+      "list": "02 · Experimentos a preparar",
+      "title": "Prototipar a ligação narrativa entre dois levels",
+      "area": "Narrativa",
+      "priority": "P1",
+      "status": "Proposta para revisão",
+      "question": "O jogador entende por que concluiu uma tarefa e deve seguir para outra?",
+      "deliverable": "Dois cenários ligados por briefing e consequência em texto provisório.",
+      "acceptance": "A pessoa explica o objetivo narrativo, a consequência da vitória e o próximo passo sem ajuda verbal.",
+      "checklist": [
+        "Usar texto curto e personagens provisórios, sem produção de cenas finais.",
+        "Manter o objetivo consultável e permitir pular textos.",
+        "Garantir que a narração funcione com trios diferentes.",
+        "Não avançar a história na derrota nem duplicar acontecimentos ao repetir.",
+        "Revisar o argumento dos selos com base no que as missões permitem fazer."
+      ],
+      "dependencies": [
+        "DEC-02",
+        "DEC-05",
+        "DEC-07"
+      ]
+    },
+    {
+      "id": "EXP-07",
+      "list": "02 · Experimentos a preparar",
+      "title": "Construir a primeira operação de 4–5 levels após validar os cenários",
+      "area": "Missões e mapas",
+      "priority": "P1",
+      "status": "Proposta para revisão",
+      "question": "Uma sequência curta mantém interesse, clareza e variedade?",
+      "deliverable": "Uma missão completa no rank, tipo e terreno escolhidos, ainda com arte provisória.",
+      "acceptance": "Cada level tem um desafio próprio e a operação possui início, mudança de situação e desfecho.",
+      "checklist": [
+        "Reaproveitar apenas os experimentos com resultados favoráveis.",
+        "Definir quatro ou cinco fichas de level antes de construir os mapas.",
+        "Usar o mesmo terreno predominante com subáreas e situações diferentes.",
+        "Testar recuperação, troca de trio, repetição e duração total da operação.",
+        "Registrar custo de autoria para revisar a quantidade de conteúdo da demo."
+      ],
+      "dependencies": [
+        "DEC-06",
+        "DEC-08",
+        "DEC-09",
+        "EXP-03",
+        "EXP-04",
+        "EXP-05",
+        "EXP-06"
+      ]
+    },
+    {
+      "id": "EXP-08",
+      "list": "02 · Experimentos a preparar",
+      "title": "Validar rejogabilidade por tipo, terreno e equipe",
+      "area": "Design",
+      "priority": "P1",
+      "status": "Proposta para revisão",
+      "question": "Repetir um tipo de missão em outro terreno realmente muda a estratégia?",
+      "deliverable": "Comparação pequena entre cenários com objetivo ou terreno variado.",
+      "acceptance": "As pessoas identificam decisões diferentes e vontade de experimentar outra composição.",
+      "checklist": [
+        "Comparar o mesmo tipo em dois terrenos e dois tipos no mesmo terreno.",
+        "Aproveitar layouts existentes antes de criar biomas completos.",
+        "Registrar rotas, importância das estruturas, linhas de tiro e pares de chakra usados.",
+        "Distinguir nova estratégia de simples aumento de inimigos.",
+        "Revisar a matriz de conteúdo com base no resultado."
+      ],
+      "dependencies": [
+        "DEC-10",
+        "EXP-03",
+        "EXP-04",
+        "EXP-05"
+      ]
+    },
+    {
+      "id": "EXP-09",
+      "list": "02 · Experimentos a preparar",
+      "title": "Conduzir testes observados e registrar decisões",
+      "area": "Pesquisa e UX",
+      "priority": "P0",
+      "status": "Proposta para revisão",
+      "question": "O protótipo comunica suas regras e gera escolhas interessantes?",
+      "deliverable": "Duas rodadas curtas com jogadores novos e registro de evidências.",
+      "acceptance": "Problemas de compreensão são distinguidos de bugs; cada hipótese recebe decisão e próximo passo.",
+      "checklist": [
+        "Pedir previsão do resultado antes de confirmar ações e combinações.",
+        "Observar entendimento do objetivo, rank, perdas e motivo narrativo.",
+        "Medir duração de levels/operação e pontos de frustração.",
+        "Registrar situações sem opções úteis e problemas de prévia.",
+        "Mover para decisões validadas apenas conclusões sustentadas pelos testes."
+      ],
+      "dependencies": [
+        "EXP-01"
+      ]
+    },
+    {
+      "id": "FUT-01",
+      "list": "05 · Depois da validação",
+      "title": "Fechar o recorte da demo e reestimar o trabalho",
+      "area": "Planejamento",
+      "priority": "P1",
+      "status": "Proposta para revisão",
+      "question": "Qual é a menor entrega coesa apoiada no que aprendemos?",
+      "deliverable": "Escopo versionado com missões, levels, layouts, terrenos, ranks, tipos e combinações.",
+      "acceptance": "O escopo tem limites, dependências, exclusões e estimativa baseada no primeiro recorte.",
+      "checklist": [
+        "Revisar as propostas antigas de seis fases e 24 semanas.",
+        "Escolher quantidade de operações e de mapas únicos/variantes.",
+        "Escolher quais das dez combinações entram em cada entrega.",
+        "Definir recursos de campanha, editor e distribuição necessários.",
+        "Reservar tempo de testes e manter artes finais como última etapa."
+      ],
+      "dependencies": [
+        "EXP-07",
+        "EXP-08",
+        "EXP-09"
+      ]
+    },
+    {
+      "id": "FUT-02",
+      "list": "05 · Depois da validação",
+      "title": "Expandir campanha, missões e terrenos selecionados",
+      "area": "Produção futura",
+      "priority": "P2",
+      "status": "Proposta para revisão",
+      "question": "Quais conteúdos e sistemas foram justificados pelos protótipos?",
+      "deliverable": "Lotes de conteúdo e recursos selecionados no recorte validado.",
+      "acceptance": "Cada lote usa fichas de desafio, respeita o orçamento e passa por revisão de jogo.",
+      "checklist": [
+        "Produzir apenas operações, tipos e ranks selecionados.",
+        "Desenvolver os pares de chakra aprovados para o lote.",
+        "Ampliar estados, objetivos e campos do editor preservando fases antigas.",
+        "Integrar seleção de missão, progresso local e desbloqueios definidos.",
+        "Exercitar mapas e combinações com diferentes equipes."
+      ],
+      "dependencies": [
+        "FUT-01"
+      ]
+    },
+    {
+      "id": "FUT-03",
+      "list": "05 · Depois da validação",
+      "title": "Reavaliar recursos opcionais depois do recorte",
+      "area": "Produção futura",
+      "priority": "P2",
+      "status": "Proposta para revisão",
+      "question": "Que acréscimos resolvem necessidades comprovadas da experiência?",
+      "deliverable": "Backlog avaliado de terceiros inimigos, novos biomas, desafios e ferramentas de compartilhamento.",
+      "acceptance": "Nenhum extra entra por quantidade de ideias; cada inclusão tem justificativa e troca de escopo.",
+      "checklist": [
+        "Avaliar novos inimigos apenas quando os dois atuais não sustentarem os desafios.",
+        "Avaliar medidor persistente da região e objetivos secundários.",
+        "Avaliar anotações e exportação do estado do turno para discutir estratégias.",
+        "Manter inventário, multiplayer, árvore de habilidades e campanha longa fora do recorte salvo decisão específica.",
+        "Reavaliar geração procedural a partir dos problemas encontrados nos mapas."
+      ],
+      "dependencies": [
+        "FUT-01"
+      ]
+    },
+    {
+      "id": "ART-01",
+      "list": "06 · Artes finais e entrega",
+      "title": "Fechar conteúdo e preparar o inventário de assets",
+      "area": "Arte",
+      "priority": "P2",
+      "status": "Proposta para revisão",
+      "question": "A experiência está pronta para receber arte final?",
+      "deliverable": "Inventário com personagens, tiles, efeitos, retratos, interface, dimensões e animações.",
+      "acceptance": "Regras, câmera, tipos de missão e conteúdo do lote estão estáveis com arte provisória.",
+      "checklist": [
+        "Concluir a revisão de leitura tática e perspectiva.",
+        "Fixar escala, âncoras, direções e animações necessárias.",
+        "Listar efeitos das combinações efetivamente incluídas.",
+        "Revisar roteiro e interface antes de encomendar assets.",
+        "Estimar esforço de arte com o inventário real."
+      ],
+      "dependencies": [
+        "FUT-01",
+        "FUT-02"
+      ]
+    },
+    {
+      "id": "ART-02",
+      "list": "06 · Artes finais e entrega",
+      "title": "Produzir e integrar artes finais na última etapa",
+      "area": "Arte",
+      "priority": "P2",
+      "status": "Proposta para revisão",
+      "question": "Como finalizar a apresentação sem perder a clareza tática validada?",
+      "deliverable": "Conjunto final de sprites, tiles, efeitos e interface do recorte selecionado.",
+      "acceptance": "A versão final mantém legibilidade, desempenho, seleção e previsões da versão provisória.",
+      "checklist": [
+        "Produzir personagens, terrenos e retratos com identidade visual comum.",
+        "Integrar efeitos e animações dos poderes e combinações.",
+        "Conferir unidades e ameaças em diferentes fundos e resoluções.",
+        "Respeitar movimento reduzido e garantir informação estática suficiente.",
+        "Executar revisão final e conferir distribuição offline/publicada."
+      ],
+      "dependencies": [
+        "ART-01"
+      ]
+    }
+  ],
+  "editing_rules": [
+    "Ler listas, cartões, descrições e checklists existentes antes de alterar o board.",
+    "Relacionar tarefas existentes aos temas desta revisão; editar e reaproveitar cartões antes de criar duplicatas.",
+    "Preservar comentários, anexos, membros, links e histórico; não excluir cartões nem listas.",
+    "Identificar propostas antigas que precisam ser revistas e movê-las apenas após ler seu contexto.",
+    "Não atribuir pessoas nem datas arbitrárias; as estimativas dependem do recorte de protótipo.",
+    "Em teste e Decisões validadas são estados de trabalho, inicialmente sem novos cartões nesta proposta.",
+    "Marcar implementação existente como referência e manter validação de design separada de testes automatizados.",
+    "Arte final permanece após validação de regras, câmera, narrativa e conteúdo."
+  ]
+}

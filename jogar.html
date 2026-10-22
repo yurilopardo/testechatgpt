@@ -1,0 +1,2876 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#111a15"><title>Tríade — Clareira do Rio</title><style>:root {
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  color: #e3e6d7;
+  background: #111a15;
+  font-synthesis: none;
+  font-weight: 400;
+  font-size: 14px;
+  color-scheme: dark;
+  --bg: #111a15;
+  --panel: #18231b;
+  --line: #344032;
+  --muted: #8e9c89;
+  --cream: #e9ebce;
+  --lime: #d2dfa0;
+  --soft: #becb91;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-width: 360px;
+  background:
+    radial-gradient(ellipse at 50% 35%, #24302055, transparent 65%), #111a15;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+button:disabled {
+  cursor: default;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #e2e8a8;
+  outline-offset: 4px;
+}
+button {
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    transform 0.15s;
+}
+button:not(:disabled):active {
+  transform: translateY(1px);
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+.icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+kbd {
+  font-family: inherit;
+  font-size: 10px;
+  border: 1px solid #495342;
+  border-radius: 3px;
+  min-width: 19px;
+  height: 19px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #a2ae97;
+  background: #ffffff03;
+  font-weight: 400;
+}
+[hidden] {
+  display: none !important;
+}
+.game-shell {
+  max-width: 1376px;
+  margin: auto;
+  padding: 0 48px;
+}
+.site-header {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  gap: 24px;
+}
+.brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: #e3e8bc;
+}
+.brand-mark {
+  width: 43px;
+  height: 43px;
+}
+.brand > span {
+  font-size: 25px;
+  font-weight: 650;
+  letter-spacing: 6px;
+  line-height: 1.2;
+}
+.brand small {
+  display: block;
+  font-size: 8px;
+  letter-spacing: 2.2px;
+  font-weight: 500;
+  color: #8f9d80;
+  margin-top: 5px;
+}
+.header-mission {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #8d9b83;
+  display: flex;
+  gap: 13px;
+  align-items: center;
+}
+.tiny-line {
+  width: 25px;
+  height: 1px;
+  background: #71805b;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+.prototype {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+  color: #a6b58c;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.prototype i,
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c0d98a;
+  box-shadow: 0 0 10px #bdd18430;
+}
+.help-btn {
+  background: transparent;
+  border: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: #bfc9b0;
+  padding: 8px 0;
+}
+.help-btn:hover {
+  color: #f0edcb;
+}
+.help-btn .icon {
+  width: 16px;
+  height: 16px;
+}
+.mission-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 0 29px;
+}
+.eyebrow {
+  font-size: 9px;
+  letter-spacing: 1.6px;
+  font-weight: 600;
+  color: #a7b58e;
+  line-height: 1.5;
+}
+.mission-header .eyebrow span {
+  color: #5e6f50;
+  padding: 0 9px;
+}
+h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 38px;
+  letter-spacing: -1.3px;
+  font-weight: 400;
+  color: #e9ecd8;
+  margin: 9px 0 10px;
+}
+h1 > span {
+  color: #b9cc81;
+}
+.mission-header p {
+  font-size: 12px;
+  color: #95a18b;
+  letter-spacing: 0.1px;
+}
+.map-strip {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 23px;
+  padding: 11px 14px;
+  border: 1px solid #34432f;
+  border-radius: 4px;
+  background: #1b281d;
+}
+.map-terrain {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-right: auto;
+  min-width: 0;
+}
+.map-terrain > .icon {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  color: #88bfc2;
+}
+.map-terrain strong,
+.map-terrain small {
+  display: block;
+}
+.map-terrain strong {
+  color: #ced9bd;
+  font-size: 11px;
+  font-weight: 500;
+}
+.map-terrain small {
+  color: #8c9f80;
+  margin-top: 4px;
+  font-size: 8px;
+  line-height: 1.5;
+}
+.map-identity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.map-identity > span {
+  font-size: 7px;
+  letter-spacing: 1.2px;
+  color: #829575;
+}
+.map-identity code {
+  color: #b6cba0;
+  font-size: 10px;
+  max-width: 240px;
+  overflow-wrap: anywhere;
+}
+.map-strip .new-map-btn {
+  flex-shrink: 0;
+  gap: 7px;
+  padding: 9px 12px;
+  font-size: 9px;
+}
+.new-map-btn .icon {
+  width: 13px;
+  height: 13px;
+}
+@media (max-width: 680px) {
+  .map-strip {
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    padding: 11px;
+    margin-bottom: 17px;
+  }
+  .map-terrain {
+    flex-basis: calc(100% - 118px);
+    gap: 8px;
+  }
+  .map-terrain small {
+    font-size: 7px;
+  }
+  .map-identity {
+    flex-basis: 100%;
+    order: 1;
+  }
+  .map-identity code {
+    max-width: none;
+    font-size: 9px;
+  }
+  .map-strip .new-map-btn {
+    padding: 9px 10px;
+  }
+}
+.round-display {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 19px;
+  border: 1px solid #3a4832;
+  border-radius: 5px;
+  background: #1b281c;
+  min-width: 218px;
+}
+.round-icon {
+  height: 33px;
+  width: 33px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #596a3f;
+  border-radius: 50%;
+  color: #cfdb9d;
+}
+.round-icon .icon {
+  width: 19px;
+}
+.round-display .eyebrow {
+  font-size: 8px;
+  color: #b3c094;
+  letter-spacing: 1.5px;
+  display: block;
+  margin-bottom: 3px;
+}
+.round-display strong {
+  font-size: 12px;
+  font-weight: 500;
+  color: #e2e6c9;
+}
+.round-display .live-dot {
+  margin-left: 14px;
+  width: 5px;
+  height: 5px;
+}
+.round-display.enemy-phase {
+  border-color: #785247;
+  background: #34251e;
+}
+.enemy-phase .round-icon {
+  color: #efb394;
+  border-color: #88644c;
+}
+.enemy-phase .live-dot {
+  background: #efa98a;
+}
+.battle-layout {
+  display: grid;
+  grid-template-columns: 208px minmax(0, 1fr) 256px;
+  gap: 25px;
+  align-items: start;
+}
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 28px;
+  margin-bottom: 12px;
+}
+.section-heading h2 {
+  font-size: 11px;
+  letter-spacing: 0.1px;
+  font-weight: 500;
+  color: #c6cfba;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.section-heading > span {
+  font-size: 8px;
+  color: #859478;
+  letter-spacing: 1px;
+}
+.squad-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.squad-card {
+  width: 100%;
+  border: 1px solid #34432f;
+  background: #19251d;
+  border-radius: 4px;
+  min-height: 111px;
+  text-align: left;
+  padding: 14px 11px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+.squad-card:before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 24px;
+  bottom: 24px;
+  width: 3px;
+  background: var(--element);
+  opacity: 0;
+}
+.squad-card.selected {
+  border-color: #879968;
+  background: linear-gradient(100deg, #303c2566, #1b281d);
+  box-shadow: 0 0 0 1px #b2c88b12;
+}
+.squad-card.selected:before {
+  opacity: 1;
+}
+.squad-card:not(:disabled):hover {
+  background: #283625;
+  border-color: #82956a;
+}
+.squad-card:disabled:not(.defeated) {
+  opacity: 0.7;
+}
+.portrait-frame {
+  width: 61px;
+  height: 68px;
+  flex-shrink: 0;
+  position: relative;
+  background: radial-gradient(circle, #65704a33, transparent 75%);
+  border-bottom: 1px solid #69704e44;
+}
+.portrait-frame canvas {
+  width: 69px;
+  height: 69px;
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  image-rendering: pixelated;
+}
+.element-badge {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #5a6046;
+  background: #243027;
+  display: grid;
+  place-items: center;
+  position: absolute;
+  right: -3px;
+  bottom: -1px;
+  color: var(--element);
+  border-radius: 50%;
+}
+.element-badge .icon {
+  height: 14px;
+  width: 14px;
+}
+.squad-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.squad-name {
+  font-size: 16px;
+  font-weight: 550;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #e5e7d3;
+}
+.squad-name kbd {
+  font-size: 8px;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  color: #829172;
+  border-color: #44523a;
+}
+.element-name {
+  font-size: 9px;
+  color: var(--element);
+  letter-spacing: 0.5px;
+}
+.hearts {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.hearts .icon {
+  height: 12px;
+  width: 12px;
+  stroke-width: 1.5;
+}
+.hearts .full {
+  color: var(--element, #df9984);
+  fill: var(--element, #df9984);
+}
+.hearts .empty {
+  color: #56634d;
+  fill: transparent;
+}
+.squad-info .hearts {
+  margin-top: 3px;
+}
+.unit-status {
+  font-size: 8px;
+  color: #a3b18e;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+.unit-status i {
+  width: 4px;
+  height: 4px;
+  background: #c1cf94;
+  border-radius: 50%;
+}
+.unit-status .icon {
+  width: 10px;
+  height: 10px;
+}
+.defeated {
+  filter: grayscale(1);
+  opacity: 0.5;
+}
+.objective-card {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 23px 0 19px;
+  margin-top: 25px;
+}
+.objective-card .eyebrow {
+  font-size: 8px;
+  letter-spacing: 1.3px;
+  color: #9cab87;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.objective-card .icon {
+  width: 14px;
+  height: 14px;
+}
+.objective-card h3 {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: 20px;
+  color: #dbe0be;
+  margin: 12px 0 8px;
+}
+.objective-card p {
+  font-size: 10px;
+  line-height: 1.9;
+  color: #9eaa90;
+}
+.objective-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 9px;
+  color: #bbc6a8;
+}
+.objective-progress > div {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.objective-progress i {
+  width: 6px;
+  height: 6px;
+  border: 1px solid #6f7a59;
+  transform: rotate(45deg);
+}
+
+.objective-progress i.complete {
+  background: #ced998;
+  border-color: #ced998;
+}
+.field-guide {
+  padding-top: 23px;
+}
+.field-guide > .eyebrow {
+  font-size: 8px;
+  display: block;
+  margin-bottom: 15px;
+  color: #839475;
+}
+.field-guide > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 9px;
+  color: #a6b298;
+  margin: 11px 0;
+}
+.legend-square {
+  width: 9px;
+  height: 9px;
+  display: block;
+  border: 1px solid;
+}
+.movement {
+  border-color: #94c6a3;
+  background: #8eb99635;
+}
+.attack {
+  border-color: #d1a56b;
+  background: #bf945135;
+}
+.danger {
+  border-color: #d88c74;
+  background: #b96b5e55;
+}
+.field-guide > p {
+  font-size: 9px;
+  color: #84987d;
+  padding-top: 10px;
+}
+.field-guide p .icon {
+  height: 13px;
+  width: 13px;
+  margin-right: 4px;
+  color: #86b8b6;
+}
+.board-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 28px;
+  font-size: 8px;
+  letter-spacing: 0.9px;
+  margin-bottom: 12px;
+  color: #8e9c80;
+}
+.board-topline > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #b9c49f;
+  letter-spacing: 0.1px;
+  font-size: 10px;
+}
+.board-topline .icon {
+  width: 15px;
+  height: 15px;
+  color: #b7c995;
+}
+.board-topline i {
+  font-style: normal;
+  margin: 0 5px;
+  color: #58684b;
+}
+.board-frame {
+  padding: 23px 9px 10px 24px;
+  position: relative;
+  background: #263426;
+  border: 1px solid #5c6846;
+  box-shadow:
+    0 14px 35px #0003,
+    inset 0 0 0 4px #1b281d;
+  isolation: isolate;
+}
+.board-surface {
+  position: relative;
+  aspect-ratio: 1;
+  border: 1px solid #819264;
+  box-shadow: 0 0 0 2px #15281f;
+  background: #64894e;
+  overflow: hidden;
+}
+#battle-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+.grid-input {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+}
+.cell {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  position: relative;
+}
+.cell:focus-visible {
+  outline: 2px solid #f3f0c5;
+  outline-offset: -3px;
+  z-index: 1;
+}
+.cell:not(:disabled):active {
+  transform: none;
+}
+.axis {
+  position: absolute;
+  display: grid;
+  color: #9cad82;
+  font-size: 8px;
+  font-family: monospace;
+  pointer-events: none;
+}
+.axis-top {
+  left: 24px;
+  right: 9px;
+  top: 7px;
+  grid-template-columns: repeat(8, 1fr);
+  text-align: center;
+}
+.axis-left {
+  top: 23px;
+  bottom: 10px;
+  left: 8px;
+  grid-template-rows: repeat(8, 1fr);
+  align-items: center;
+}
+.board-corner {
+  position: absolute;
+  pointer-events: none;
+  width: 9px;
+  height: 9px;
+  border-color: #a5b783;
+  border-style: solid;
+}
+.corner-tl {
+  left: -1px;
+  top: -1px;
+  border-width: 2px 0 0 2px;
+}
+.corner-tr {
+  right: -1px;
+  top: -1px;
+  border-width: 2px 2px 0 0;
+}
+.corner-bl {
+  left: -1px;
+  bottom: -1px;
+  border-width: 0 0 2px 2px;
+}
+.corner-br {
+  right: -1px;
+  bottom: -1px;
+  border-width: 0 2px 2px 0;
+}
+.board-caption {
+  height: 41px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  color: #a4b18e;
+  font-size: 9px;
+  line-height: 1.6;
+  padding: 1px 1px 0;
+}
+.board-caption > span:last-child {
+  color: #76876c;
+  min-width: 20px;
+  text-align: right;
+  font-family: monospace;
+}
+.turn-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #3b4933;
+  padding: 15px 0 0;
+  gap: 10px;
+}
+.turn-summary {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.turn-summary > span {
+  font-family: Georgia, serif;
+  font-size: 26px;
+  color: #d2dba7;
+  line-height: 1;
+}
+.turn-summary strong {
+  display: block;
+  font-size: 9px;
+  font-weight: 500;
+  color: #c1c9ad;
+}
+.turn-summary small {
+  display: block;
+  font-size: 8px;
+  color: #7d8f73;
+  margin-top: 5px;
+}
+.end-turn,
+.primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #d1dca2;
+  border: 1px solid #dfe5b6;
+  color: #273321;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 3px;
+  padding: 13px 15px;
+  min-height: 43px;
+}
+.end-turn:hover,
+.primary-btn:hover {
+  background: #e5ebbc;
+}
+.end-turn > .icon {
+  width: 16px;
+  height: 16px;
+}
+.end-turn kbd {
+  width: 17px;
+  height: 17px;
+  min-width: 17px;
+  font-size: 8px;
+  border-color: #9ca879;
+  color: #576448;
+  background: #becb93;
+  margin-left: 4px;
+}
+.end-turn:disabled {
+  opacity: 0.5;
+}
+.end-turn.all-done {
+  box-shadow: 0 0 18px #c8db8b1c;
+}
+.selection-dot {
+  width: 5px;
+  height: 5px;
+  background: #d5e0ad;
+  border-radius: 50%;
+  margin-right: 3px;
+}
+.unit-panel {
+  background: #19251c;
+  border: 1px solid #3b4833;
+  border-radius: 4px;
+  padding: 16px 15px;
+}
+.selected-profile {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 82px;
+}
+.selected-portrait {
+  width: 73px;
+  height: 77px;
+  background: radial-gradient(circle, #93a16c22, transparent 70%);
+  display: block;
+  margin-left: -5px;
+}
+.selected-portrait canvas {
+  width: 77px;
+  height: 77px;
+  image-rendering: pixelated;
+}
+.selected-profile .eyebrow {
+  font-size: 8px;
+  color: var(--element);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 1.3px;
+}
+.selected-profile .eyebrow .icon {
+  width: 12px;
+  height: 12px;
+}
+.selected-profile h3 {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: -0.3px;
+  margin: 3px 0 5px;
+  color: #e6e8d3;
+}
+.selected-profile > div > span {
+  font-size: 8px;
+  color: #92a083;
+  white-space: nowrap;
+}
+.unit-stats {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0 17px;
+  border-bottom: 1px solid #34432e;
+  margin-bottom: 18px;
+}
+.unit-stats > span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+}
+.unit-stats .icon {
+  width: 12px;
+  height: 12px;
+  color: #91a17e;
+}
+.unit-stats strong {
+  font-size: 11px;
+  color: #d8dfbb;
+  font-weight: 500;
+}
+.unit-stats small {
+  font-size: 8px;
+  color: #8f9e7f;
+}
+.action-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.action-heading .eyebrow {
+  font-size: 8px;
+  letter-spacing: 1.1px;
+  color: #9bab89;
+}
+.action-pips {
+  display: flex;
+  gap: 5px;
+}
+.action-pips i {
+  height: 5px;
+  width: 5px;
+  background: #bccb8c;
+  transform: rotate(45deg);
+}
+.action-pips i.used {
+  background: #46533a;
+}
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.action-btn {
+  background: #1d2b20;
+  border: 1px solid #3d4c33;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 55px;
+  padding: 10px 10px;
+  border-radius: 3px;
+  text-align: left;
+  position: relative;
+}
+.action-btn > .icon {
+  height: 18px;
+  width: 18px;
+  color: #a8b88c;
+}
+.action-btn > span:nth-child(2) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+.action-btn strong {
+  font-size: 10px;
+  font-weight: 500;
+  color: #dce2c5;
+  line-height: 1.3;
+}
+.action-btn small {
+  font-size: 8px;
+  color: #91a080;
+}
+.action-btn .action-value {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: #8f9e7c;
+  align-self: center;
+  padding-left: 4px;
+}
+.action-btn:hover:not(:disabled) {
+  background: #303f28;
+  border-color: #91a56d;
+}
+.action-btn.active {
+  background: #38472988;
+  border-color: #98ac71;
+}
+.action-btn.active > .icon {
+  color: #d4dfa8;
+}
+.special-btn {
+  border-color: #6c665055;
+  background: linear-gradient(110deg, #54442c33, #1e2b20);
+}
+.special-btn > .icon,
+.special-star {
+  color: var(--element);
+}
+.special-btn.active {
+  border-color: var(--element);
+  background: #52463144;
+}
+.special-star {
+  font-size: 16px;
+}
+.action-btn:disabled {
+  opacity: 0.4;
+}
+.undo-btn {
+  min-height: 46px;
+  background: #1c2920;
+  border-style: dashed;
+}
+.undo-btn > kbd {
+  flex-shrink: 0;
+}
+.undo-btn:not(:disabled) {
+  border-color: #90b69f;
+}
+.undo-btn:not(:disabled) > .icon {
+  color: #b6d9c5;
+}
+.wait-btn {
+  min-height: 43px;
+  background: transparent;
+  border-color: transparent;
+  padding-bottom: 4px;
+}
+.wait-btn > span:nth-child(2) {
+  flex-direction: row;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+.wait-btn strong {
+  font-size: 9px;
+}
+.wait-btn small {
+  font-size: 7px;
+}
+.wait-btn > .icon {
+  width: 13px;
+  height: 13px;
+}
+.ability-note {
+  font-size: 8px;
+  line-height: 1.8;
+  color: #899b7a;
+  border-top: 1px solid #35432e;
+  margin-top: 10px;
+  padding-top: 11px;
+  min-height: 42px;
+}
+.ability-note .icon {
+  width: 12px;
+  height: 12px;
+  color: #cfdaa3;
+  margin-right: 3px;
+}
+.intent-panel {
+  margin-top: 22px;
+}
+.intent-panel .section-heading {
+  margin-bottom: 6px;
+}
+.intent-panel .section-heading h2 {
+  font-size: 10px;
+  color: #c6c7a9;
+}
+.intent-panel .section-heading .icon {
+  width: 14px;
+  height: 14px;
+  color: #cbaa82;
+}
+.intent-panel .section-heading > span {
+  color: #cba18b;
+}
+.intent-panel > p {
+  font-size: 9px;
+  line-height: 1.8;
+  color: #8d9b80;
+  margin-bottom: 10px;
+  max-width: 225px;
+}
+.intent-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 0;
+  border-bottom: 1px solid #2e3c2a;
+}
+.enemy-number {
+  width: 29px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #614d3e;
+  background: #352b2244;
+  border-radius: 3px;
+  color: #d59980;
+}
+.enemy-number .icon {
+  width: 15px;
+  height: 15px;
+}
+.intent-row > span:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+.intent-row strong {
+  font-size: 9px;
+  font-weight: 500;
+  color: #bac5aa;
+}
+.intent-row small {
+  font-size: 8px;
+  color: #8f9c82;
+}
+.intent-row small b {
+  color: #d3a18a;
+  font-weight: 500;
+}
+.intent-row .hearts {
+  gap: 3px;
+}
+.intent-row .hearts .icon {
+  width: 9px;
+  height: 9px;
+}
+.intent-note {
+  font-size: 8px;
+  color: #8e9f7c;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding-top: 12px;
+}
+.intent-note .icon {
+  width: 12px;
+  height: 12px;
+}
+.no-threats {
+  font-size: 10px;
+  color: #b4c891;
+  padding: 15px 0;
+}
+.empty-unit {
+  padding: 20px 0;
+  color: #8d9b82;
+  font-size: 12px;
+}
+.battle-journal {
+  margin-top: 29px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  border: 1px solid #34432e;
+  border-radius: 4px;
+  padding: 16px 20px;
+  background: #172219;
+  min-height: 94px;
+}
+.journal-title {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 9px;
+  min-width: 143px;
+  border-right: 1px solid #34432e;
+}
+.journal-title .eyebrow {
+  font-size: 8px;
+  letter-spacing: 1.2px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.journal-title .eyebrow i {
+  height: 4px;
+  width: 4px;
+  border-radius: 50%;
+  background: #a5b782;
+}
+.journal-title > span:last-child {
+  font-family: monospace;
+  font-size: 9px;
+  color: #6f8463;
+  padding-left: 11px;
+}
+.battle-log {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.log-entry {
+  font-size: 9px;
+  color: #74896b;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.4;
+}
+.log-entry.latest {
+  color: #bdc9a7;
+}
+.log-dot {
+  width: 3px;
+  height: 3px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #829d6d;
+  margin-top: 4px;
+}
+.log-entry.danger .log-dot,
+.log-entry.attack .log-dot {
+  background: #d59a77;
+}
+.log-entry.water .log-dot {
+  background: #8bc8d2;
+}
+.log-entry.success .log-dot {
+  background: #ded997;
+}
+.restart-btn {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 9px;
+  background: transparent;
+  border: 0;
+  padding: 9px 0 9px 18px;
+  color: #95a984;
+  white-space: nowrap;
+}
+.restart-btn:hover {
+  color: #e7e7ba;
+}
+.restart-btn .icon {
+  height: 13px;
+  width: 13px;
+}
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  min-height: 88px;
+  font-size: 8px;
+  color: #6f8263;
+}
+footer > span:first-child {
+  letter-spacing: 0.2px;
+}
+footer strong {
+  font-weight: 400;
+  color: #9eac89;
+}
+footer > div {
+  display: flex;
+  gap: 18px;
+}
+footer > div > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+footer kbd {
+  font-size: 7px;
+  width: 15px;
+  height: 15px;
+  min-width: 15px;
+  border-color: #35472e;
+  color: #7d936c;
+}
+footer > div > span:first-child kbd {
+  margin-right: -3px;
+}
+.build-tag {
+  font-size: 7px;
+  letter-spacing: 1.4px;
+  color: #7d906c;
+  white-space: nowrap;
+}
+.build-tag i {
+  font-style: normal;
+  color: #435b37;
+  margin: 0 7px;
+}
+.toast {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2c3b29;
+  border: 1px solid #849861;
+  color: #ebefd2;
+  padding: 13px 22px;
+  border-radius: 4px;
+  font-size: 12px;
+  box-shadow: 0 8px 24px #0005;
+  z-index: 100;
+  max-width: 90vw;
+  text-align: center;
+}
+.result-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  background: #102017c9;
+  backdrop-filter: blur(3px);
+}
+.result-card {
+  text-align: center;
+  padding: 25px;
+  color: #e4e8c9;
+  animation: appear 0.35s;
+}
+.result-emblem {
+  height: 66px;
+  width: 66px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #adbe79;
+  margin: 0 auto 25px;
+  transform: rotate(45deg);
+  color: #d9e5aa;
+  background: #445c2c66;
+}
+.result-emblem .icon {
+  width: 31px;
+  height: 31px;
+  transform: rotate(-45deg);
+}
+.result-card .eyebrow {
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+.result-card h2 {
+  font-family: Georgia, serif;
+  font-size: 36px;
+  font-weight: 400;
+  margin: 13px 0 15px;
+  letter-spacing: -0.6px;
+}
+.result-card p {
+  font-size: 12px;
+  line-height: 1.9;
+  color: #b8c7a2;
+  margin-bottom: 25px;
+}
+.result-card.defeat .result-emblem {
+  border-color: #bb8c76;
+  color: #e8b49b;
+  background: #6c473b66;
+}
+.defeat .eyebrow {
+  color: #d2a28a;
+}
+dialog {
+  background: #19251d;
+  color: #e4e8ce;
+  border: 1px solid #61724d;
+  border-radius: 7px;
+  max-width: 640px;
+  width: calc(100vw - 48px);
+  padding: 35px;
+  box-shadow: 0 30px 120px #0008;
+}
+dialog::backdrop {
+  background: #09110dcc;
+  backdrop-filter: blur(4px);
+}
+.dialog-close {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  padding: 5px;
+  background: transparent;
+  border: 0;
+  color: #a4b48d;
+}
+.dialog-close .icon {
+  height: 18px;
+  width: 18px;
+}
+dialog h2 {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: 31px;
+  margin: 12px 0;
+  color: #e6e8cc;
+}
+dialog > p {
+  color: #9eae90;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.help-steps {
+  margin: 25px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+.help-steps > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+.help-steps b {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #9bb576;
+}
+.help-steps span {
+  font-size: 10px;
+  color: #9dac90;
+  line-height: 1.8;
+}
+.help-steps strong {
+  display: block;
+  font-size: 11px;
+  color: #d6dfbe;
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+.help-elements {
+  border-top: 1px solid #3b4b33;
+  border-bottom: 1px solid #3b4b33;
+  padding: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.help-elements .icon {
+  height: 21px;
+  width: 21px;
+  color: var(--element);
+  display: block;
+  margin-bottom: 8px;
+}
+.help-elements strong {
+  font-size: 10px;
+  color: var(--element);
+  font-weight: 500;
+}
+.help-elements p {
+  font-size: 9px;
+  line-height: 1.8;
+  color: #9cab8b;
+  margin-top: 7px;
+}
+.help-keyboard {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 9px;
+  line-height: 2.3;
+  color: #98a888;
+  padding: 18px 0 22px;
+}
+.help-push {
+  padding: 12px 14px;
+  border: 1px solid #46533a;
+  border-radius: 3px;
+  background: #1d2b20;
+  line-height: 1.8;
+}
+.help-keyboard kbd {
+  padding: 2px 6px;
+  width: auto;
+  height: auto;
+  font-size: 8px;
+}
+.primary-btn .icon {
+  height: 15px;
+  width: 15px;
+}
+.restart-dialog {
+  max-width: 440px;
+}
+.restart-dialog h2 {
+  font-size: 28px;
+}
+.dialog-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+.secondary-btn {
+  border: 1px solid #526345;
+  padding: 11px 15px;
+  font-size: 11px;
+  border-radius: 3px;
+  background: #23301f;
+  color: #bccba6;
+}
+.secondary-btn:hover {
+  background: #35442d;
+}
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (min-width: 1500px) {
+  .game-shell {
+    padding: 0 40px;
+  }
+  .battle-layout {
+    grid-template-columns: 224px minmax(0, 1fr) 272px;
+    gap: 30px;
+  }
+  .squad-card {
+    min-height: 124px;
+    padding: 16px;
+  }
+  .site-header {
+    height: 110px;
+  }
+  .mission-header {
+    padding: 37px 0 34px;
+  }
+}
+@media (max-width: 1150px) {
+  .game-shell {
+    padding: 0 28px;
+  }
+  .battle-layout {
+    grid-template-columns: 180px minmax(0, 1fr) 225px;
+    gap: 18px;
+  }
+  .header-mission {
+    display: none;
+  }
+  .squad-card {
+    padding: 12px 8px;
+    gap: 5px;
+  }
+  .portrait-frame {
+    width: 55px;
+  }
+  .squad-name {
+    font-size: 14px;
+  }
+  .unit-panel {
+    padding: 12px;
+  }
+  .selected-profile {
+    gap: 0;
+  }
+  .selected-profile > div > span {
+    font-size: 7px;
+  }
+  .selected-portrait {
+    width: 65px;
+  }
+  .selected-profile h3 {
+    font-size: 25px;
+  }
+  .action-btn {
+    padding: 10px 8px;
+    gap: 8px;
+  }
+  .action-btn strong {
+    font-size: 9px;
+  }
+  .action-btn small {
+    font-size: 7px;
+  }
+  .board-topline > span:last-child {
+    font-size: 7px;
+    letter-spacing: 0;
+  }
+  .turn-summary small {
+    display: none;
+  }
+  .end-turn {
+    padding: 11px;
+    gap: 7px;
+    font-size: 10px;
+  }
+  .end-turn kbd {
+    display: none;
+  }
+  footer .build-tag {
+    display: none;
+  }
+  .intent-row {
+    gap: 6px;
+  }
+  .intent-row .hearts {
+    flex-direction: column;
+    gap: 2px;
+  }
+  .intent-row small {
+    font-size: 7px;
+  }
+  .objective-card .eyebrow {
+    font-size: 7px;
+  }
+  .field-guide > div {
+    font-size: 8px;
+    gap: 7px;
+  }
+  .battle-journal {
+    gap: 18px;
+  }
+  .journal-title {
+    min-width: 125px;
+  }
+  .board-caption {
+    font-size: 8px;
+    height: 43px;
+  }
+}
+@media (max-width: 940px) {
+  .game-shell {
+    padding: 0 24px;
+  }
+  .battle-layout {
+    grid-template-columns: minmax(0, 1fr) 240px;
+    gap: 22px;
+  }
+  .squad-column {
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .squad-column > .section-heading {
+    margin-bottom: 8px;
+  }
+  .squad-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .squad-card {
+    min-height: 96px;
+    padding: 10px 16px;
+    gap: 12px;
+  }
+  .squad-name {
+    font-size: 16px;
+  }
+  .portrait-frame {
+    width: 60px;
+  }
+  .objective-card,
+  .field-guide {
+    display: none;
+  }
+  .mission-header {
+    padding: 28px 0;
+  }
+  .round-display {
+    min-width: 200px;
+    padding: 13px 15px;
+  }
+  .board-topline {
+    margin-bottom: 9px;
+  }
+  .squad-column {
+    margin-bottom: 0;
+  }
+  .board-column {
+    grid-column: 1;
+  }
+  .action-column {
+    grid-column: 2;
+  }
+  .unit-panel {
+    padding: 14px;
+  }
+  .selected-profile > div > span {
+    font-size: 8px;
+  }
+  .action-btn strong {
+    font-size: 10px;
+  }
+  .action-btn small {
+    font-size: 8px;
+  }
+  .intent-row .hearts {
+    flex-direction: row;
+  }
+  .intent-row small {
+    font-size: 8px;
+  }
+  .header-actions {
+    gap: 20px;
+  }
+  .battle-journal {
+    margin-top: 24px;
+  }
+  .restart-btn {
+    font-size: 8px;
+  }
+  .round-display .live-dot {
+    margin-left: 0;
+  }
+}
+@media (max-width: 680px) {
+  .game-shell {
+    padding: 0 16px;
+  }
+  .site-header {
+    height: 78px;
+    gap: 10px;
+  }
+  .brand {
+    gap: 9px;
+  }
+  .brand-mark {
+    width: 33px;
+    height: 33px;
+  }
+  .brand > span {
+    font-size: 20px;
+    letter-spacing: 4px;
+  }
+  .brand small {
+    font-size: 6px;
+    letter-spacing: 1.5px;
+    margin-top: 4px;
+  }
+  .prototype {
+    display: none;
+  }
+  .help-btn {
+    font-size: 10px;
+  }
+  .help-btn .icon {
+    width: 15px;
+    height: 15px;
+  }
+  .mission-header {
+    padding: 25px 0 22px;
+    align-items: flex-start;
+  }
+  .mission-header .eyebrow {
+    font-size: 7px;
+    letter-spacing: 1.1px;
+  }
+  h1 {
+    font-size: 30px;
+    letter-spacing: -1px;
+    margin-top: 8px;
+  }
+  .mission-header p {
+    font-size: 9px;
+    max-width: 210px;
+    line-height: 1.7;
+  }
+  .round-display {
+    min-width: unset;
+    padding: 10px 11px;
+    gap: 8px;
+    margin-top: 19px;
+  }
+  .round-icon {
+    display: none;
+  }
+  .round-display .eyebrow {
+    font-size: 7px;
+  }
+  .round-display strong {
+    font-size: 9px;
+  }
+  .round-display .live-dot {
+    width: 4px;
+    height: 4px;
+  }
+  .battle-layout {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .squad-list {
+    gap: 7px;
+  }
+  .squad-card {
+    padding: 9px 6px;
+    gap: 4px;
+    min-height: 91px;
+  }
+  .portrait-frame {
+    width: 40px;
+    height: 50px;
+  }
+  .portrait-frame canvas {
+    width: 55px;
+    height: 55px;
+    left: -7px;
+    top: -3px;
+  }
+  .squad-info {
+    gap: 3px;
+  }
+  .squad-name {
+    font-size: 13px;
+  }
+  .squad-name kbd {
+    display: none;
+  }
+  .element-name {
+    font-size: 8px;
+  }
+  .squad-info .hearts {
+    gap: 3px;
+  }
+  .squad-info .hearts .icon {
+    width: 9px;
+    height: 9px;
+  }
+  .unit-status {
+    font-size: 6px;
+    gap: 3px;
+    margin-top: 3px;
+  }
+  .element-badge {
+    width: 17px;
+    height: 17px;
+    bottom: -3px;
+    right: -2px;
+  }
+  .element-badge .icon {
+    height: 11px;
+    width: 11px;
+  }
+  .section-heading {
+    margin-bottom: 9px;
+    min-height: 20px;
+  }
+  .section-heading h2 {
+    font-size: 10px;
+  }
+  .section-heading > span {
+    font-size: 7px;
+  }
+  .board-column {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .board-topline {
+    height: 20px;
+    margin-bottom: 9px;
+  }
+  .board-topline > span:first-child {
+    font-size: 9px;
+  }
+  .board-frame {
+    padding: 20px 8px 8px 20px;
+  }
+  .axis-top {
+    left: 20px;
+    right: 8px;
+    top: 5px;
+    font-size: 7px;
+  }
+  .axis-left {
+    top: 20px;
+    bottom: 8px;
+    left: 6px;
+    font-size: 7px;
+  }
+  .board-caption {
+    font-size: 8px;
+    height: 43px;
+  }
+  .turn-controls {
+    padding-top: 12px;
+  }
+  .turn-summary small {
+    display: block;
+    font-size: 7px;
+  }
+  .turn-summary strong {
+    font-size: 8px;
+  }
+  .end-turn {
+    font-size: 10px;
+    gap: 10px;
+    padding: 11px 14px;
+  }
+  .end-turn kbd {
+    display: flex;
+  }
+  .action-column {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .action-column > .section-heading {
+    margin-bottom: 10px;
+  }
+  .unit-panel {
+    padding: 15px;
+  }
+  .selected-profile {
+    min-height: 60px;
+    gap: 6px;
+  }
+  .selected-portrait {
+    height: 60px;
+    width: 65px;
+  }
+  .selected-portrait canvas {
+    width: 65px;
+    height: 65px;
+    margin-top: -7px;
+  }
+  .selected-profile h3 {
+    font-size: 25px;
+    margin: 2px 0 3px;
+  }
+  .unit-stats {
+    padding: 8px 0 12px;
+    margin-bottom: 12px;
+    justify-content: flex-start;
+    gap: 26px;
+  }
+  .action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .action-btn {
+    min-height: 57px;
+  }
+  .wait-btn {
+    padding: 10px 8px;
+    border: 1px solid #35472e;
+  }
+  .wait-btn > span:nth-child(2) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  .action-btn strong {
+    font-size: 10px;
+  }
+  .action-btn small {
+    font-size: 8px;
+  }
+  .ability-note {
+    font-size: 9px;
+    min-height: unset;
+    line-height: 1.8;
+  }
+  .intent-panel {
+    margin-top: 22px;
+  }
+  .intent-panel > p {
+    max-width: unset;
+    font-size: 9px;
+  }
+  #intent-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+  }
+  .intent-row {
+    display: block;
+    padding: 10px 8px;
+    border: 1px solid #39442e;
+    background: #19251b;
+    border-radius: 3px;
+    position: relative;
+  }
+  .enemy-number {
+    width: 22px;
+    height: 22px;
+    margin-bottom: 8px;
+  }
+  .enemy-number .icon {
+    width: 12px;
+    height: 12px;
+  }
+  .intent-row > span:nth-child(2) {
+    gap: 5px;
+  }
+  .intent-row strong {
+    font-size: 8px;
+  }
+  .intent-row small {
+    font-size: 7px;
+    line-height: 1.7;
+  }
+  .intent-row .hearts {
+    position: absolute;
+    top: 12px;
+    right: 7px;
+    gap: 3px;
+  }
+  .intent-row .hearts .icon {
+    width: 7px;
+    height: 7px;
+  }
+  .intent-note {
+    font-size: 8px;
+    padding-top: 11px;
+  }
+  .battle-journal {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 15px;
+    margin-top: 25px;
+  }
+  .journal-title {
+    flex-basis: 100%;
+    border: 0;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .battle-log {
+    flex-basis: 100%;
+    gap: 9px;
+  }
+  .log-entry {
+    font-size: 9px;
+  }
+  .restart-btn {
+    padding: 4px 0 0;
+    margin-left: auto;
+    font-size: 9px;
+  }
+  footer {
+    padding: 18px 0 23px;
+    flex-direction: column;
+    gap: 15px;
+    min-height: 85px;
+    font-size: 8px;
+  }
+  footer > div {
+    gap: 13px;
+  }
+  .result-card h2 {
+    font-size: 29px;
+  }
+  .result-card p {
+    font-size: 10px;
+  }
+  .result-emblem {
+    width: 47px;
+    height: 47px;
+    margin-bottom: 20px;
+  }
+  .result-emblem .icon {
+    width: 24px;
+    height: 24px;
+  }
+  .result-card .eyebrow {
+    font-size: 7px;
+  }
+  .help-steps {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+  .help-elements {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .help-elements .icon {
+    display: inline-block;
+    margin: 0 8px 0 0;
+    width: 18px;
+    height: 18px;
+  }
+  .help-elements p {
+    margin-left: 28px;
+  }
+  .help-elements strong {
+    font-size: 11px;
+  }
+  .help-elements p {
+    font-size: 10px;
+  }
+  .help-keyboard {
+    font-size: 8px;
+  }
+  dialog {
+    padding: 27px 23px;
+    max-height: 88vh;
+  }
+  dialog h2 {
+    font-size: 25px;
+  }
+  .dialog-actions {
+    flex-direction: column-reverse;
+  }
+  .dialog-actions button {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Keep the desktop battlefield close to its 64 px tile scale and the controls legible. */
+@media (min-width: 941px) {
+  .game-shell {
+    max-width: 1280px;
+    padding: 0 36px;
+  }
+  .site-header {
+    height: 88px;
+  }
+  .battle-layout {
+    grid-template-columns: 216px minmax(0, 1fr) 264px;
+    gap: 24px;
+  }
+  .mission-header {
+    padding: 28px 0 26px;
+  }
+  .section-heading h2 {
+    font-size: 12px;
+  }
+  .section-heading > span {
+    font-size: 9px;
+  }
+  .squad-card {
+    min-height: 113px;
+    padding: 13px 11px;
+  }
+  .element-name {
+    font-size: 10px;
+  }
+  .unit-status {
+    font-size: 9px;
+  }
+  .objective-card p {
+    font-size: 11px;
+  }
+  .objective-progress {
+    font-size: 10px;
+  }
+  .field-guide > div {
+    font-size: 10px;
+  }
+  .field-guide > p {
+    font-size: 10px;
+  }
+  .board-topline > span:first-child {
+    font-size: 11px;
+  }
+  .board-topline > span:last-child {
+    font-size: 9px;
+  }
+  .board-caption {
+    font-size: 10px;
+  }
+  .selected-profile > div > span {
+    font-size: 9px;
+  }
+  .selected-profile .eyebrow {
+    font-size: 9px;
+  }
+  .unit-stats strong {
+    font-size: 12px;
+  }
+  .unit-stats small {
+    font-size: 10px;
+  }
+  .action-heading .eyebrow {
+    font-size: 9px;
+  }
+  .action-btn strong {
+    font-size: 11px;
+  }
+  .action-btn small {
+    font-size: 9px;
+  }
+  .wait-btn small {
+    font-size: 8px;
+  }
+  .ability-note {
+    font-size: 9px;
+  }
+  .intent-panel .section-heading h2 {
+    font-size: 11px;
+  }
+  .intent-panel > p {
+    font-size: 10px;
+  }
+  .intent-row strong {
+    font-size: 10px;
+  }
+  .intent-row small {
+    font-size: 9px;
+  }
+  .intent-note {
+    font-size: 9px;
+  }
+  .turn-summary strong {
+    font-size: 10px;
+  }
+  .turn-summary small {
+    font-size: 9px;
+  }
+  .log-entry {
+    font-size: 10px;
+  }
+  .restart-btn {
+    font-size: 10px;
+  }
+  footer {
+    font-size: 9px;
+  }
+}
+@media (min-width: 941px) and (max-width: 1100px) {
+  .game-shell {
+    padding: 0 24px;
+  }
+  .battle-layout {
+    grid-template-columns: 178px minmax(0, 1fr) 222px;
+    gap: 17px;
+  }
+  .squad-card {
+    padding: 12px 8px;
+    gap: 4px;
+  }
+  .unit-status {
+    font-size: 8px;
+  }
+  .action-btn strong {
+    font-size: 10px;
+  }
+  .action-btn small {
+    font-size: 8px;
+  }
+  .unit-panel {
+    padding: 12px;
+  }
+  .field-guide > div {
+    font-size: 8px;
+  }
+  .intent-row small {
+    font-size: 8px;
+  }
+  .selected-profile > div > span {
+    font-size: 7px;
+  }
+}
+
+/* Action forecasts: solid cyan is the immediate shove; violet dashes are next turn. */
+.preview-panel {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid #3b4936;
+  border-radius: 4px;
+  background: #18241c;
+}
+.preview-panel.has-preview {
+  border-color: #648c83;
+  background: linear-gradient(135deg, #1d302a, #19251d);
+}
+.preview-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.preview-heading h2 {
+  font-size: 11px;
+  font-weight: 500;
+  color: #d5dfbf;
+}
+.preview-heading > span {
+  font-size: 6px;
+  letter-spacing: 0.7px;
+  color: #8d9e85;
+  text-align: right;
+}
+.preview-empty {
+  font-size: 10px;
+  line-height: 1.8;
+  color: #94a789;
+}
+.preview-action {
+  font-size: 11px;
+  color: #9de0df;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #365044;
+}
+.preview-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.preview-panel li {
+  padding: 10px 0;
+  border-bottom: 1px solid #344536;
+}
+.preview-panel li > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  font-size: 10px;
+  color: #d8dfc7;
+}
+.preview-panel strong {
+  font-size: 10px;
+  font-weight: 500;
+}
+.preview-panel li > div > span {
+  white-space: nowrap;
+  color: #e8caa1;
+  font-family: monospace;
+}
+.preview-panel small {
+  display: block;
+  font-size: 9px;
+  line-height: 1.7;
+  color: #a9bba0;
+  margin-top: 5px;
+}
+.preview-panel em {
+  font-size: 6px;
+  letter-spacing: 0.8px;
+  font-style: normal;
+  color: #efc57f;
+  border: 1px solid #8e734a;
+  padding: 2px 3px;
+}
+.preview-ally strong {
+  color: #edc57f;
+}
+.preview-defeated {
+  display: block;
+  font-size: 9px;
+  font-weight: 500;
+  color: #f1a48d;
+  margin-top: 5px;
+}
+.preview-structure strong {
+  color: #d9ce96;
+}
+.preview-next {
+  padding-top: 13px;
+}
+.preview-next h3 {
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: #c6b6ea;
+  margin-bottom: 9px;
+}
+.preview-route {
+  margin: 9px 0;
+  padding-left: 9px;
+  border-left: 2px dashed #a99aca;
+}
+.preview-route strong,
+.preview-route > span {
+  display: block;
+}
+.preview-route > span {
+  font-size: 10px;
+  color: #d0c3e7;
+  margin-top: 5px;
+  line-height: 1.6;
+}
+.preview-next > p {
+  font-size: 9px;
+  line-height: 1.7;
+  color: #94a788;
+  margin-top: 12px;
+}
+.preview-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 10px;
+  padding-top: 12px;
+  font-size: 7px;
+  color: #9eb69d;
+}
+.preview-legend > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.preview-legend i {
+  width: 7px;
+  height: 7px;
+  display: inline-block;
+}
+.preview-push-color {
+  border: 1px solid #8be5ed;
+  background: #8be5ed44;
+}
+.preview-path-color {
+  border: 1px dashed #cab1ff;
+  background: #cab1ff33;
+}
+.preview-victory {
+  font-size: 10px;
+  line-height: 1.8;
+  color: #deeba9;
+  margin-top: 10px;
+}
+@media (max-width: 680px) {
+  .preview-panel {
+    margin-top: 14px;
+    padding: 14px;
+  }
+  .preview-heading h2 {
+    font-size: 12px;
+  }
+  .preview-heading > span {
+    font-size: 7px;
+  }
+  .preview-panel strong,
+  .preview-panel li > div,
+  .preview-route > span {
+    font-size: 11px;
+  }
+  .preview-panel small,
+  .preview-next > p {
+    font-size: 10px;
+  }
+  .preview-legend {
+    font-size: 8px;
+  }
+}
+
+/* Mission limit, reinforcement waves and ranged enemy identities. */
+.round-display .round-counter {
+  display: flex;
+  gap: 5px;
+}
+#round-limit {
+  color: #7f916e;
+}
+.round-display.last-round {
+  border-color: #94784b;
+  background: #312b1d;
+}
+.round-display.last-round .round-icon,
+.round-display.last-round #round-limit {
+  color: #e1bd7b;
+}
+.objective-progress {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.wave-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  margin-top: 13px;
+  color: #91a085;
+  font-size: 9px;
+  line-height: 1.7;
+}
+.wave-status strong {
+  font-weight: 500;
+  color: #d5ddbd;
+}
+.next-wave {
+  color: #bfd39d;
+  font-size: 9px;
+  line-height: 1.7;
+  border-top: 1px solid #35452e;
+  padding-top: 10px;
+  margin-top: 11px;
+}
+.objective-card.last-round h3,
+.objective-card.last-round .next-wave {
+  color: #e8be7e;
+}
+.intent-row > span:nth-child(2) {
+  min-width: 0;
+}
+.intent-row .enemy-number {
+  flex-shrink: 0;
+}
+.enemy-role {
+  font-size: 6px;
+  letter-spacing: 0.4px;
+  line-height: 1.7;
+  color: #a79b7e;
+}
+.intent-row.ranged {
+  border-left: 2px solid #9e75c9;
+  border-bottom-color: #53415e;
+  background: #a77bd20b;
+  padding-left: 8px;
+}
+.ranged .enemy-number {
+  border-color: #81619e;
+  background: #a57bd221;
+  color: #d7acff;
+}
+.ranged .enemy-role,
+.intent-row.ranged strong {
+  color: #d0b3ec;
+}
+.intent-row.attack-blocked small,
+.intent-row.attack-blocked small b {
+  color: #9c9e90;
+}
+
+@media (max-width: 940px) {
+  .objective-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 5px 22px;
+    margin-top: 15px;
+    padding: 14px 16px;
+    border: 1px solid #39472e;
+    border-radius: 4px;
+    background: #1c291d;
+  }
+  .objective-card > .eyebrow,
+  .objective-card h3,
+  .objective-card > p {
+    grid-column: 1;
+  }
+  .objective-card h3 {
+    margin: 2px 0;
+    font-size: 18px;
+  }
+  .objective-card p {
+    font-size: 9px;
+  }
+  .objective-progress {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    margin-top: 0;
+    align-content: center;
+    justify-content: flex-start;
+    font-size: 10px;
+  }
+  .wave-status {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: center;
+    margin-top: 0;
+  }
+  .next-wave {
+    grid-column: 1 / -1;
+    padding-top: 7px;
+    margin-top: 5px;
+  }
+}
+
+@media (max-width: 680px) {
+  .objective-card {
+    gap: 5px 14px;
+    padding: 12px;
+  }
+  .objective-card .eyebrow {
+    font-size: 6px;
+    letter-spacing: 0.6px;
+    gap: 4px;
+  }
+  .objective-card h3 {
+    font-size: 16px;
+  }
+  .objective-card p {
+    font-size: 8px;
+  }
+  .objective-progress {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    font-size: 9px;
+  }
+  .wave-status,
+  .next-wave {
+    font-size: 8px;
+  }
+  .enemy-role {
+    font-size: 6px;
+    letter-spacing: 0;
+  }
+  .intent-row.ranged {
+    padding-left: 8px;
+  }
+}
+
+.enemy-ready-label {
+  display: block;
+  color: #ffd2a5;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.35px;
+  line-height: 1.7;
+}
+.ranged .enemy-ready-label {
+  color: #d2b8ff;
+}
+
+.editor-nav {
+  text-decoration: none;
+}
+.level-rule-notice {
+  border: 1px solid #806e42;
+  background: #453d251c;
+  padding: 12px 16px;
+  color: #ddc390;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.mission-header h1 {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 640px) {
+  .editor-nav span {
+    display: none;
+  }
+}
+
+.change-team-btn {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid #b9c8a42b;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 11px;
+  padding: 8px 12px;
+  margin: 0 0 12px;
+  cursor: pointer;
+}
+.change-team-btn:hover {
+  color: #ecebc6;
+  border-color: #d9dfa17a;
+}
+.team-dialog {
+  width: min(1040px, calc(100vw - 32px));
+  max-width: 1040px;
+  padding: 32px;
+}
+.team-dialog::backdrop {
+  background: #081811e8;
+  backdrop-filter: blur(6px);
+}
+.team-dialog > p {
+  max-width: 720px;
+}
+.team-options {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin: 26px 0 18px;
+}
+.team-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  color: #dfe5ce;
+  background: #172d28;
+  border: 1px solid #7d9a793d;
+  border-radius: 12px;
+  padding: 14px;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+.team-option[aria-pressed="true"] {
+  border-color: var(--element);
+  background: color-mix(in srgb, var(--element) 9%, #142c25);
+  box-shadow: inset 0 0 0 1px var(--element);
+}
+.team-option:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+.team-option:focus-visible {
+  outline: 3px solid #f3efc5;
+  outline-offset: 3px;
+}
+.team-portrait {
+  position: relative;
+  width: 100%;
+  height: 82px;
+  display: flex;
+  justify-content: center;
+  border-radius: 7px;
+  background: #0c201e66;
+}
+.team-portrait canvas {
+  width: 80px;
+  height: 80px;
+  image-rendering: pixelated;
+}
+.team-portrait > .icon {
+  position: absolute;
+  bottom: 7px;
+  right: 7px;
+  color: var(--element);
+  width: 18px;
+  height: 18px;
+}
+.team-option-name {
+  font-size: 22px;
+  font-weight: 650;
+  margin: 12px 0;
+}
+.team-option-name small {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--element);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-top: 4px;
+}
+.team-option > strong {
+  font-size: 12px;
+  color: var(--element);
+  margin-bottom: 8px;
+}
+.team-description {
+  font-size: 11px;
+  line-height: 1.65;
+  color: #aebda7;
+}
+.team-choice {
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--element);
+}
+#team-count {
+  color: #dedfb6;
+  font-size: 13px;
+}
+.team-restart-note {
+  font-size: 11px !important;
+  color: #97aa94 !important;
+}
+.help-elements {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+@media (max-width: 760px) {
+  .team-dialog {
+    padding: 22px;
+  }
+  .team-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .team-option:last-child {
+    grid-column: 1/-1;
+  }
+  .team-dialog h2 {
+    font-size: 28px;
+  }
+}
+
+/* Only the board changes in the reduced visual experiment. */
+.isometric-surface {
+  aspect-ratio: 4 / 3;
+  background: #111b26;
+  border-color: #45606d;
+}
+.isometric-frame > .axis {
+  display: none;
+}
+.isometric-input {
+  display: block;
+}
+.isometric-input > .cell {
+  position: absolute;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+.isometric-input > .cell:focus-visible {
+  outline: none;
+  background: #fff5c21c;
+}
+.isometric-unit-inputs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.isometric-unit-target {
+  pointer-events: auto;
+  position: absolute;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.isometric-unit-target:disabled {
+  cursor: default;
+}
+.isometric-unit-target:focus-visible {
+  outline: none;
+}
+</style></head><body><div id="app"></div><script>var Triade=(function(e){Object.defineProperty(e,Symbol.toStringTag,{value:`Module`});var t=8,n=[[0,-1],[1,0],[0,1],[-1,0]],r=new Set([`tree`,`rock`,`wall`]),i=({x:e,y:t})=>`${e},${t}`,a=({x:e,y:n})=>e>=0&&n>=0&&e<t&&n<t,o=({x:e,y:t})=>n.map(([n,r])=>({x:e+n,y:t+r})).filter(a),s=(e,t)=>Math.abs(e.x-t.x)+Math.abs(e.y-t.y),c=()=>Array.from({length:64},(e,n)=>({x:n%t,y:Math.floor(n/t)}));function l(e){return e==null||typeof e==`number`&&!Number.isFinite(e)?`triade`:String(e).normalize(`NFD`).replace(/[\u0300-\u036f]/g,``).toLowerCase().replace(/[^a-z0-9_-]+/g,`-`).replace(/^-+|-+$/g,``).slice(0,32).replace(/-+$/g,``)||`triade`}function u(){let e=new Uint32Array(2);return globalThis.crypto?.getRandomValues?globalThis.crypto.getRandomValues(e):(e[0]=Date.now()>>>0,e[1]=Math.floor(Math.random()*4294967296)),`map-${Array.from(e,e=>e.toString(36)).join(`-`)}`}function d(e){let t=2166136261;for(let n of e)t=Math.imul(t^n.charCodeAt(0),16777619);return()=>{t+=1831565813;let e=Math.imul(t^t>>>15,t|1);return e^=e+Math.imul(e^e>>>7,e|61),((e^e>>>14)>>>0)/4294967296}}var f=(e,t)=>e[Math.floor(t()*e.length)];function p(e,t){let n=e.slice();for(let e=n.length-1;e>0;e--){let r=Math.floor(t()*(e+1));[n[e],n[r]]=[n[r],n[e]]}return n}function m(e){let n=e()<.5,r=new Map,a=(e,t)=>{let a=n?{x:e,y:t}:{x:t,y:e};r.set(i(a),a)},o=2+Math.floor(e()*4);for(let n=0;n<t;n++){let t=f(n===2||n===5?[-1,1]:[-1,0,0,1],e),r=Math.max(1,Math.min(6,o+(n?t:0)));for(let e=Math.min(o,r);e<=Math.max(o,r);e++)a(n,e);n>0&&n<7&&e()<.28&&a(n,Math.max(1,Math.min(6,r+f([-1,1],e)))),o=r}return new Set([...r.values()].map(e=>n?e.y:e.x)).size<2&&a(3,o===6?o-1:o+1),[...r.values()]}function h(e){let t=2+Math.floor(e()*3),n=2+Math.floor(e()*3),r=new Map;for(let e of[{x:t,y:n},{x:t+1,y:n},{x:t,y:n+1},{x:t+1,y:n+1}])r.set(i(e),e);let a=8+Math.floor(e()*6);for(;r.size<a;){let a=new Map;for(let e of r.values())for(let t of o(e))t.x===0||t.y===0||t.x===7||t.y===7||r.has(i(t))||a.set(i(t),t);let c={x:t+.5,y:n+.5},l=f([...a.values()].map(t=>({...t,score:s(t,c)+e()*2})).sort((e,t)=>e.score-t.score).slice(0,4),e);r.set(i(l),{x:l.x,y:l.y})}return[...r.values()]}function g(e){let n=Math.floor(e()*4),r=2,i=[];for(let n=0;n<t;n++)r=Math.max(1,Math.min(3,r+f([-1,0,1],e))),i.push(r);for(i[3]=Math.max(2,i[3]),new Set(i).size===1&&(i[3]=i[3]===1?2:i[3]-1);i.reduce((e,t)=>e+t,0)>20;){let e=i.findIndex(e=>e>1);i[e]--}let a=[];for(let e=0;e<t;e++)for(let t=0;t<i[e];t++)a.push(n===0?{x:t,y:e}:n===1?{x:7-t,y:e}:n===2?{x:e,y:t}:{x:e,y:7-t});return a}function _(e,t){let n=new Set([i(t)]),a=[t];for(let t of a)for(let s of o(t))n.has(i(s))||r.has(e[s.y][s.x])||(n.add(i(s)),a.push(s));return n}function v(e){let t=c().filter(t=>!r.has(e[t.y][t.x]));return t.length>0&&_(e,t[0]).size===t.length}function y(e,t,n){return!t.some(t=>!a(t)||e[t.y][t.x]!==`grass`)&&(t.forEach(t=>{e[t.y][t.x]=n}),v(e)?!0:(t.forEach(t=>{e[t.y][t.x]=`grass`}),!1))}function b(e,r){let i=3+Math.floor(r()*4);for(let a=0;a<160;a++){let a={x:Math.floor(r()*t),y:Math.floor(r()*t)},[o,s]=f(n,r),c=r()<.5?-1:1,l=2+Math.floor(r()*Math.min(3,i-1)),u=Array.from({length:l},(e,t)=>({x:a.x+t*o,y:a.y+t*s})),d=u.at(-1);for(let e=1;e<=i-l;e++)u.push({x:d.x-s*c*e,y:d.y+o*c*e});if(y(e,u,`wall`))return!0}return!1}function x(e,t,n,r){let i=0;for(let a of p(c(),r))if(y(e,[a],t)&&++i===n)return!0;return!1}function S(e,t){let n=new Map(t.map(e=>[i(e),0])),a=t.slice();for(let t of a)for(let s of o(t))r.has(e[s.y][s.x])||n.has(i(s))||(n.set(i(s),n.get(i(t))+1),a.push(s));return n}function C(e,t){let n=c().filter(t=>e[t.y][t.x]===`grass`),r=n.filter(e=>e.x<=3&&e.y>=4);if(r.length<4)return null;let a=f(r.filter(e=>e.x>=1&&e.y<=6).length?r.filter(e=>e.x>=1&&e.y<=6):r,t),o=p(n.filter(e=>e!==a&&e.x<=4&&e.y>=3&&s(e,a)<=3),t);if(o.length<2)return null;let l=[a,o[0],o[1]],u=new Set(l.map(i)),d=S(e,l),m=[];for(let e=0;e<3;e++){let e=n.filter(e=>!u.has(i(e))&&d.get(i(e))>=3&&d.get(i(e))<=5&&m.every(t=>s(t,e)>=2));if(!e.length)return null;let r=f(e.map(e=>({...e,score:e.x*.55-e.y*.15+t()*3})).sort((e,t)=>t.score-e.score).slice(0,6),t),a={x:r.x,y:r.y};u.add(i(a)),m.push(a)}return n.filter(e=>(e.x===0||e.y===0||e.x===7||e.y===7)&&!u.has(i(e))).length<6?null:Object.fromEntries([`fire`,`water`,`earth`,`enemy-1`,`enemy-2`,`enemy-3`].map((e,t)=>[e,{...[...l,...m][t]}]))}function w(e,n){let r=Array.from({length:t},()=>Array(t).fill(`grass`));for(let e=0;e<t;e++)r[e][4]=`water`;let i=1+Math.floor(n()*2);for(let e=i;e<=4;e++)r[e][5]=`water`;for(let e=5;e<=6;e++)n()<.7&&(r[e][3]=`water`);for(let[e,t]of[[0,0],[1,0],[n()<.5?0:1,1]])r[t][e]=`wall`;for(let{x:e,y:t}of p([{x:2,y:0},{x:6,y:0},{x:7,y:0},{x:7,y:7},{x:0,y:3}],n).slice(0,3))r[t][e]=`tree`;for(let{x:e,y:t}of p([{x:6,y:1},{x:6,y:2},{x:6,y:6},{x:7,y:4}],n).slice(0,2))r[t][e]=`rock`;return{seed:e,waterKind:`river`,terrain:r,spawns:{fire:{x:1+Math.floor(n()*2),y:5},water:{x:1+Math.floor(n()*2),y:6},earth:{x:0,y:7},"enemy-1":{x:3,y:3},"enemy-2":{x:5,y:5},"enemy-3":{x:5,y:7}}}}function T(e=`triade`){let n=l(e),r=d(n),i=f([`river`,`lake`,`coast`],r);for(let e=0;e<160;e++){let e=Array.from({length:t},()=>Array(t).fill(`grass`));if({river:m,lake:h,coast:g}[i](r).forEach(({x:t,y:n})=>{e[n][t]=`water`}),!b(e,r)||!x(e,`tree`,3+Math.floor(r()*3),r)||!x(e,`rock`,2+Math.floor(r()*2),r))continue;let a=C(e,r);if(a)return{seed:n,waterKind:i,terrain:e,spawns:a}}return w(n,r)}var E={fire:{name:`Fogo`,character:`Ígni`,title:`O impulso da chama`,special:`Projétil de Fogo`,color:`#efa36d`,description:`1 de dano em linha reta, até 4 casas. Atinge o primeiro inimigo; obstáculos e unidades bloqueiam.`},water:{name:`Água`,character:`Nami`,title:`A força da corrente`,special:`Onda Circular`,color:`#80c7dd`,description:`Ative na própria casa para empurrar unidades, pedras e barreiras nas 4 vizinhas. Colisão: 1 de dano em cada parte. Árvores ficam paradas.`},earth:{name:`Terra`,character:`Taro`,title:`A firmeza da terra`,special:`Barreira de Terra`,color:`#bdcb7b`,description:`Cria uma barreira de 2 PV em grama adjacente vazia. Pode ser empurrada. Criar outra substitui a anterior.`},lightning:{name:`Raio`,character:`Rai`,title:`A velocidade do trovão`,special:`Dash Relâmpago`,color:`#ecd278`,description:`Avança em linha reta até o primeiro inimigo ou estrutura. Causa 1 de dano e empurra 1 casa. Rai perde 1 PV. Aliados e terreno intransponível bloqueiam o dash.`},wind:{name:`Vento`,character:`Sora`,title:`O rumo da rajada`,special:`Rajada de Vento`,color:`#b8b5ed`,description:`Mire qualquer casa, sobrevoando personagens. Empurra as 4 vizinhas para fora: aliados, inimigos, pedras e barreiras. Sem dano direto. Árvores e muralhas ficam paradas; colisões causam 1 de dano em cada parte.`}},D=[`fire`,`water`,`earth`];function O(e=D){if(!Array.isArray(e)||e.length!==3||new Set(e).size!==3||e.some(e=>!Object.hasOwn(E,e)))throw Error(`Escolha exatamente três ninjas de elementos diferentes.`);return e.slice()}function k(e,t){return{id:e,team:`ally`,element:e,name:E[e].character,...t,hp:3,maxHp:3,range:3,moved:!1,acted:!1,intent:null}}var A=(e,t,n,r,i,a,o=``)=>({id:e,name:t,category:n,layer:r,color:i,rule:a,future:o}),j=[A(`grass`,`Grama`,`Chão`,`ground`,`#698b52`,`Movimento normal.`),A(`dirt`,`Terra batida`,`Chão`,`ground`,`#98764c`,`Movimento normal.`),A(`path`,`Caminho de pedra`,`Chão`,`ground`,`#8d9685`,`Movimento normal.`),A(`water`,`Água rasa`,`Chão`,`ground`,`#448e8d`,`Pode ser atravessada.`),A(`deep-water`,`Água profunda`,`Chão`,`ground`,`#26536b`,`Bloqueia caminhada; uma ponte permite atravessar.`),A(`sand`,`Areia`,`Chão`,`ground`,`#cfb878`,`Movimento normal.`),A(`mud`,`Lama`,`Chão`,`ground`,`#70543f`,`Entrar custa 2 pontos de movimento; empurrões não gastam movimento.`),A(`ice`,`Gelo`,`Chão`,`ground`,`#a4d8de`,`Pode ser atravessado com custo normal.`,`Deslizamento ainda em planejamento.`),A(`tree`,`Árvore`,`Objetos`,`objects`,`#397044`,`Fixa, 2 PV; recebe dano de colisão.`),A(`rock`,`Pedra`,`Objetos`,`objects`,`#8c9c83`,`Móvel, 2 PV; preserva o chão ao ser empurrada.`),A(`wall`,`Muralha em ruínas`,`Objetos`,`objects`,`#a6a58b`,`Fixa, 2 PV; bloqueia passagem e tiros.`),A(`bush`,`Arbusto`,`Objetos`,`objects`,`#59834b`,`Permite passagem.`,`Ocultação e cobertura ainda em planejamento.`),A(`log`,`Tronco caído`,`Objetos`,`objects`,`#856440`,`Pinta 2 casas; segmentos fixos de 2 PV.`,`Movimento do tronco inteiro ainda em planejamento.`),A(`crate`,`Caixa de madeira`,`Objetos`,`objects`,`#b98c53`,`Móvel, 1 PV; bloqueia passagem e tiros.`),A(`pillar`,`Pilar`,`Objetos`,`objects`,`#b0b1a1`,`Fixo, 2 PV; bloqueia passagem e tiros.`,`Queda direcional ainda em planejamento.`),A(`bridge`,`Ponte`,`Objetos`,`objects`,`#ad895b`,`Permite atravessar água profunda.`,`Destruição da ponte ainda em planejamento.`),A(`spikes`,`Espinhos`,`Efeitos e objetivos`,`effects`,`#b4b8b1`,`Marcador visível; permite passagem.`,`Dano ao entrar ainda em planejamento.`),A(`abyss`,`Abismo`,`Efeitos e objetivos`,`ground`,`#19212d`,`Bloqueia caminhada.`,`Queda por empurrão ainda em planejamento.`),A(`current`,`Correnteza`,`Efeitos e objetivos`,`effects`,`#6bbbc4`,`Marca água e direção do fluxo.`,`Deslocamento automático ainda em planejamento.`),A(`embers`,`Brasa`,`Efeitos e objetivos`,`effects`,`#e6894d`,`Marcador visível; permite passagem.`,`Dano no fim do turno ainda em planejamento.`),A(`cracked`,`Solo rachado`,`Efeitos e objetivos`,`effects`,`#a38363`,`Pode ser atravessado.`,`Desmoronamento ainda em planejamento.`),A(`plate`,`Placa de pressão`,`Efeitos e objetivos`,`effects`,`#bda878`,`Marcador de mecanismo; permite passagem.`,`Ligação com portões ainda em planejamento.`),A(`shrine`,`Santuário`,`Efeitos e objetivos`,`effects`,`#d5c395`,`Marcador de objetivo; permite passagem.`,`Objetivos de proteger ou ocupar ainda em planejamento.`),A(`reinforcement`,`Ponto de reforço`,`Efeitos e objetivos`,`effects`,`#c37f77`,`Reforços usam estas entradas; se não houver marcadores, usam as bordas.`)];j.push(A(`steam`,`Vapor`,`Efeitos e objetivos`,`effects`,`#b9d4c7`,`Permite passagem e bloqueia projéteis dos dois lados.`),A(`hot-rock`,`Pedra incandescente`,`Objetos`,`objects`,`#d69762`,`Pedra móvel de 2 PV; mantém as regras de colisão.`,`Rastro de brasa ainda em planejamento.`),A(`electric-seal`,`Selo elétrico`,`Efeitos e objetivos`,`effects`,`#e2cb77`,`Marcador visível de armadilha.`,`Dano e paralisia ainda em planejamento.`),A(`electrified-water`,`Água eletrizada`,`Efeitos e objetivos`,`effects`,`#a5dfe1`,`Água rasa com indicação elétrica; permite passagem.`,`Dano por condução ainda em planejamento.`));var ee=Object.fromEntries(j.map(e=>[e.id,e])),te=[`north`,`east`,`south`,`west`],M=[`tree`,`rock`,`hot-rock`,`wall`,`log`,`crate`,`pillar`],N=(e=null)=>Array.from({length:8},()=>Array(8).fill(e)),ne=(e,t)=>Number.isInteger(e)&&Number.isInteger(t)&&e>=0&&t>=0&&e<8&&t<8,re=(e,t)=>`${`ABCDEFGH`[e]}${t+1}`;function P(){return{format:`triade-level`,version:1,size:8,name:`Nova fase`,description:``,ground:N(`grass`),objects:N(),effects:N(),directions:N(`east`),units:[{id:`fire`,team:`ally`,element:`fire`,x:1,y:6},{id:`water`,team:`ally`,element:`water`,x:2,y:6},{id:`earth`,team:`ally`,element:`earth`,x:1,y:7},{id:`enemy-1`,team:`enemy`,kind:`melee`,x:5,y:2},{id:`enemy-2`,team:`enemy`,kind:`ranged`,x:6,y:1}],rules:{maxRounds:5,waves:[]}}}function ie(e,t,n){return!ne(t,n)||M.includes(e.objects[n][t])?!1:e.objects[n][t]===`bridge`||![`deep-water`,`abyss`].includes(e.ground[n][t])}function ae(e){let t=e=>{throw Error(e)};(!e||e.format!==`triade-level`||e.version!==1||e.size!==8)&&t(`Arquivo incompatível. Use uma fase Tríade, versão 1, de 8×8 casas.`);let n=P();(typeof e.name!=`string`||!e.name.trim()||e.name.length>80)&&t(`O nome da fase deve ter entre 1 e 80 caracteres.`),n.name=e.name.trim(),e.description!==void 0&&(typeof e.description!=`string`||e.description.length>1e3)&&t(`A descrição deve ter até 1.000 caracteres.`),n.description=e.description||``;for(let r of[`ground`,`objects`,`effects`,`directions`]){let i=e[r]??(r===`directions`?N(`east`):null);(!Array.isArray(i)||i.length!==8||i.some(e=>!Array.isArray(e)||e.length!==8))&&t(`A camada ${r} precisa ter 8 linhas de 8 casas.`),n[r]=i.map(e=>e.map(e=>{if(r===`directions`)te.includes(e)||t(`Direção inválida no mapa.`);else if(e===null&&r!==`ground`)return null;else(!ee[e]||ee[e].layer!==r)&&t(`Tile inválido na camada ${r}: ${String(e).slice(0,40)}.`);return e}))}(!Array.isArray(e.units)||e.units.length>32)&&t(`A fase pode ter até 32 personagens.`);let r=new Set,i=new Set;n.units=e.units.map(e=>{(!e||!ne(e.x,e.y))&&t(`Personagem fora do tabuleiro.`),(typeof e.id!=`string`||r.has(e.id))&&t(`Personagens precisam de identificadores únicos.`);let n=`${e.x},${e.y}`;if(i.has(n)&&t(`Dois personagens ocupam ${re(e.x,e.y)}.`),r.add(e.id),i.add(n),e.team===`ally`&&Object.hasOwn(E,e.element)&&e.id===e.element)return{id:e.id,team:`ally`,element:e.element,x:e.x,y:e.y};if(e.team===`enemy`&&[`melee`,`ranged`].includes(e.kind)&&/^enemy-[1-9]\d{0,3}$/.test(e.id))return{id:e.id,team:`enemy`,kind:e.kind,x:e.x,y:e.y};t(`Tipo de personagem inválido.`)});let a=e.rules;(!a||!Number.isInteger(a.maxRounds)||a.maxRounds<1||a.maxRounds>20)&&t(`O limite da fase deve ser de 1 a 20 turnos.`),(!Array.isArray(a.waves)||a.waves.length>19)&&t(`Lista de ondas inválida.`);let o=new Set;return n.rules={maxRounds:a.maxRounds,waves:a.waves.map(e=>((!e||!Number.isInteger(e.round)||e.round<2||e.round>a.maxRounds||o.has(e.round))&&t(`Cada onda precisa de um turno único entre 2 e o limite da fase.`),(!Array.isArray(e.kinds)||e.kinds.length<1||e.kinds.length>8||e.kinds.some(e=>![`melee`,`ranged`].includes(e)))&&t(`Cada onda deve ter de 1 a 8 inimigos válidos.`),o.add(e.round),{round:e.round,kinds:e.kinds.slice()})).sort((e,t)=>e.round-t.round)},n}function oe(e){let t;try{t=ae(e)}catch(e){return{errors:[e.message],warnings:[]}}let n=[],r=[];t.units.filter(e=>e.team===`ally`).length!==3&&n.push(`Posicione exatamente três ninjas de elementos diferentes para testar a fase.`);for(let e of t.units)ie(t,e.x,e.y)||n.push(`Há um personagem sobre um obstáculo em ${re(e.x,e.y)}.`);!t.units.some(e=>e.team===`enemy`)&&!t.rules.waves.length&&n.push(`Adicione pelo menos um inimigo ou uma onda de reforços.`);let i=se(t);i.length&&r.push(`Efeitos em planejamento: ${i.map(e=>e.name).join(`, `)}. Consulte a regra de cada tile; o teste usa apenas os comportamentos já disponíveis.`);let a=t.units.filter(e=>e.team===`ally`);for(let e of a)[[0,-1],[1,0],[0,1],[-1,0]].some(([n,r])=>ie(t,e.x+n,e.y+r)&&!t.units.some(t=>t.x===e.x+n&&t.y===e.y+r))||r.push(`${E[e.element].character} começa cercado.`);return{errors:n,warnings:r}}function se(e){let t=new Set([...e.ground.flat(),...e.objects.flat(),...e.effects.flat()]);return j.filter(e=>t.has(e.id)&&e.future)}function ce(e){return e.ground.map((t,n)=>t.map((t,r)=>e.objects[n][r]||t))}var F=[{round:2,kinds:[`melee`]},{round:3,kinds:[`melee`,`ranged`]},{round:4,kinds:[`ranged`]},{round:5,kinds:[`melee`,`ranged`]}],I=[[0,-1],[1,0],[0,1],[-1,0]],L=(e,t)=>`${e},${t}`,R=(e,t)=>e>=0&&t>=0&&e<8&&t<8,z=(e,t)=>Math.abs(e.x-t.x)+Math.abs(e.y-t.y),B={tree:{name:`Árvore`,maxHp:2},rock:{name:`Pedra`,maxHp:2},wall:{name:`Muralha em ruínas`,maxHp:2},crate:{name:`Caixa de madeira`,maxHp:1},"hot-rock":{name:`Pedra incandescente`,maxHp:2},pillar:{name:`Pilar`,maxHp:2},log:{name:`Tronco`,maxHp:2}},le=class e{constructor(e={}){if(this.options={waves:e.waves!==!1,team:O(e.team),maxRounds:e.maxRounds===void 0?5:e.maxRounds,seed:l(e.seed??u()),...e.terrain?{terrain:structuredClone(e.terrain)}:{},...e.spawns?{spawns:structuredClone(e.spawns)}:{},...e.level?{level:ae(e.level)}:{}},this.options.level&&oe(this.options.level).errors.length)throw Error(oe(this.options.level).errors.join(` `));this.reset()}reset(){let e=this.options.level;this.levelLayers=e?{ground:structuredClone(e.ground),effects:structuredClone(e.effects),directions:structuredClone(e.directions)}:null;let t=e?{seed:`fase-personalizada`,waterKind:`custom`,terrain:ce(e),spawns:{}}:this.options.terrain?{seed:this.options.seed,waterKind:`custom`,terrain:structuredClone(this.options.terrain),spawns:this.options.spawns||{}}:T(this.options.seed);this.mapSeed=t.seed,this.waterKind=t.waterKind,this.terrain=t.terrain,this.terrainRevision=0,this.barrier=null,this.structureSerial=0,this.structures=new Map,this.terrain.forEach((e,t)=>e.forEach((e,n)=>this.structureAt(n,t))),this.team=e?e.units.filter(e=>e.team===`ally`).map(e=>e.element):this.options.team.slice(),this.options.team=this.team.slice();let n=D.map((e,n)=>t.spawns[e]||[{x:1,y:5},{x:2,y:6},{x:1,y:7}][n]);if(this.units=[...this.team.map((e,t)=>k(e,n[t])),{id:`enemy-1`,kind:`melee`,team:`enemy`,name:`Sentinela I`,x:3,y:5,hp:2,maxHp:2,range:2},{id:`enemy-2`,kind:`ranged`,attackRange:4,team:`enemy`,name:`Besteiro II`,x:6,y:2,hp:1,maxHp:1,range:2},{id:`enemy-3`,kind:`melee`,team:`enemy`,name:`Sentinela III`,x:5,y:7,hp:2,maxHp:2,range:2}].map(e=>({...e,...e.team===`enemy`?t.spawns[e.id]:{},moved:!1,acted:!1,intent:null})),e){let t=this.units;this.units=e.units.map(e=>({...e.team===`ally`?k(e.element,e):t.find(t=>t.kind===e.kind),...e,name:e.team===`ally`?E[e.element].character:`${e.kind===`ranged`?`Besteiro`:`Sentinela`} ${e.id.slice(6)}`,moved:!1,acted:!1,intent:null}))}this.round=1,this.maxRounds=e?e.rules.maxRounds:this.options.maxRounds,this.reinforcementQueue=e?e.rules.waves.flatMap(e=>e.kinds.map(t=>({round:e.round,kind:t}))):this.options.waves?F.flatMap(e=>e.kinds.map(t=>({round:e.round,kind:t}))):[],this.totalEnemies=this.enemies.length+this.reinforcementQueue.length,this.enemySerial=Math.max(0,...this.enemies.map(e=>Number(e.id.slice(6)))),this.kills=0,this.resultReason=null,this.phase=`player`,this.selectedId=this.team[0],this.mode=`move`,this.log=[],this.lastEffect=null,this.visualEvents=[],this.prepareEnemies(!e),this.addLog(`Missão iniciada.${this.maxRounds?` Elimine todas as ondas até o turno ${this.maxRounds}.`:` Observe as intenções inimigas.`}`,`info`)}newMap(e=u()){return this.options.seed=l(e),delete this.options.terrain,delete this.options.spawns,delete this.options.level,this.reset(),!0}loadLevel(e){let t=ae(e),n=oe(t);if(n.errors.length)throw Error(n.errors.join(` `));return this.options.level=t,delete this.options.terrain,delete this.options.spawns,this.reset(),!0}setTeam(e){let t=O(e);if(this.options.level){let e=this.options.level.units.filter(e=>e.team===`ally`);this.options.level.units=[...t.map((t,n)=>({id:t,team:`ally`,element:t,x:e[n].x,y:e[n].y})),...this.options.level.units.filter(e=>e.team===`enemy`)]}return this.options.team=t,this.reset(),!0}get pendingReinforcements(){return this.reinforcementQueue.length}get nextWaveCount(){return this.maxRounds&&this.round>=this.maxRounds?0:Math.min(2,this.reinforcementQueue.filter(e=>e.round<=this.round+1).length)}get waveNumber(){return this.round}spawnReinforcements(){let e=this.reinforcementQueue.filter(e=>e.round<=this.round).slice(0,2),t=0;for(let n of e){let e=[];for(let t=0;t<8;t++)for(let n=0;n<8;n++){let r=this.levelLayers?.effects,i=r?.flat().includes(`reinforcement`);if((i?r[t][n]!==`reinforcement`:n!==0&&t!==0&&n!==7&&t!==7)||!this.free(n,t))continue;let a=Math.min(...this.allies.map(e=>z(e,{x:n,y:t})));(a>=2||i)&&e.push({x:n,y:t,nearest:a})}e.sort((e,t)=>e.nearest-t.nearest||t.y-e.y||t.x-e.x);let r=e[0];if(!r)break;let i=++this.enemySerial,a=n.kind===`ranged`;this.units.push({id:`enemy-${i}`,team:`enemy`,kind:n.kind,name:`${a?`Besteiro`:`Sentinela`} ${i}`,x:r.x,y:r.y,hp:a?1:2,maxHp:a?1:2,range:2,attackRange:a?4:1,moved:!1,acted:!1,intent:null}),this.reinforcementQueue.splice(this.reinforcementQueue.indexOf(n),1),t++}return t&&this.addLog(`Onda ${this.round}: ${t} reforço${t===1?` entrou`:`s entraram`} na clareira.`,`danger`),e.length>t&&this.addLog(`Reforços aguardam uma entrada livre nas bordas.`,`info`),t}get allies(){return this.units.filter(e=>e.team===`ally`)}get enemies(){return this.units.filter(e=>e.team===`enemy`)}get selected(){return this.units.find(e=>e.id===this.selectedId)||null}unitAt(e,t){return this.units.find(n=>n.x===e&&n.y===t)||null}barrierAt(e,t){return this.barrier?.x===e&&this.barrier?.y===t?this.barrier:null}structureAt(e,t){let n=this.barrierAt(e,t);if(n)return n.id||(n.id=`barrier-${++this.structureSerial}`),n.name||(n.name=`Barreira de Terra`),n.type=`barrier`,n.maxHp||(n.maxHp=2),n;let r=this.terrain[t]?.[e],i=B[r];if(!i)return null;let a=L(e,t);return this.structures.get(a)?.type!==r&&this.structures.set(a,{id:`${r}-${++this.structureSerial}`,x:e,y:t,type:r,...i,hp:i.maxHp,underlay:this.levelLayers?.ground[t][e]||`grass`}),this.structures.get(a)}movableStructureAt(e,t){let n=this.structureAt(e,t);return n&&[`rock`,`hot-rock`,`crate`,`barrier`].includes(n.type)?n:null}obstacle(e,t){return!R(e,t)||!!B[this.terrain[t][e]]||[`deep-water`,`abyss`].includes(this.terrain[t][e]===`bush`?this.levelLayers?.ground[t][e]:this.terrain[t][e])||!!this.barrierAt(e,t)}blocksShot(e,t){return!R(e,t)||this.opaqueTerrain(e,t)||!!this.barrierAt(e,t)}opaqueTerrain(e,t){return!!B[this.terrain[t]?.[e]]||this.levelLayers?.effects[t]?.[e]===`steam`}movementCost(e,t){return this.terrain[t]?.[e]===`bridge`?1:(this.terrain[t]?.[e]===`bush`?this.levelLayers?.ground[t][e]:this.terrain[t]?.[e])===`mud`?2:1}free(e,t){return!this.obstacle(e,t)&&!this.unitAt(e,t)}addLog(e,t=`info`){this.log.unshift({text:e,type:t,round:this.round}),this.log=this.log.slice(0,30)}select(e){let t=this.units.find(t=>t.id===e&&t.team===`ally`);return this.phase!==`player`||!t?!1:(this.selectedId=e,this.mode=t.moved&&!t.acted?`punch`:`move`,!0)}reachable(e=this.selected,t=e?.range||0){let n=new Map;if(!e)return n;let r=[{x:e.x,y:e.y,steps:0,path:[]}],i=new Map([[L(e.x,e.y),0]]);for(;r.length;){r.sort((e,t)=>e.steps-t.steps);let e=r.shift();if(!(e.steps>=t))for(let[a,o]of I){let s=e.x+a,c=e.y+o,l=L(s,c),u=e.steps+this.movementCost(s,c);if(u>t||i.has(l)&&i.get(l)<=u||!this.free(s,c))continue;i.set(l,u);let d={x:s,y:c,steps:u,path:[...e.path,{x:s,y:c}]};n.set(l,d),r.push(d)}}return n}move(e,t){let n=this.selected;if(this.phase!==`player`||!n||n.moved||n.acted)return!1;let r=this.reachable(n).get(L(e,t));if(!r)return!1;let i={x:n.x,y:n.y};return n.moveUndo={round:this.round,from:i,to:{x:e,y:t},path:r.path.map(e=>({...e}))},n.x=e,n.y=t,n.moved=!0,this.mode=`punch`,this.lastEffect={type:`move`,from:i,to:{x:e,y:t},id:n.id,path:r.path},this.addLog(`${n.name} avançou ${r.path.length} casa${r.path.length===1?``:`s`}.${r.steps>r.path.length?` Custo: ${r.steps} pontos de movimento.`:``}`),!0}invalidateMoveUndo(e){e&&delete e.moveUndo}canUndoMove(e=this.selected){let t=e?.moveUndo;return this.phase!==`player`||!e||e.team!==`ally`||!this.units.includes(e)||!e.moved||e.acted||e.hp<=0||!t||t.round!==this.round||e.x!==t.to.x||e.y!==t.to.y?!1:[t.from,...t.path.slice(0,-1)].every(e=>this.free(e.x,e.y))}undoMove(){let e=this.selected;if(!this.canUndoMove(e))return!1;let t=e.moveUndo;return this.lastEffect={type:`move`,from:{x:e.x,y:e.y},to:{...t.from},id:e.id,path:[t.from,...t.path].reverse().slice(1).map(e=>({...e}))},e.x=t.from.x,e.y=t.from.y,e.moved=!1,this.invalidateMoveUndo(e),this.mode=`move`,this.addLog(`${e.name} desfez o movimento.`),!0}setMode(e){return this.phase!==`player`||!this.selected||this.selected.acted||![`move`,`punch`,`special`].includes(e)||e===`move`&&this.selected.moved?!1:(this.mode=e,!0)}targets(e=this.mode,t=this.selected){if(!t||t.acted||this.phase!==`player`)return[];if(e===`move`)return t.moved?[]:[...this.reachable(t).values()];if(e===`punch`)return I.map(([e,n])=>({x:t.x+e,y:t.y+n})).filter(e=>R(e.x,e.y)&&this.terrain[e.y][e.x]!==`tree`);if(e!==`special`)return[];if(t.element===`fire`){let e=[];for(let[n,r]of I)for(let i=1;i<=4;i++){let a=t.x+n*i,o=t.y+r*i;if(!R(a,o)||this.blocksShot(a,o))break;let s=this.unitAt(a,o);if(s?.team===`ally`||(e.push({x:a,y:o}),s))break}return e}if(t.element===`water`)return[{x:t.x,y:t.y}];if(t.element===`wind`)return Array.from({length:64},(e,t)=>({x:t%8,y:Math.floor(t/8)}));if(t.element===`lightning`)return I.flatMap(([e,n])=>{let r=this.dashPlan(t.x+e,t.y+n,t);return r?[...r.path.slice(1),{x:r.target.x,y:r.target.y}]:[]});let n=I.map(([e,n])=>({x:t.x+e,y:t.y+n})).filter(e=>R(e.x,e.y));return t.element===`earth`?n.filter(e=>this.terrain[e.y][e.x]===`grass`&&this.free(e.x,e.y)):n}waveArea(e=this.selected){return!e||e.element!==`water`?[]:I.map(([t,n])=>({x:e.x+t,y:e.y+n})).filter(e=>R(e.x,e.y))}fork(){return Object.assign(Object.create(e.prototype),structuredClone(this))}previewAction(e,t,n=this.mode){if(this.phase!==`player`||!this.selected||this.selected.acted||!R(e,t)||![`punch`,`special`].includes(n))return null;let r=this.fork();r.mode=n,r.log=[],r.visualEvents=[];let i=structuredClone(r.units),a=e=>{let t=new Map;for(let n=0;n<8;n++)for(let r=0;r<8;r++){let i=e.structureAt(r,n);i&&t.set(L(r,n),{...i})}return t},o=a(r);if(!r.act(e,t))return null;let s=structuredClone(r.visualEvents),c=structuredClone(r.units),l=a(r),u=s.filter(e=>e.type===`push`).map(e=>({id:e.id,from:e.path[0],to:e.path.at(-1),team:i.find(t=>t.id===e.id).team})),d=s.filter(e=>e.type===`collision`),f=new Map([...o.values()].map(e=>[e.id,e])),p=new Map([...l.values()].map(e=>[e.id,e])),m=s.filter(e=>e.type===`structure-push`).map(e=>{let t=f.get(e.id),n=p.get(e.id);return{id:e.id,name:t.name,type:t.type,from:e.path[0],to:e.path.at(-1),hpBefore:t.hp,hpAfter:n.hp,maxHp:n.maxHp}}),h=i.find(e=>e.id===this.selectedId),g=n===`special`&&[`water`,`wind`].includes(h.element),_=n===`special`&&h.element===`lightning`,v=g&&h.element===`wind`?{x:e,y:t}:_?r.lastEffect.impactFrom:h,y=_?r.lastEffect.to:{x:e,y:t},b=[...i,...o.values()].filter(e=>g?(e.team||[`rock`,`hot-rock`,`crate`,`barrier`].includes(e.type))&&z(v,e)===1:(n===`punch`||_)&&(e.team===`enemy`||[`rock`,`hot-rock`,`crate`,`barrier`].includes(e.type))&&e.x===y.x&&e.y===y.y&&(e.team===`enemy`||e.hp>1)),x=b.filter(e=>![...u,...m].some(t=>t.id===e.id)).map(e=>{let t={x:e.x+Math.sign(e.x-v.x),y:e.y+Math.sign(e.y-v.y)},n=o.get(L(t.x,t.y)),r=i.find(e=>e.x===t.x&&e.y===t.y);return{id:e.id,from:{x:e.x,y:e.y},to:t,reason:R(t.x,t.y)?n?`structure`:r?`unit`:`terrain`:`edge`,obstacle:n?.name||(n?`Barreira de Terra`:r?.name)}}),S=i.flatMap(e=>{let t=c.find(t=>t.id===e.id),n=t&&z(e,t)>0;return t?.hp===e.hp&&!n&&!b.some(t=>t.id===e.id)?[]:[{id:e.id,name:e.name,team:e.team,element:e.element,kind:e.kind,from:{x:e.x,y:e.y},to:t?{x:t.x,y:t.y}:null,hpBefore:e.hp,hpAfter:t?.hp||0,maxHp:e.maxHp,damage:e.hp-(t?.hp||0),defeated:!t,moved:!!n,...e.team===`enemy`?{intent:t?.intent?{...t.intent}:null,attackCells:t?r.enemyThreatenedCells(t):[]}:{}}]}),C=[...new Set([...f.keys(),...p.keys()])].flatMap(e=>{let t=f.get(e),n=p.get(e),r=!!t&&!!n&&z(t,n)>0;if(t&&n&&t.hp===n.hp&&t.type===n.type&&!r&&!b.some(t=>t.id===e))return[];let i=n||t;return[{id:e,x:i.x,y:i.y,name:i.name||`Barreira de Terra`,type:i.type,hpBefore:t?.hp||0,hpAfter:n?.hp||0,created:!t,destroyed:!n,from:t?{x:t.x,y:t.y}:null,to:n?{x:n.x,y:n.y}:null,moved:r}]}),w=r.phase,T=structuredClone(r.lastEffect),E=u.filter(e=>e.team===`enemy`&&c.some(t=>t.id===e.id)),D=[],O=null,k=null,A=0;if(E.length&&r.phase===`player`){let e=new Map(E.map(e=>{let t=c.find(t=>t.id===e.id);return[e.id,!!t.intent&&!r.enemyThreatenedCells(t).length]}));r.visualEvents=[],r.beginEnemyTurn(),r.resolveEnemyTurn(),O=r.phase,k=r.resultReason,A=r.enemySerial-this.enemySerial,D=E.map(t=>{let n=c.find(e=>e.id===t.id),i=r.units.find(e=>e.id===t.id),a=r.visualEvents.find(e=>e.type===`enemy-move`&&e.id===t.id);return{id:t.id,name:n.name,from:t.to,to:i?{x:i.x,y:i.y}:null,path:a?.path||[t.to],status:i?r.phase===`player`?a?`moves`:`stays`:`battle-ended`:`defeated`,attackInterrupted:e.get(t.id)}})}return{mode:n,at:{x:e,y:t},actor:{id:h.id,name:h.name,element:h.element},units:S,structures:C,structureMoves:m,pushes:u,collisions:d,blocked:x,nextEnemies:D,outcome:w,forecastPhase:O,forecastResultReason:k,incomingCount:A,effect:T}}finishAction(e){this.invalidateMoveUndo(e),e.acted=!0,e.moved=!0,this.mode=`move`,this.checkResult()}punch(e,t){let n=this.selected,r=this.unitAt(e,t)||this.structureAt(e,t);if(this.phase!==`player`||!n||n.acted||!r||r.type===`tree`||z(n,{x:e,y:t})!==1||r.team===`ally`)return!1;this.lastEffect={type:`punch`,from:{x:n.x,y:n.y},to:{x:e,y:t}},this.damage(r,1);let i=this.knockback(r,n);return this.addLog(`${n.name} usou Soco. −1 PV.${i?` Alvo empurrado 1 casa.`:``}`,`attack`),this.finishAction(n),!0}knockback(e,t){if(!e.team&&!(e.hp>0&&[`rock`,`hot-rock`,`crate`,`barrier`].includes(e.type)))return!1;let n={x:e.x+Math.sign(e.x-t.x),y:e.y+Math.sign(e.y-t.y)};if(this.free(n.x,n.y))return e.team?this.pushUnit(e,n):this.moveStructure(e,n),!0;let r=this.structureAt(n.x,n.y)||this.unitAt(n.x,n.y);return r&&this.collide(e,r),!1}dashPlan(e,t,n=this.selected){if(!n||!R(e,t)||n.x!==e&&n.y!==t||n.x===e&&n.y===t)return null;let r=Math.sign(e-n.x),i=Math.sign(t-n.y),a=[{x:n.x,y:n.y}];for(let o=1;o<8;o++){let s=n.x+r*o,c=n.y+i*o;if(!R(s,c))return null;let l=this.unitAt(s,c)||this.structureAt(s,c);if(l?.team===`ally`)return null;if(l)return Math.abs(e-n.x)+Math.abs(t-n.y)>o?null:{target:l,path:a,destination:a.at(-1)};if(this.obstacle(s,c))return null;a.push({x:s,y:c})}return null}lightning(e,t){let n=this.selected;if(this.phase!==`player`||!n||n.element!==`lightning`||n.acted)return!1;let r=this.dashPlan(e,t,n);if(!r)return!1;let i={x:n.x,y:n.y},a={x:r.target.x,y:r.target.y};return Object.assign(n,r.destination),this.invalidateMoveUndo(n),this.visualEvents.push({type:`dash`,id:n.id,path:r.path}),this.visualEvents.push({type:`impact`,id:n.id,from:{...r.destination},to:a,obstacleType:r.target.team?`unit`:`structure`,obstacleId:r.target.id}),this.damage(r.target,1),this.knockback(r.target,n),this.damage(n,1),this.lastEffect={type:`lightning`,from:i,to:a,impactFrom:{...r.destination},path:r.path},this.addLog(`${n.name} usou Dash Relâmpago. −1 PV no alvo e empurrão; −1 PV em ${n.name}.`,`attack`),this.finishAction(n),!0}fire(e,t){let n=this.selected;if(this.phase!==`player`||!n||n.element!==`fire`||n.acted||!this.targets(`special`,n).some(n=>n.x===e&&n.y===t))return!1;let r=Math.sign(e-n.x),i=Math.sign(t-n.y),a={x:n.x,y:n.y},o=null;for(let e=1;e<=4;e++){let t=n.x+r*e,s=n.y+i*e;if(!R(t,s)||this.blocksShot(t,s))break;a={x:t,y:s};let c=this.unitAt(t,s);if(c){c.team===`enemy`&&(o=c);break}}return o&&this.damage(o,1),this.lastEffect={type:`fire`,from:{x:n.x,y:n.y},to:a},this.addLog(`${n.name} lançou Projétil de Fogo.${o?` −1 PV.`:` Nenhum alvo atingido.`}`,`attack`),this.finishAction(n),!0}pushUnit(e,t){let n={x:t.x-e.x,y:t.y-e.y};this.invalidateMoveUndo(e),this.visualEvents.push({type:`push`,id:e.id,path:[{x:e.x,y:e.y},{x:t.x,y:t.y}],...e.hp===0?{defeatedUnit:{...e,x:t.x,y:t.y}}:{}}),e.x=t.x,e.y=t.y,e.team===`enemy`&&e.intent&&(e.intent={x:e.intent.x+n.x,y:e.intent.y+n.y})}moveStructure(e,t){if(!e||![`rock`,`hot-rock`,`crate`,`barrier`].includes(e.type)||e.hp<=0||!this.free(t.x,t.y))return!1;let n={x:e.x,y:e.y};return[`rock`,`hot-rock`,`crate`].includes(e.type)&&(this.structures.delete(L(n.x,n.y)),this.terrain[n.y][n.x]=e.underlay||`grass`,e.underlay=this.terrain[t.y][t.x],this.terrain[t.y][t.x]=e.type,this.structures.set(L(t.x,t.y),e),this.terrainRevision++),e.x=t.x,e.y=t.y,this.visualEvents.push({type:`structure-push`,id:e.id,structure:{...e},path:[n,{x:t.x,y:t.y}]}),!0}collide(e,t){this.visualEvents.push({type:`collision`,id:e.id,from:{x:e.x,y:e.y},to:{x:t.x,y:t.y},obstacleType:t.team?`unit`:`structure`,obstacleId:t.id||null}),this.damage(e,1),this.damage(t,1),this.addLog(`${e.name} colidiu com ${t.name||`Barreira de Terra`}. −1 PV em cada.`,`attack`)}wave(){let e=this.selected;return this.phase!==`player`||!e||e.element!==`water`||e.acted?!1:this.radialPush(e,{x:e.x,y:e.y},`water`)}wind(e,t){let n=this.selected;return this.phase!==`player`||!n||n.element!==`wind`||n.acted||!R(e,t)?!1:this.radialPush(n,{x:e,y:t},`wind`)}radialPush(e,t,n){let r={x:e.x,y:e.y},i=I.map(([e,n])=>this.movableStructureAt(t.x+e,t.y+n)).filter(Boolean),a=[...this.units,...i].filter(e=>z(t,e)===1).map(e=>({unit:e,x:e.x+Math.sign(e.x-t.x),y:e.y+Math.sign(e.y-t.y)})),o=a.filter(e=>this.free(e.x,e.y)),s=a.map(e=>({...e,obstacle:this.structureAt(e.x,e.y)||this.unitAt(e.x,e.y)})).filter(e=>e.obstacle);o.forEach(e=>e.unit.team?this.pushUnit(e.unit,e):this.moveStructure(e.unit,e));for(let e of s)this.collide(e.unit,e.obstacle);return this.lastEffect={type:n,from:r,to:{...t},collisions:s.map(e=>({from:{x:e.unit.x,y:e.unit.y},to:{x:e.x,y:e.y}}))},this.addLog(`${e.name} usou ${E[n].special}. ${o.length} unidade${o.length===1?``:`s`} empurrada${o.length===1?``:`s`}.`,`water`),this.finishAction(e),!0}earth(e,t){let n=this.selected;return this.phase!==`player`||!n||n.element!==`earth`||n.acted||!this.targets(`special`,n).some(n=>n.x===e&&n.y===t)?!1:(this.barrier={id:`barrier-${++this.structureSerial}`,name:`Barreira de Terra`,x:e,y:t,hp:2,maxHp:2,type:`barrier`},this.lastEffect={type:`earth`,from:{x:n.x,y:n.y},to:{x:e,y:t}},this.addLog(`${n.name} ergueu uma Barreira de Terra. 2 PV.`,`earth`),this.finishAction(n),!0)}act(e,t){return this.mode===`move`?this.move(e,t):this.mode===`punch`?this.punch(e,t):this.mode===`special`?this.selected?.element===`fire`?this.fire(e,t):this.selected?.element===`water`?e===this.selected.x&&t===this.selected.y&&this.wave():this.selected?.element===`lightning`?this.lightning(e,t):this.selected?.element===`wind`?this.wind(e,t):this.earth(e,t):!1}wait(){let e=this.selected;return this.phase!==`player`||!e||e.acted?!1:(this.addLog(`${e.name} aguardou em posição.`),this.finishAction(e),!0)}enemyAttackInRange(e,t=e.intent){if(!t)return!1;let n=z(e,t);return n>0&&(e.x===t.x||e.y===t.y)&&n<=(e.kind===`ranged`?e.attackRange||4:1)}enemyAttackPath(e,t=e.intent){if(!this.enemyAttackInRange(e,t))return[];let n=Math.sign(t.x-e.x),r=Math.sign(t.y-e.y),i=[];for(let a=1;a<=z(e,t);a++){let t={x:e.x+n*a,y:e.y+r*a};if(!R(t.x,t.y))break;i.push(t)}return i}enemyThreatenedCells(e){let t=[];for(let n of this.enemyAttackPath(e))if(B[this.terrain[n.y][n.x]]||e.kind===`ranged`&&this.levelLayers?.effects[n.y][n.x]===`steam`||(t.push(n),this.unitAt(n.x,n.y)||this.barrierAt(n.x,n.y)))break;return t}enemyAttackValid(e,t=e.intent){if(!this.enemyAttackInRange(e,t))return!1;if(e.kind!==`ranged`)return this.enemyAttackPath(e,t).length>0;let n=this.enemyAttackPath(e,t);if(!n.length)return!1;for(let t=0;t<n.length;t++){let{x:r,y:i}=n[t];if(this.opaqueTerrain(r,i))return!1;let a=this.unitAt(r,i);if(t<n.length-1&&(this.barrierAt(r,i)||a&&a.id!==e.id))return!1}return!0}prepareEnemies(e=!0){for(let t of this.enemies){if(!this.allies.length)break;t.advanceSteps=0;let n=(e,n)=>t.kind===`ranged`?this.enemyAttackValid({...t,...e},n):z(e,n)===1,r=this.allies.find(e=>n(t,e));if(e&&!r){let e=[{x:t.x,y:t.y,steps:0,path:[]},...this.reachable(t,128).values()].flatMap(e=>this.allies.filter(t=>n(e,t)).map(t=>({...e,target:t})));if(e.sort((e,n)=>e.steps-n.steps||z(t,e.target)-z(t,n.target)||e.target.id.localeCompare(n.target.id)),e.length){let n=e[0].path;if(n.length){let e=[],r=0;for(let i of n){if(r+=this.movementCost(i.x,i.y),r>t.range)break;e.push(i)}if(e.length){t.advanceSteps=e.length,this.visualEvents.push({type:`enemy-move`,id:t.id,path:[{x:t.x,y:t.y},...e]});let n=e.at(-1);t.x=n.x,t.y=n.y}}}}let i=[...this.allies].sort((e,n)=>z(t,e)-z(t,n)||e.id.localeCompare(n.id))[0];if(i){if(t.kind===`ranged`){let e=[...this.allies].filter(e=>this.enemyAttackValid(t,e)).sort((e,n)=>z(t,e)-z(t,n)||e.id.localeCompare(n.id))[0];if(e)t.intent={x:e.x,y:e.y};else{let[e,n]=[...I].sort((e,n)=>z({x:t.x+e[0],y:t.y+e[1]},i)-z({x:t.x+n[0],y:t.y+n[1]},i))[0];t.intent={x:t.x+e*(t.attackRange||4),y:t.y+n*(t.attackRange||4)}}}else{let e=I.map(([e,n])=>({x:t.x+e,y:t.y+n})).filter(e=>R(e.x,e.y)&&!B[this.terrain[e.y][e.x]]).sort((e,t)=>z(e,i)-z(t,i))[0];t.intent=e?{x:e.x,y:e.y}:{x:t.x,y:t.y-1}}this.visualEvents.push({type:`enemy-ready`,id:t.id,at:{x:t.x,y:t.y},intent:{...t.intent},kind:t.kind,steps:t.advanceSteps})}}}beginEnemyTurn(){return this.phase===`player`&&(this.units.forEach(e=>this.invalidateMoveUndo(e)),this.phase=`enemy`,this.mode=`move`,!0)}resolveEnemyTurn(){if(this.phase!==`enemy`)return!1;let e=this.enemies.filter(e=>e.intent).map(e=>({id:e.id,name:e.name,kind:e.kind,attackRange:e.attackRange,from:{x:e.x,y:e.y},to:{...e.intent}}));for(let t of e){if(!this.enemies.some(e=>e.id===t.id)){t.cancelled=!0;continue}if(!this.enemyAttackInRange({...t.from,kind:t.kind,attackRange:t.attackRange},t.to)){t.cancelled=!0,this.addLog(`${t.name} não tem uma direção de ataque válida.`,`evade`);continue}if(t.kind===`ranged`){let e=!1;for(let{x:n,y:r}of this.enemyAttackPath({...t.from,kind:t.kind,attackRange:t.attackRange},t.to)){if(t.hit={x:n,y:r},this.opaqueTerrain(n,r))break;let i=this.unitAt(n,r)||this.barrierAt(n,r);if(i){this.damage(i,1),this.addLog(`${t.name} disparou em ${i.name||`a barreira`}. −1 PV.`,`danger`),e=!0;break}}e||this.addLog(`${t.name} disparou sem atingir uma unidade.`,`evade`);continue}if(!R(t.to.x,t.to.y)){this.addLog(`${t.name} atacou para fora do tabuleiro.`,`evade`);continue}let e=this.unitAt(t.to.x,t.to.y)||this.barrierAt(t.to.x,t.to.y);e?(this.damage(e,1),this.addLog(`${t.name} atingiu ${e.name||`a barreira`}. −1 PV.`,`danger`)):this.addLog(`${t.name} atacou uma casa vazia.`,`evade`)}return this.lastEffect={type:`enemy`,strikes:e},this.checkResult()?!0:this.maxRounds&&this.round>=this.maxRounds?(this.phase=`defeat`,this.resultReason=`timeout`,this.addLog(`Tempo esgotado: a clareira não foi limpa em ${this.maxRounds} turnos.`,`danger`),!0):(this.round++,this.allies.forEach(e=>{e.moved=!1,e.acted=!1}),this.spawnReinforcements(),this.prepareEnemies(),this.phase=`player`,this.selected||(this.selectedId=this.allies[0]?.id||null),this.addLog(`Turno ${this.round}. Novas intenções reveladas.`),!0)}damage(e,t){let n=Math.min(e.hp,Math.max(0,t));n&&(e.hp=Math.max(0,e.hp-t),this.visualEvents.push({type:`damage`,id:e.id||`structure-${L(e.x,e.y)}`,at:{x:e.x,y:e.y},amount:n,defeated:e.hp===0,unit:e.team?{...e}:null}),e.hp>0?e.type===`tree`&&this.terrainRevision++:e===this.barrier?(this.barrier=null,this.addLog(`Barreira de Terra foi destruída.`,`earth`)):this.structures.get(L(e.x,e.y))===e?(this.structures.delete(L(e.x,e.y)),this.terrain[e.y][e.x]=e.underlay||`grass`,this.terrainRevision++,this.addLog(`${e.name} foi destruída. A casa está livre.`,`earth`)):(this.units=this.units.filter(t=>t!==e),e.team===`enemy`&&this.kills++,this.addLog(`${e.name} foi derrotado.`,e.team===`enemy`?`success`:`danger`),e.id===this.selectedId&&(this.selectedId=this.allies[0]?.id||null)))}checkResult(){if(!this.allies.length)this.phase=`defeat`,this.resultReason=`eliminated`;else if(!this.enemies.length&&!this.pendingReinforcements)this.phase=`victory`,this.resultReason=`cleared`;else return!1;return!0}},V=(e,t,n,r,i,a)=>{e.fillStyle=a,e.fillRect(t,n,r,i)},ue=(e,t,n,r)=>{e.save(),e.translate(t,n),e.beginPath(),e.rect(0,0,64,64),e.clip(),r(),e.restore()};function de(e,t,n,r){let i={dirt:`#98764c`,path:`#8d9685`,sand:`#cfb878`,mud:`#70543f`,ice:`#a4d8de`,"deep-water":`#26536b`,abyss:`#19212d`,bridge:`#448e8d`};i[t]&&ue(e,n,r,()=>{if(V(e,0,0,64,64,i[t]),t===`path`)for(let t=2;t<64;t+=16)for(let n=-8+t%3*4;n<64;n+=23)V(e,n,t,21,14,`#a3aa96`),V(e,n+2,t+2,17,2,`#bcc0aa`);else if(t===`abyss`)V(e,0,0,64,5,`#596450`),V(e,0,0,5,64,`#596450`),V(e,8,9,48,47,`#101720`),V(e,13,15,36,32,`#0a1018`);else{for(let i=0;i<20;i++)V(e,(i*17+Math.floor(n/64)*7)%60,(i*23+Math.floor(r/64)*11)%60,t.includes(`water`)||t===`bridge`?10:4,2,t===`mud`?`#a08261`:t===`ice`?`#e2f4e6`:t===`deep-water`?`#467e91`:t===`sand`?`#e9d295`:`#b49467`);t===`mud`&&(V(e,10,16,23,7,`#4c4940`),V(e,35,40,19,8,`#4c4940`)),t===`ice`&&(V(e,14,12,2,25,`#effff0`),V(e,16,12,17,2,`#effff0`))}V(e,0,0,64,1,`#30473655`),V(e,0,0,1,64,`#30473655`),t===`bridge`&&H(e,`bridge`,0,0,`east`)})}function H(e,t,n,r,i=`east`){[`bush`,`log`,`crate`,`pillar`,`bridge`,`hot-rock`].includes(t)&&ue(e,n,r,()=>{if([`log`,`bridge`].includes(t)&&[`north`,`south`].includes(i)&&(e.translate(64,0),e.rotate(Math.PI/2)),t===`hot-rock`)V(e,25,23,4,9,`#e4a061`),V(e,28,30,10,3,`#f0c17a`),V(e,35,33,3,10,`#dc8554`);else if(t===`bush`)V(e,8,30,47,21,`#264b34`),V(e,15,21,35,25,`#4d7b43`),V(e,24,17,17,26,`#6b9750`),V(e,14,29,13,6,`#82a55b`);else if(t===`crate`){V(e,12,16,40,36,`#573d2a`),V(e,15,19,34,30,`#a77a45`);for(let t=20;t<49;t+=9)V(e,16,t,32,2,`#d0a66e`);e.strokeStyle=`#66482e`,e.lineWidth=4,e.beginPath(),e.moveTo(17,21),e.lineTo(47,46),e.moveTo(47,21),e.lineTo(17,46),e.stroke()}else if(t===`log`){V(e,0,24,64,23,`#523d2c`),V(e,0,27,64,14,`#8e6a43`);for(let t=0;t<64;t+=17)V(e,t,30,13,3,`#b28a57`);V(e,3,25,7,20,`#c3a16c`),V(e,5,29,3,12,`#82613c`)}else if(t===`pillar`)V(e,15,45,34,9,`#676e60`),V(e,22,15,20,32,`#aaad98`),V(e,25,18,4,25,`#d0cfb5`),V(e,17,10,30,9,`#c0bfaa`),V(e,35,25,3,12,`#6a7463`);else if(t===`bridge`){for(let t=0;t<64;t+=10)V(e,t,14,8,38,`#9a754c`),V(e,t+1,15,6,3,`#c2a06c`);V(e,0,16,64,4,`#664e35`),V(e,0,46,64,4,`#664e35`)}})}function fe(e,t,n,r,i=`east`){t&&ue(e,n,r,()=>{if(t===`steam`)e.globalAlpha=.8,V(e,5,24,45,15,`#c0d3c8`),V(e,14,15,36,23,`#b6ccbf`),V(e,23,10,22,30,`#d2e1d4`),V(e,13,38,41,9,`#9ab7ad`);else if(t===`electric-seal`)e.strokeStyle=`#ead68c`,e.lineWidth=3,e.strokeRect(14,14,36,36),e.beginPath(),e.moveTo(35,17),e.lineTo(24,34),e.lineTo(35,34),e.lineTo(28,47),e.stroke();else if(t===`electrified-water`)e.strokeStyle=`#e6e6b3`,e.lineWidth=2,e.beginPath(),e.moveTo(10,19),e.lineTo(24,28),e.lineTo(20,37),e.lineTo(43,34),e.lineTo(50,47),e.stroke(),V(e,39,12,4,7,`#e6f8e6`),V(e,35,15,12,2,`#e6f8e6`);else if(t===`current`)e.translate(32,32),e.rotate({east:0,south:Math.PI/2,west:Math.PI,north:-Math.PI/2}[i]),V(e,-20,-3,31,6,`#b9f3e4`),e.fillStyle=`#d9ffff`,e.beginPath(),e.moveTo(22,0),e.lineTo(7,-12),e.lineTo(7,12),e.fill();else if(t===`spikes`)for(let[t,n]of[[12,40],[28,46],[43,36]])e.fillStyle=`#c4c8b8`,e.beginPath(),e.moveTo(t,n),e.lineTo(t+5,n-22),e.lineTo(t+11,n),e.fill();else if(t===`embers`)for(let[t,n]of[[13,38],[28,27],[45,43],[35,49]])V(e,t,n,9,5,`#a34e35`),V(e,t+2,n-5,4,8,`#f2b269`);else t===`cracked`?(e.strokeStyle=`#443d32`,e.lineWidth=3,e.beginPath(),e.moveTo(13,8),e.lineTo(24,26),e.lineTo(38,30),e.lineTo(29,47),e.lineTo(42,59),e.moveTo(38,30),e.lineTo(53,23),e.stroke()):t===`plate`?(V(e,12,24,40,27,`#696a52`),V(e,17,27,30,19,`#c1ae7e`),V(e,21,29,22,3,`#e2c997`)):t===`shrine`?(V(e,16,45,33,7,`#8f8b6c`),V(e,21,23,7,24,`#c1ae80`),V(e,39,23,7,24,`#c1ae80`),V(e,13,17,42,7,`#c4a267`),V(e,18,12,32,6,`#6c6f56`),V(e,29,30,7,16,`#ead6a0`)):t===`reinforcement`&&(e.strokeStyle=`#edaa9e`,e.lineWidth=3,e.strokeRect(11,11,42,42),V(e,28,21,8,24,`#e9a38a`),V(e,20,29,24,8,`#e9a38a`))})}var U=64,pe=760,me=340;function he(e,t){let n=Math.max(0,Math.min(e.length-1,t)),r=Math.floor(n),i=e[r],a=e[r+1]||i,o=n-r;return{x:i.x+(a.x-i.x)*o,y:i.y+(a.y-i.y)*o}}var W=(e,t,n,r,i,a)=>{e.fillStyle=a,e.fillRect(Math.round(t),Math.round(n),r,i)},ge=e=>{let t=e;return()=>(t=t*1664525+1013904223>>>0,t/4294967296)};function _e(e,t,n,r,i=1){if(e.save(),e.translate(Math.round(n),Math.round(r)),e.scale(i,i),t.team===`enemy`){if(t.kind===`ranged`){W(e,-17,12,35,5,`#10251d88`),W(e,-8,8,6,9,`#08090b`),W(e,3,8,6,9,`#08090b`),W(e,-10,-5,20,9,`#101114`),W(e,-12,-1,24,8,`#101114`),W(e,-15,5,30,7,`#101114`),W(e,-17,11,34,4,`#101114`),W(e,-13,3,4,10,`#1b1a22`),W(e,9,3,4,10,`#1b1a22`),W(e,-7,6,14,10,`#08090b`),W(e,-2,7,4,9,`#27232e`),W(e,-4,-22,8,4,`#16151b`),W(e,-8,-18,16,4,`#1d1b24`),W(e,-11,-14,22,13,`#101114`),W(e,-8,-14,16,3,`#27232e`),W(e,-8,-11,16,9,`#030405`),W(e,-7,-10,5,4,`#811529`),W(e,2,-10,5,4,`#811529`),W(e,-6,-9,3,2,`#ff354f`),W(e,3,-9,3,2,`#ff354f`),W(e,-10,-1,5,6,`#08090b`),W(e,5,-1,5,6,`#08090b`),W(e,-20,0,4,7,`#27242e`),W(e,16,0,4,7,`#27242e`),W(e,-17,-2,5,4,`#4e405b`),W(e,12,-2,5,4,`#4e405b`),W(e,-13,-3,26,3,`#5b426f`),W(e,-16,6,32,1,`#695277`),W(e,-3,-3,6,14,`#24212a`),W(e,-1,-7,2,15,`#9b85ad`),W(e,-2,-8,4,2,`#9b85ad`),W(e,-5,3,3,4,`#08090b`),W(e,2,3,3,4,`#08090b`),e.restore();return}W(e,-13,11,27,5,`#10251d88`),W(e,-9,7,7,8,`#08090b`),W(e,3,7,7,8,`#08090b`),W(e,-12,-4,24,16,`#101114`),W(e,-15,-2,5,12,`#08090b`),W(e,10,-2,5,12,`#08090b`),W(e,-10,5,21,9,`#17191d`),W(e,-5,8,11,7,`#0b0c0e`),W(e,-8,-17,16,4,`#17191d`),W(e,-12,-13,24,13,`#0b0c0e`),W(e,-9,-14,18,4,`#24272c`),W(e,-10,-10,20,11,`#101114`),W(e,-8,-7,16,9,`#030405`),W(e,-8,-6,6,4,`#811529`),W(e,2,-6,6,4,`#811529`),W(e,-7,-5,4,2,`#ff354f`),W(e,3,-5,4,2,`#ff354f`),W(e,-2,-1,4,7,`#191b20`),W(e,-12,1,5,3,`#292c31`),W(e,7,1,5,3,`#292c31`),e.restore();return}let a={fire:[`#d87547`,`#ffc17b`,`#9b4d34`],water:[`#4f9caf`,`#a8e4e5`,`#376477`],earth:[`#8fa75d`,`#d5dc92`,`#526b3f`],lightning:[`#c4a543`,`#fff0a4`,`#847036`],wind:[`#9995cb`,`#e0e1ff`,`#605c8d`]}[t.element]||[`#8fa75d`,`#d5dc92`,`#526b3f`];W(e,-13,11,27,5,`#153c3088`),W(e,-9,14,18,2,`#153c3070`),W(e,-8,8,6,6,`#263b36`),W(e,3,8,6,6,`#263b36`),W(e,-9,10,5,4,`#182b2b`),W(e,4,10,5,4,`#182b2b`),W(e,-12,-3,24,12,`#23393c`),W(e,-9,-5,18,16,`#324b4b`),W(e,-13,-2,5,8,a[0]),W(e,8,-2,5,8,a[0]),W(e,-13,5,4,5,`#e5b78d`),W(e,9,5,4,5,`#e5b78d`),W(e,-8,3,16,4,a[0]),W(e,-3,3,6,4,a[1]),W(e,5,7,7,3,a[0]),W(e,9,10,5,3,a[2]),W(e,-9,-14,18,15,`#34372f`),W(e,-7,-15,14,3,`#4b4c36`),W(e,-11,-10,22,8,`#34372f`),W(e,-6,-5,12,7,`#f0c49b`),W(e,-8,-7,16,4,`#d9a77c`),W(e,-8,-6,16,3,a[0]),W(e,-3,-6,6,3,a[1]),W(e,-6,-2,3,2,`#343b36`),W(e,4,-2,3,2,`#343b36`),W(e,-6,-13,5,4,`#696744`),W(e,-2,-15,7,4,`#535638`),W(e,9,-6,6,3,a[0]),W(e,12,-4,4,3,a[2]),t.element===`lightning`?(W(e,-9,-19,5,7,`#c4b47a`),W(e,-2,-22,5,9,`#eee1a0`),W(e,5,-18,5,7,`#c4b47a`),W(e,-2,-5,4,2,`#fff5b8`),W(e,-3,-3,4,3,`#ecd278`),W(e,-1,0,3,3,`#fff5b8`),W(e,-16,0,3,7,`#ecd278`),W(e,-18,5,3,5,`#fff0a4`)):t.element===`wind`&&(W(e,-13,-13,4,11,`#b9b4db`),W(e,9,-13,4,11,`#b9b4db`),W(e,11,-1,9,3,`#e0e1ff`),W(e,17,2,7,3,`#9995cb`),W(e,21,5,5,3,`#e0e1ff`),W(e,-6,-17,12,3,`#d9d6f1`)),e.restore()}function ve(e,t,n,r,i=!1){if(i){W(e,t+19,n+45,28,7,`#244c35`),W(e,t+27,n+28,11,23,`#655a39`),W(e,t+30,n+29,4,23,`#b69460`),W(e,t+35,n+30,9,5,`#655a39`),W(e,t+42,n+28,5,5,`#e8c18b`);for(let[r,i,a,o]of[[19,10,18,8],[11,18,30,12],[8,30,22,10],[15,39,14,6]])W(e,t+r,n+i,a,o,`#665c36`);for(let[r,i,a,o]of[[20,12,13,5],[13,21,23,7],[10,32,15,5]])W(e,t+r,n+i,a,o,`#b79549`);W(e,t+19,n+22,9,3,`#e2c16d`),W(e,t+28,n+35,6,3,`#302d24`),W(e,t+31,n+38,5,4,`#302d24`),W(e,t+28,n+42,5,5,`#302d24`);for(let[r,i]of[[12,46],[43,41],[48,49],[18,51]])W(e,t+r,n+i,4,2,`#d5ae5e`)}else{W(e,t+19,n+45,28,7,`#244c35`),W(e,t+27,n+39,10,12,`#655a39`),W(e,t+30,n+42,4,10,`#91734a`),[[19,7,26,9],[10,14,42,11],[7,25,48,13],[12,38,41,8],[20,44,26,4]].forEach(([r,i,a,o])=>W(e,t+r,n+i,a,o,`#244e39`)),[[19,8,25,7],[12,15,36,12],[9,27,43,9],[16,35,30,7]].forEach(([r,i,a,o])=>W(e,t+r,n+i,a,o,`#397044`)),[[23,10,15,5],[17,16,22,7],[11,28,16,7],[28,25,19,9],[22,34,13,5]].forEach(([r,i,a,o])=>W(e,t+r,n+i,a,o,`#568a4f`)),[[24,10,9,3],[18,18,12,4],[13,28,8,3],[30,26,11,3]].forEach(([r,i,a,o])=>W(e,t+r,n+i,a,o,`#81a957`));for(let i=0;i<8;i++)W(e,t+16+Math.floor(r()*28),n+16+Math.floor(r()*20),3,2,`#9ab964`)}}function ye(e,t,n){W(e,t+12,n+44,42,6,`#31583b`),[[22,16,22,5],[15,21,35,8],[11,29,43,13],[16,42,34,5]].forEach(([r,i,a,o])=>W(e,t+r,n+i,a,o,`#566c62`)),W(e,t+20,n+20,23,7,`#a1ac8f`),W(e,t+15,n+27,28,8,`#8c9c83`),W(e,t+16,n+35,26,7,`#778d77`),W(e,t+43,n+28,7,14,`#465e56`),W(e,t+25,n+19,12,3,`#c0c5a4`),W(e,t+18,n+28,8,3,`#b2b99c`),W(e,t+33,n+28,3,9,`#65796a`),W(e,t+36,n+35,7,3,`#65796a`),W(e,t+13,n+40,12,5,`#60844b`),W(e,t+15,n+39,7,2,`#8fa554`)}function be(e,t,n){W(e,t+8,n+18,48,32,`#3b4f34`),W(e,t+12,n+14,40,31,`#8e895c`),W(e,t+16,n+10,32,7,`#c0b783`),W(e,t+15,n+20,16,10,`#b0a06a`),W(e,t+34,n+20,14,10,`#a08f5d`),W(e,t+20,n+33,25,8,`#b0a06a`)}function xe(e,t,n,r,i){let{north:a,east:o,south:s,west:c}=r,l=o||c||!a&&!s,u=a||s,d=c?0:12,f=o?64:52,p=a?0:11,m=s?64:53;if(e.save(),e.beginPath(),e.rect(t,n,U,U),e.clip(),l&&W(e,t+d,n+23,f-d,29,`#304f34`),u&&W(e,t+22,n+p,27,m-p,`#304f34`),u){W(e,t+20,n+p,24,m-p,`#4c5148`),W(e,t+23,n+p,17,m-p,`#a8a48b`),W(e,t+25,n+p,4,m-p,`#c2bfa0`),W(e,t+40,n+p,4,m-p,`#696d5c`);for(let r=p+10;r<m;r+=13)W(e,t+23,n+r,17,2,`#696d5c`),W(e,t+32+(r%2?-3:2),n+r-9,2,8,`#878d75`);a||(W(e,t+20,n+p,7,4,`#63864e`),W(e,t+35,n+p,9,6,`#63864e`),W(e,t+27,n+p-3,8,5,`#b8b395`)),s||(W(e,t+20,n+m-5,8,5,`#4c5148`),W(e,t+36,n+m-7,8,7,`#63864e`))}if(l){W(e,t+d,n+19,f-d,28,`#4c5148`),W(e,t+d,n+21,f-d,12,`#a8a48b`),W(e,t+d,n+23,f-d,3,`#c2bfa0`),W(e,t+d,n+33,f-d,12,`#7c806b`),W(e,t+d,n+34,f-d,2,`#93977c`),W(e,t+d,n+39,f-d,2,`#545d4d`);for(let r=d+12;r<f;r+=17)W(e,t+r,n+21,2,12,`#6a715d`),W(e,t+r-7,n+35,2,4,`#545d4d`),W(e,t+r+3,n+41,2,4,`#545d4d`);c||(W(e,t+d,n+19,7,7,`#63864e`),W(e,t+d-3,n+29,7,9,`#7c806b`),W(e,t+d,n+42,5,5,`#63864e`)),o||(W(e,t+f-6,n+19,6,9,`#63864e`),W(e,t+f-2,n+32,5,7,`#7c806b`),W(e,t+f-7,n+41,7,6,`#63864e`))}let h=24+Math.floor(i()*13),g=l?20:19+Math.floor(i()*13);W(e,t+h,n+g,6,3,`#626c54`),W(e,t+h+4,n+g+3,2,5,`#626c54`),W(e,t+h+2,n+g+8,4,2,`#626c54`),l?(W(e,t+21,n+43,10,4,`#557346`),W(e,t+24,n+41,5,2,`#8b9a59`)):(W(e,t+39,n+35,6,11,`#557346`),W(e,t+38,n+38,3,5,`#8b9a59`));for(let r=0;r<6;r++){let a=7+Math.floor(i()*46),o=l?49+Math.floor(i()*8):12+Math.floor(i()*44);W(e,t+a,n+o+3,5,2,`#45603b`),W(e,t+a,n+o,4+r%2,3,r%2?`#969b80`:`#7c806b`)}e.restore()}function Se(e,t=new Map,n=new Set,r=null){let i=document.createElement(`canvas`);i.width=512,i.height=512;let a=i.getContext(`2d`),o=(n,i)=>B[e[i]?.[n]]||e[i]?.[n]===`bush`||e[i]?.[n]===`bridge`?t.get(L(n,i))?.underlay||r?.ground[i]?.[n]||`grass`:e[i]?.[n];for(let i=0;i<8;i++)for(let s=0;s<8;s++){let c=s*U,l=i*U,u=e[i][s],d=ge(s*912+i*3751+1189);if(o(s,i)===`water`){W(a,c,l,64,64,(s+i)%2?`#448e8d`:`#418989`);for(let e=0;e<20;e++)W(a,c+Math.floor(d()*52),l+Math.floor(d()*60),5+Math.floor(d()*8),2,e%3?`#60a7a044`:`#a6d4bb88`);W(a,c,l,64,1,`#235c5755`),W(a,c,l,1,64,`#235c5755`);for(let[e,t]of[[0,-1],[1,0],[0,1],[-1,0]])o(s+e,i+t)!==`water`&&(t===-1&&(W(a,c,l,64,3,`#a3c195`),W(a,c,l+3,64,2,`#6eac9b`)),t===1&&(W(a,c,l+61,64,3,`#8ab18b`),W(a,c,l+59,64,2,`#6eac9b`)),e===-1&&(W(a,c,l,3,64,`#a3c195`),W(a,c+3,l,2,64,`#6eac9b`)),e===1&&(W(a,c+61,l,3,64,`#8ab18b`),W(a,c+59,l,2,64,`#6eac9b`)))}else{W(a,c,l,64,64,(s+i)%2?`#63864e`:`#698b52`);for(let e=0;e<65;e++){let t=c+Math.floor(d()*61),n=l+Math.floor(d()*61);W(a,t,n,2+Math.floor(d()*3),2,e%3?`#7e9e5d77`:`#456c4566`),e%12==0&&(W(a,t+1,n-3,1,4,`#9ab56d`),W(a,t-2,n-1,2,1,`#9ab56d`))}(s*3+i)%7==0&&(W(a,c+47,l+47,2,2,`#e5d791`),W(a,c+50,l+43,2,2,`#e2cd8a`)),W(a,c,l,64,1,`#31533632`),W(a,c,l,1,64,`#31533632`)}de(a,o(s,i),c,l),u===`tree`&&ve(a,c,l,d,t.get(L(s,i))?.hp===1),[`rock`,`hot-rock`].includes(u)&&!n.has(L(s,i))&&ye(a,c,l),n.has(L(s,i))||H(a,u,c,l,r?.directions[i]?.[s]),u===`wall`&&xe(a,c,l,{north:e[i-1]?.[s]===`wall`,east:e[i]?.[s+1]===`wall`,south:e[i+1]?.[s]===`wall`,west:e[i]?.[s-1]===`wall`},d),fe(a,r?.effects[i]?.[s],c,l,r?.directions[i]?.[s])}return i}var Ce=class{constructor(e,t){this.canvas=e,this.ctx=e.getContext(`2d`),this.battle=t,this.base=Se(t.terrain,t.structures,new Set,t.levelLayers),this.terrainRevision=t.terrainRevision,this.terrainOmissions=``,this.hover=null,this.cursor=null,this.effect=null,this.feedback=[],this.motions=[],this.inputLocked=!1,this.preview=null,this.reducedMotion=window.matchMedia(`(prefers-reduced-motion: reduce)`).matches,this.running=!0,this.lastFrame=0,this.frame=e=>{this.running&&(e-this.lastFrame>40&&(this.draw(e),this.lastFrame=e),this.raf=requestAnimationFrame(this.frame))},this.raf=requestAnimationFrame(this.frame)}dispose(){this.running=!1,cancelAnimationFrame(this.raf)}trigger(e){e&&(this.effect={...e,start:performance.now()})}reset(){this.base=Se(this.battle.terrain,this.battle.structures,new Set,this.battle.levelLayers),this.terrainRevision=this.battle.terrainRevision,this.terrainOmissions=``,this.effect=null,this.feedback=[],this.motions=[],this.preview=null}consumeEvents(e=performance.now()){let t=this.battle.visualEvents.splice(0),n=Math.max(e,...this.motions.map(e=>e.end));t.some(e=>e.type===`damage`)&&!this.reducedMotion&&(n+=340);let r=t.find(e=>e.type===`dash`),i=e+(r&&r.path.length>1&&!this.reducedMotion?300:0);for(let r of t)if(r.type===`dash`)!this.reducedMotion&&r.path.length>1&&this.motions.push({...r,start:e,end:i,stepMs:300/(r.path.length-1)});else if(r.type===`enemy-ready`){let t=Math.max(e,...this.motions.filter(e=>e.id===r.id).map(e=>e.end));this.feedback.push({...r,start:t,duration:1e3})}else{if(r.type===`push`&&r.defeatedUnit){let e=this.feedback.find(e=>e.type===`damage`&&e.id===r.id&&e.defeated);e&&(e.unit=r.defeatedUnit)}if([`push`,`structure-push`].includes(r.type)&&!this.reducedMotion){let e=Math.max(i,...this.motions.filter(e=>e.id===r.id).map(e=>e.end));this.motions.push({...r,start:e,end:e+180})}else if(r.type===`enemy-move`&&!this.reducedMotion){let e=n+(r.path.length-1)*180;this.motions.push({...r,start:n,end:e}),n=e}else if(![`enemy-move`,`push`,`structure-push`].includes(r.type)){let e=r.type===`damage`&&this.feedback.find(e=>e.type===`damage`&&e.id===r.id&&e.start===i);e?(e.amount+=r.amount,e.defeated=r.defeated,e.unit=r.unit):this.feedback.push({...r,start:i,duration:r.type===`damage`?pe:me})}}return Math.max(0,...this.motions.map(t=>t.end-e))}positionFor(e,t){let n=this.motions.find(n=>n.id===e.id&&t<n.end),r=n?he(n.path,(t-n.start)/(n.stepMs||180)):{x:e.x,y:e.y},i=0,a=0;if(!this.reducedMotion){let n=this.feedback.find(t=>t.id===e.id&&[`collision`,`impact`].includes(t.type));if(n){let e=Math.max(0,Math.min(1,(t-n.start)/n.duration)),r=Math.sin(e*Math.PI)*14;i=(n.to.x-n.from.x)*r,a=(n.to.y-n.from.y)*r}else{let n=this.feedback.find(t=>t.id===e.id&&t.type===`damage`);if(n){let e=Math.max(0,Math.min(1,(t-n.start)/300));i=Math.sin(e*Math.PI*6)*3*(1-e)}}}return{x:r.x*U+i,y:r.y*U+a,walking:n?.type===`enemy-move`&&t>=n.start}}draw(e=0){let{ctx:t,battle:n}=this;this.consumeEvents(e),this.feedback=this.feedback.filter(t=>e-t.start<t.duration),this.motions=this.motions.filter(t=>e<t.end);let r=[...n.structures.values()].filter(e=>[`rock`,`hot-rock`,`crate`].includes(e.type)&&(this.motions.some(t=>t.type===`structure-push`&&t.id===e.id)||!this.reducedMotion&&this.feedback.some(t=>t.type===`collision`&&t.id===e.id))),i=new Set(r.map(e=>L(e.x,e.y))),a=[...i].sort().join(`;`);(this.terrainRevision!==n.terrainRevision||this.terrainOmissions!==a)&&(this.base=Se(n.terrain,n.structures,i,n.levelLayers),this.terrainRevision=n.terrainRevision,this.terrainOmissions=a),t.imageSmoothingEnabled=!1,t.clearRect(0,0,512,512),t.drawImage(this.base,0,0);let o=this.inputLocked?[]:n.targets(),s=!this.inputLocked&&n.mode===`special`&&n.selected?.element===`water`&&!n.selected.acted,c=!this.inputLocked&&n.mode===`special`&&n.selected?.element===`wind`&&!n.selected.acted?this.cursor||this.hover:null,l=c?[{x:c.x,y:c.y-1},{x:c.x+1,y:c.y},{x:c.x,y:c.y+1},{x:c.x-1,y:c.y}].filter(e=>e.x>=0&&e.y>=0&&e.x<8&&e.y<8):s?n.waveArea():[];if(l.length)for(let e of l)W(t,e.x*U+3,e.y*U+3,58,58,`#efb37838`),t.strokeStyle=`#edb78299`,t.lineWidth=1,t.strokeRect(e.x*U+3.5,e.y*U+3.5,57,57);let u=new Set(o.map(e=>L(e.x,e.y)));for(let e of o){let r=e.x*64,i=e.y*64;W(t,r+2,i+2,60,60,n.mode===`move`?`#8fe2c02a`:s?`#7ad4e966`:n.selected?.element===`earth`&&n.mode===`special`?`#d7db7540`:n.selected?.element===`wind`&&n.mode===`special`?`#b8b5ed12`:`#efb37830`),t.strokeStyle=n.mode===`move`?`#b1e0ba88`:`#edb78288`,t.lineWidth=1,t.strokeRect(r+3.5,i+3.5,57,57),n.mode===`move`&&W(t,r+30,i+30,4,4,`#cbe5ae99`),s&&(t.strokeStyle=`#b9f3f2`,t.lineWidth=2,t.beginPath(),t.arc(r+32,i+32,25,0,Math.PI*2),t.stroke())}for(let e of this.motions.length?[]:n.enemies)if(e.intent){let r=n.enemyAttackPath(e),i=n.enemyThreatenedCells(e);for(let e of i)W(t,e.x*U+2,e.y*U+2,60,60,`#d86e6338`),t.strokeStyle=`#f2987e88`,t.strokeRect(e.x*U+3,e.y*U+3,58,58);let a=e.x*U+32,o=e.y*U+32,s=Math.sign(e.intent.x-e.x),c=Math.sign(e.intent.y-e.y);t.fillStyle=e.kind===`ranged`?`#d2b8ff`:`#ffd2a5`,t.beginPath(),t.moveTo(a+s*29,o+c*29),t.lineTo(a+s*18-c*6,o+c*18+s*6),t.lineTo(a+s*18+c*6,o+c*18-s*6),t.closePath(),t.fill();let l=i.at(-1)||r[0];if(!l)continue;let{x:u,y:d}=l,f=u*64,p=d*64;W(t,f+2,p+2,60,60,`#d86e6355`),t.strokeStyle=`#f2987e`,t.lineWidth=2,t.strokeRect(f+3,p+3,58,58),t.strokeStyle=`#ffd7ab`,t.lineWidth=2,t.beginPath(),t.moveTo(f+8,p+15),t.lineTo(f+8,p+8),t.lineTo(f+15,p+8),t.moveTo(f+49,p+56),t.lineTo(f+56,p+56),t.lineTo(f+56,p+49),t.stroke(),t.fillStyle=`#ffd2a5`,t.font=`bold 11px monospace`,t.textAlign=`right`,t.fillText(`!`,f+54,p+17),t.strokeStyle=e.kind===`ranged`?`#d2b8ffbb`:`#f5a68a99`,t.setLineDash([3,4]),t.beginPath(),t.moveTo(a,o),t.lineTo(f+32,p+32),t.stroke(),t.setLineDash([])}for(let i of n.structures.values()){let n=this.positionFor(i,e);if(r.includes(i)&&([`rock`,`hot-rock`].includes(i.type)?(ye(t,n.x,n.y),i.type===`hot-rock`&&H(t,`hot-rock`,n.x,n.y)):H(t,i.type,n.x,n.y)),i.hp===i.maxHp)continue;let a=n.x,o=n.y;this.health(i,a+32,o+6,`#e8c18b`),i.type===`tree`?(W(t,a+12,o+53,40,11,`#18372e`),t.fillStyle=`#ffe2a0`,t.font=`bold 9px monospace`,t.textAlign=`center`,t.fillText(`${i.hp}/${i.maxHp} PV`,a+32,o+62)):(t.strokeStyle=`#f0d3a0`,t.lineWidth=2,t.beginPath(),t.moveTo(a+30,o+21),t.lineTo(a+26,o+29),t.lineTo(a+34,o+34),t.lineTo(a+30,o+42),t.stroke())}if(n.barrier){let{x:r,y:i}=this.positionFor(n.barrier,e);be(t,r,i),this.health(n.barrier,r+32,i+53,`#d9cb8b`)}for(let r of n.units){let i=this.positionFor(r,e),a=i.x,o=i.y,s=r.id===n.selectedId,c=r.team===`enemy`?r.kind===`ranged`?`#c8b3ed`:`#ef9f8b`:E[r.element].color;s&&n.phase===`player`&&(t.strokeStyle=`#eef2bd`,t.lineWidth=2,t.strokeRect(a+6,o+12,52,44),W(t,a+26,o+54,12,3,`#eef2bd`)),t.fillStyle=r.team===`enemy`?`#4a343fbb`:`#29483bd9`,t.beginPath(),t.ellipse(a+32,o+44,19,8,0,0,Math.PI*2),t.fill(),t.strokeStyle=c,t.lineWidth=1,t.stroke(),t.save(),r.acted&&(t.globalAlpha=.62);let l=this.feedback.find(e=>e.type===`damage`&&e.id===r.id);l&&e>=l.start&&e-l.start<110&&!this.reducedMotion&&(t.filter=`brightness(0) invert(1)`);let u=i.walking?Math.sin(e/180*Math.PI*2)*1.5:0;_e(t,r,a+32,o+33+u),t.restore(),this.health(r,a+32,o+6,c),r.acted&&(W(t,a+44,o+44,9,9,`#233e32`),t.strokeStyle=`#c3ce99`,t.lineWidth=1.5,t.beginPath(),t.moveTo(a+46,o+48),t.lineTo(a+48,o+50),t.lineTo(a+52,o+46),t.stroke())}let d=this.cursor||this.hover;if(d){let e=d.x*64,r=d.y*64;if(t.strokeStyle=u.has(L(d.x,d.y))?`#f4f0c9`:`#e1e8c5aa`,t.lineWidth=2,t.strokeRect(e+1,r+1,62,62),n.mode===`move`&&this.hover){let e=o.find(e=>e.x===d.x&&e.y===d.y)?.path;if(e){t.fillStyle=`#ecedbd`;for(let n of e)t.fillRect(n.x*64+30,n.y*64+30,4,4)}}}this.drawPreview(),this.drawEffect(e),this.drawFeedback(e)}health(e,t,n,r){let i=t-(e.maxHp*9-2)/2;for(let t=0;t<e.maxHp;t++)W(this.ctx,i+t*9-1,n-1,9,5,`#18372e`),W(this.ctx,i+t*9,n,7,3,t<e.hp?r:`#43533e`)}drawPreview(){let e=this.preview;if(!e||this.inputLocked)return;let t=this.ctx,n=`#8be5ed`,r=`#cab1ff`,i=`#f3cb86`,a=(e,n,r,i=!0)=>{let a=Math.max(18,n.length*6+8),o=e.x*U+32-a/2,s=e.y*U+(i?49:12);W(t,o,s,a,13,`#12251fed`),t.fillStyle=r,t.font=`bold 9px monospace`,t.textAlign=`center`,t.fillText(n,e.x*U+32,s+10)},o=(e,n,r=!1,i=0)=>{if(e.length<2)return;let a=e.map(e=>({x:e.x*U+32,y:e.y*U+32+i}));t.save(),t.lineJoin=`round`,t.lineCap=`round`,t.setLineDash(r?[5,4]:[]);let o=()=>{t.beginPath(),a.forEach((e,n)=>n?t.lineTo(e.x,e.y):t.moveTo(e.x,e.y)),t.stroke()};t.strokeStyle=`#182921dd`,t.lineWidth=5,o(),t.strokeStyle=n,t.lineWidth=2,o(),t.setLineDash([]);let s=a.at(-1),c=a.at(-2),l=Math.atan2(s.y-c.y,s.x-c.x);t.fillStyle=n,t.beginPath(),t.moveTo(s.x,s.y),t.lineTo(s.x-Math.cos(l-.55)*10,s.y-Math.sin(l-.55)*10),t.lineTo(s.x-Math.cos(l+.55)*10,s.y-Math.sin(l+.55)*10),t.closePath(),t.fill(),t.restore()},s=(e,n)=>{let r=Math.max(8,Math.min(504,e.x*U+32)),i=Math.max(8,Math.min(504,e.y*U+32));t.strokeStyle=n,t.lineWidth=3,t.beginPath(),t.moveTo(r-7,i-7),t.lineTo(r+7,i+7),t.moveTo(r+7,i-7),t.lineTo(r-7,i+7),t.stroke()};t.save(),e.effect?.type===`fire`&&o([e.effect.from,e.effect.to],i),e.effect?.type===`lightning`&&(o(e.effect.path,`#fff0a4`,!1),a(e.effect.impactFrom,`DASH · −1 PV`,i)),e.effect?.type===`wind`&&(o([e.effect.from,e.at],`#dcd8ff`),t.strokeStyle=`#e0e1ff`,t.lineWidth=2,t.beginPath(),t.arc(e.at.x*U+32,e.at.y*U+32,24,0,Math.PI*2),t.stroke());for(let t of e.units)t.damage&&a(t.from,`−${t.damage}`,t.team===`ally`?i:`#ffd1bd`),t.defeated&&s(e.pushes.find(e=>e.id===t.id)?.to||t.from,`#ffb09d`);for(let r of e.pushes){let s=e.units.find(e=>e.id===r.id),c=s.team===`ally`?i:n;if(t.save(),t.globalAlpha=.48,_e(t,{team:s.team,element:s.element,kind:s.kind},r.to.x*U+32,r.to.y*U+33),t.restore(),t.strokeStyle=c,t.lineWidth=2,t.strokeRect(r.to.x*U+5,r.to.y*U+10,54,45),o([r.from,r.to],c,!1,-6),a(r.to,`1 · ${s.hpAfter} PV`,c),!s.defeated)for(let e of s.attackCells||[])t.strokeStyle=`#ffba76`,t.lineWidth=2,t.setLineDash([4,3]),t.strokeRect(e.x*U+7,e.y*U+7,50,50),t.setLineDash([])}for(let r of e.structureMoves||[]){let e=r.type===`barrier`?be:[`rock`,`hot-rock`].includes(r.type)?(e,t,n)=>{ye(e,t,n),r.type===`hot-rock`&&H(e,`hot-rock`,t,n)}:(e,t,n)=>H(e,r.type,t,n);t.save(),t.globalAlpha=.48,e(t,r.to.x*U,r.to.y*U),t.restore(),t.strokeStyle=n,t.lineWidth=2,t.strokeRect(r.to.x*U+5,r.to.y*U+9,54,46),o([r.from,r.to],n,!1,-6),r.hpBefore>r.hpAfter&&a(r.from,`−${r.hpBefore-r.hpAfter}`,i),a(r.to,`1 · ${r.hpAfter} PV`,n)}for(let n of e.structures){if(n.moved)continue;let e=n.x*U,r=n.y*U;n.created&&(t.save(),t.globalAlpha=.5,n.type===`wall`?xe(t,e,r,{north:!1,east:!1,south:!1,west:!1},ge(n.x*912+n.y*3751+1189)):n.type===`rock`?ye(t,e,r):n.type===`barrier`?be(t,e,r):H(t,n.type,e,r),t.restore()),t.strokeStyle=i,t.lineWidth=2,t.setLineDash([3,3]),t.strokeRect(e+7,r+9,50,46),t.setLineDash([]),n.destroyed&&s(n,`#ffc5a1`),a(n,`${n.hpBefore}→${n.hpAfter} PV`,i)}for(let t of e.collisions)s(t.to,i);for(let t of e.blocked.filter(t=>!e.collisions.some(e=>e.id===t.id)))s(t.to,`#eac18c`);for(let n of e.nextEnemies){if(n.status!==`moves`)continue;o(n.path,r,!0,9);let e=n.to.x*U,i=n.to.y*U;t.strokeStyle=r,t.lineWidth=2,t.setLineDash([4,4]),t.strokeRect(e+9,i+13,46,42),t.setLineDash([]),a(n.to,`2`,r,!1)}t.restore()}drawEffect(e){let t=this.effect;if(!t)return;let n=(e-t.start)/650;if(n>1){this.effect=null;return}let r=this.ctx;r.save(),r.globalAlpha=1-n;let i={fire:`#ffc276`,water:`#b0e7ed`,earth:`#e8db9a`,lightning:`#fff0a4`,wind:`#e0e1ff`,punch:`#fff1cb`,enemy:`#ffa58d`,move:`#d5edb7`}[t.type];if(r.strokeStyle=i,r.fillStyle=i,r.lineWidth=3,t.type===`fire`){let e=(t.from.x+(t.to.x-t.from.x)*Math.min(n*2,1))*64+32,i=(t.from.y+(t.to.y-t.from.y)*Math.min(n*2,1))*64+32;W(r,e-6,i-6,12,12,`#f6a953`),W(r,e-3,i-3,6,6,`#fff0b4`)}else if(t.type===`lightning`){r.beginPath(),r.moveTo(t.from.x*U+32,t.from.y*U+32);let e=t.to.x-t.from.x,n=t.to.y-t.from.y;for(let i=1;i<=8;i++){let a=i===8?0:i%2?7:-7;r.lineTo((t.from.x+e*i/8)*U+32+(n?a:0),(t.from.y+n*i/8)*U+32+(e?a:0))}r.stroke()}else if(t.type===`wind`){let e=t.to.x*U+32,i=t.to.y*U+32,a=Math.min(n*2,1);r.beginPath(),r.arc(e,i,12+a*58,n*7,n*7+Math.PI*1.6),r.stroke();for(let[t,n]of[[0,-1],[1,0],[0,1],[-1,0]])r.beginPath(),r.moveTo(e+t*20,i+n*20),r.lineTo(e+t*(28+a*52),i+n*(28+a*52)),r.stroke()}else if(t.type===`water`){let e=12+n*78;r.beginPath(),r.arc(t.from.x*64+32,t.from.y*64+32,e,0,Math.PI*2),r.stroke()}else if(t.type===`enemy`)for(let e of t.strikes){if(e.cancelled)continue;if(e.kind===`ranged`){let t=e.hit||e.to,i=Math.min(n*2,1),a=(e.from.x+(t.x-e.from.x)*i)*U+32,o=(e.from.y+(t.y-e.from.y)*i)*U+32,s=Math.atan2(t.y-e.from.y,t.x-e.from.x);r.save(),r.translate(a,o),r.rotate(s),W(r,-11,-1,19,3,`#ddd0f5`),r.fillStyle=`#c4a0ff`,r.beginPath(),r.moveTo(10,0),r.lineTo(2,-5),r.lineTo(2,5),r.closePath(),r.fill(),r.restore();continue}let t=e.to.x*64+32,i=e.to.y*64+32;r.beginPath(),r.moveTo(t-13,i-13),r.lineTo(t+13,i+13),r.moveTo(t+13,i-13),r.lineTo(t-13,i+13),r.stroke()}else if(t.to){let e=t.to.x*64+32,i=t.to.y*64+32;r.strokeRect(e-12-n*10,i-12-n*10,24+n*20,24+n*20)}r.restore()}drawFeedback(e){let t=this.ctx;for(let n of this.feedback){if(e<n.start)continue;let r=Math.max(0,Math.min(1,(e-n.start)/n.duration));if(t.save(),t.globalAlpha=1-r,n.type===`enemy-ready`){let e=n.at.x*U,r=n.at.y*U;W(t,e+6,r+52,52,11,`#211e2bef`),t.fillStyle=n.kind===`ranged`?`#e2ceff`:`#ffe1aa`,t.font=`bold 8px monospace`,t.textAlign=`center`,t.fillText(`ARMADO`,e+32,r+60)}else if(n.type===`damage`){let i=n.defeated&&n.unit?this.positionFor(n.unit,e):{x:n.at.x*U,y:n.at.y*U},a=i.x,o=i.y;n.defeated&&n.unit&&(r<.15&&!this.reducedMotion&&(t.filter=`brightness(0) invert(1)`),_e(t,n.unit,a+32,o+33),t.filter=`none`),t.strokeStyle=n.unit?`#ff9b8d`:`#f3d597`,t.lineWidth=2,t.strokeRect(a+12-r*7,o+13-r*7,40+r*14,39+r*14),t.font=`bold 14px monospace`,t.textAlign=`center`,t.lineWidth=3,t.strokeStyle=`#1b2020`,t.strokeText(`−${n.amount}`,a+32,o+19-r*15),t.fillStyle=n.unit?`#ffe3d6`:`#fff0be`,t.fillText(`−${n.amount}`,a+32,o+19-r*15)}else if([`collision`,`impact`].includes(n.type)){let e=(n.from.x+n.to.x)*U/2+32,i=(n.from.y+n.to.y)*U/2+32;t.strokeStyle=`#ffd993`,t.lineWidth=2,t.beginPath(),t.arc(e,i,4+r*14,0,Math.PI*2),t.stroke();for(let n=0;n<8;n++){let a=n*Math.PI/4,o=5+r*24;W(t,e+Math.cos(a)*o-2,i+Math.sin(a)*o-2,3,3,n%2?`#ffc26d`:`#fff0be`)}}t.restore()}}};function we(){let e=P();e.name=`Clareira do Rio`,e.description=`Teste visual isométrico · Fogo, Água e Terra`;for(let[t,n]of[[3,0],[3,1],[3,2],[4,2],[4,3],[4,4],[4,5],[3,5],[3,6],[3,7]])e.ground[n][t]=`water`;for(let[t,n]of[[1,1],[6,1],[0,5],[6,6],[7,3]])e.objects[n][t]=`tree`;for(let[t,n]of[[2,2],[5,4]])e.objects[n][t]=`rock`;return e.units=[{id:`fire`,element:`fire`,team:`ally`,x:2,y:4},{id:`water`,element:`water`,team:`ally`,x:2,y:5},{id:`earth`,element:`earth`,team:`ally`,x:1,y:5},{id:`enemy-1`,kind:`melee`,team:`enemy`,x:4,y:4}],e.rules={maxRounds:5,waves:[]},e}var G=Object.freeze({width:512,height:384,halfWidth:28,halfHeight:14,originX:256,originY:78,depth:18});function K(e,t){return{x:G.originX+(e-t)*G.halfWidth,y:G.originY+(e+t)*G.halfHeight}}function Te(e,t){let n=K(e,t);return{left:(n.x-G.halfWidth)/G.width*100,top:(n.y-G.halfHeight)/G.height*100,width:G.halfWidth*2/G.width*100,height:G.halfHeight*2/G.height*100}}var q={outline:`#18252b`,shade:`#253a40`,cloth:`#3b5360`,clothLight:`#5b7580`,stone:`#64756d`,stoneLight:`#9aa596`,woodDark:`#4e3b32`,wood:`#72533b`,woodLight:`#a17d4e`,skin:`#d39a6b`,skinLight:`#efc49a`,leafDark:`#254d3b`,leaf:`#366b45`,leafLight:`#5e914f`,leafTip:`#94b866`,waterDark:`#234a68`,water:`#2b7393`,waterLight:`#4fa8ba`,foam:`#a3dadd`,cream:`#f3f0de`,gold:`#f1c76b`,red:`#c74b43`},J=(e,t,n,r,i,a)=>{e.fillStyle=a,e.fillRect(Math.round(t),Math.round(n),r,i)};function Y(e,t,n){e.fillStyle=n;for(let n=Math.ceil(Math.min(...t.map(e=>e[1])));n<Math.max(...t.map(e=>e[1]));n++){let r=[];for(let e=0;e<t.length;e++){let i=t[e],a=t[(e+1)%t.length],o=n+.5;(i[1]<=o&&a[1]>o||a[1]<=o&&i[1]>o)&&r.push(i[0]+(o-i[1])*(a[0]-i[0])/(a[1]-i[1]))}r.sort((e,t)=>e-t);for(let t=0;t<r.length;t+=2)e.fillRect(Math.ceil(r[t]),n,Math.ceil(r[t+1])-Math.ceil(r[t]),1)}}var Ee=(e,t=0)=>[[e.x,e.y-14+t],[e.x+28-t*2,e.y],[e.x,e.y+14-t],[e.x-28+t*2,e.y]];function X(e,t,n,r=2,i=!1){e.save(),e.strokeStyle=n,e.lineWidth=1,e.setLineDash(i?[3,3]:[]),e.beginPath(),Ee(t,r).forEach(([t,n],r)=>r?e.lineTo(t,n):e.moveTo(t,n)),e.closePath(),e.stroke(),e.restore()}function De(e,t,n=13){Y(e,[[t.x-n,t.y],[t.x,t.y-5],[t.x+n,t.y],[t.x,t.y+6]],`#18252b66`)}function Oe(e,t,n=!1){De(e,t,18),J(e,t.x-3,t.y-22,7,24,q.woodDark),J(e,t.x-2,t.y-20,3,21,q.wood),J(e,t.x-2,t.y-17,1,15,q.woodLight);let r=t.x,i=t.y-35;Y(e,[[r-20,i-1],[r-15,i-12],[r-5,i-18],[r+6,i-17],[r+15,i-10],[r+20,i+1],[r+15,i+10],[r+3,i+15],[r-11,i+12],[r-21,i+5]],q.outline),Y(e,[[r-18,i-1],[r-13,i-11],[r-4,i-16],[r+5,i-15],[r+14,i-8],[r+18,i+1],[r+13,i+8],[r+2,i+12],[r-10,i+10],[r-18,i+4]],q.leafDark),Y(e,[[r-17,i-1],[r-12,i-10],[r-3,i-15],[r+5,i-13],[r+10,i-5],[r+6,i+4],[r-5,i+8],[r-14,i+5]],q.leaf),Y(e,[[r-14,i-2],[r-10,i-9],[r-3,i-13],[r+3,i-11],[r+3,i-5],[r-3,i-2],[r-4,i+3],[r-11,i+2]],n?q.gold:q.leafLight),J(e,r-9,i-8,5,2,q.leafTip),J(e,r-13,i-3,4,2,q.leafTip),J(e,r+6,i+3,6,3,q.leaf),n&&(J(e,r+7,i-12,10,9,`#111b26`),J(e,r+9,i-6,3,8,q.woodLight),J(e,r+13,i+16,3,2,q.gold))}function ke(e,t,n=!1){De(e,t,17);let r=t.x,i=t.y;Y(e,[[r-19,i-4],[r-15,i-18],[r-3,i-25],[r+11,i-21],[r+19,i-10],[r+16,i+2],[r+2,i+7],[r-13,i+3]],q.outline),Y(e,[[r-17,i-5],[r-13,i-17],[r-3,i-23],[r+10,i-19],[r+16,i-9],[r+13,i+1],[r+1,i+4],[r-12,i+1]],n?q.wood:q.stone),Y(e,[[r-13,i-16],[r-3,i-22],[r+8,i-18],[r+2,i-9],[r-8,i-8]],n?q.woodLight:q.stoneLight),Y(e,[[r+3,i-9],[r+10,i-19],[r+16,i-9],[r+13,i+1],[r+1,i+4]],q.shade),J(e,r-11,i-13,5,2,n?q.gold:q.cream),n&&(J(e,r-6,i-22,3,19,q.woodDark),J(e,r+5,i-15,3,13,q.woodDark))}function Ae(e,t,n,r=0,i=!1,a=1){e.save(),e.translate(Math.round(n.x),Math.round(n.y));let o=t.team===`enemy`,s=t.element,c=o?`#ff354f`:{fire:`#e78646`,water:q.waterLight,earth:q.leafTip,lightning:q.gold,wind:`#9176a3`}[s]||q.cream,l=s===`earth`,u=i?Math.floor(r/100)%4:0,d=i&&u%2?-1:0;e.translate(0,d),De(e,{x:0,y:1},12);let f=o?`#101114`:q.cloth,p=o?`#030405`:q.shade,m=o?`#24272c`:q.clothLight;J(e,-9,-12,7,13,q.outline),J(e,3,-12,7,13,q.outline),J(e,-8,-10,5,9+ +(u===1),p),J(e,4,-10,5,9+ +(u===3),p),J(e,-10,-2+(u===1?-2:0),8,4,q.outline),J(e,3,-1+(u===3?-2:0),9,4,q.outline),J(e,-10,-24,20,17,q.outline),J(e,-8,-24,17,15,f),J(e,-8,-23,5,12,m),J(e,5,-21,4,13,p),J(e,l?-15:-12,-23,l?8:6,11,q.outline),J(e,8,-22,l?8:6,12,q.outline),J(e,l?-14:-11,-22,l?7:5,7,l?q.stoneLight:m),J(e,9,-21,l?6:4,7,l?q.stone:p),J(e,-11,-14,5,5,o?p:q.skin),J(e,10,-13,4,5,o?p:q.skin),J(e,-8,-12,17,3,o?`#24272c`:q.cream),J(e,-2,-12,4,4,c),J(e,-3,-22,5,5,o?p:q.cream),J(e,-2,-21,3,2,c),J(e,-9,-40,17,16,q.outline),J(e,-7,-39,14,12,o?p:`#253a40`),o?(J(e,-8,-36,16,3,`#24272c`),J(e,-6,-31,5,2,`#ff354f`),J(e,3,-31,5,2,`#ff354f`)):(J(e,-7,-38,6,5,`#3b5360`),J(e,-8,-35,17,3,q.cream),J(e,-2,-35,5,3,c),J(e,-6,-31,13,5,q.skin),J(e,-6,-31,6,3,q.skinLight),J(e,1,-30,2,2,q.outline),J(e,6,-30,2,2,q.outline),J(e,-5,-26,13,4,p)),s===`fire`&&(Y(e,[[-9,-37],[-11,-42],[-5,-41],[-3,-45],[0,-41],[5,-43],[8,-38],[8,-36]],q.outline),J(e,-8,-41,5,2,`#e78646`),J(e,-3,-42,4,3,`#c74b43`),J(e,6,-29,8,3,c),J(e,11,-26,5,3,`#c74b43`)),s===`water`&&(J(e,-10,-38,3,13,q.outline),J(e,-12,-35,4,14,q.waterDark),J(e,-11,-35,2,11,c),J(e,-11,-22,4,3,q.foam),J(e,8,-30,7,2,c),J(e,12,-28,5,2,q.foam)),l&&(J(e,-9,-41,16,3,q.outline),J(e,-7,-40,7,2,q.stoneLight),J(e,-14,-16,6,3,c),J(e,10,-15,6,3,c),J(e,-6,-36,5,1,q.gold)),a<0&&!o&&(J(e,-6,-32,14,8,o?p:q.shade),J(e,-6,-33,14,2,c)),e.restore()}var je=class extends Ce{constructor(e,t){super(e,t),e.width=G.width,e.height=G.height,this.ctx.imageSmoothingEnabled=!1,e.parentElement?.classList.add(`isometric-surface`),e.closest(`.board-frame`)?.classList.add(`isometric-frame`);let n=e.parentElement?.querySelector(`.grid-input`);if(n){n.classList.add(`isometric-input`);for(let e of n.querySelectorAll(`.cell`)){let t=Te(+e.dataset.x,+e.dataset.y);for(let[n,r]of Object.entries(t))e.style[n]=`${r}%`}this.unitInputs=document.createElement(`div`),this.unitInputs.className=`isometric-unit-inputs`,n.append(this.unitInputs)}}trigger(e){super.trigger(e),e&&(this.motions=this.motions.filter(e=>e.type!==`walk`)),e?.type===`move`&&!this.reducedMotion&&this.motions.push({type:`walk`,id:e.id,path:[e.from,...e.path],start:this.effect.start,end:this.effect.start+e.path.length*180})}screenPosition(e,t){let n=this.positionFor(e,t);return{...K(n.x/64,n.y/64),walking:n.walking||this.motions.some(n=>n.id===e.id&&n.type===`walk`&&t<n.end)}}draw(e=0){this.consumeEvents(e),this.feedback=this.feedback.filter(t=>e-t.start<t.duration),this.motions=this.motions.filter(t=>e<t.end);let t=this.ctx,n=this.battle;t.imageSmoothingEnabled=!1,t.clearRect(0,0,G.width,G.height),J(t,0,0,G.width,G.height,`#111b26`),Y(t,[[256,83],[488,194],[256,325],[24,201]],`#080f16`);let r=[];for(let e=0;e<8;e++)for(let t=0;t<8;t++)r.push({x:t,y:e});r.sort((e,t)=>e.x+e.y-t.x-t.y||e.x-t.x);for(let i of r){let{x:r,y:a}=i,o=K(r,a),s=(n.levelLayers?.ground[a][r]||n.terrain[a][r])===`water`;s&&(o.y+=3);let c=Ee(o),[l,u,d,f]=c;if(Y(t,[f,d,[d[0],d[1]+18],[f[0],f[1]+18]],s?q.waterDark:q.wood),Y(t,[d,u,[u[0],u[1]+18],[d[0],d[1]+18]],s?`#182f43`:q.woodDark),Y(t,c,s?q.water:q.leaf),s){let n=this.reducedMotion?0:Math.floor(e*6/1e3)%4;for(let e=0;e<3;e++){let i=(r*7+a*11+e*13)%27-13,s=(e*7+r*3)%13-6;J(t,o.x+i+ +(n===e),o.y+s,7,1,e===1?q.foam:q.waterLight)}}else for(let e=0;e<4;e++){let n=(r*13+a*7+e*11)%29-14,i=(r*5+a*3+e*7)%13-6;J(t,o.x+n,o.y+i,3,1,q.leafLight),e===1&&J(t,o.x+n+1,o.y+i-2,1,2,q.leafLight)}X(t,o,s?`#234a68`:`#254d3b`,0)}let i=this.inputLocked?[]:n.targets();for(let e of i){let r=K(e.x,e.y);Y(t,Ee(r,2),n.mode===`move`?`#4fa8ba20`:`#f1c76b20`),X(t,r,n.mode===`move`?q.waterLight:q.gold,2,!0)}for(let e of n.enemies)for(let r of n.enemyThreatenedCells(e)){let e=K(r.x,r.y);Y(t,Ee(e,1),`#c74b4340`),X(t,e,q.red,1);for(let n=-10;n<=10;n+=5)J(t,e.x+n,e.y-2,2,3,q.red)}(n.mode===`special`&&!n.selected?.acted?n.selected?.element===`water`?n.waveArea():n.selected?.element===`wind`&&this.preview?[[0,-1],[1,0],[0,1],[-1,0]].map(([e,t])=>({x:this.preview.at.x+e,y:this.preview.at.y+t})).filter(e=>e.x>=0&&e.y>=0&&e.x<8&&e.y<8):[]:[]).forEach(e=>X(t,K(e.x,e.y),q.gold,2));let a=[...n.structures.values(),...n.barrier?[n.barrier]:[],...n.units];for(let e of this.feedback)e.type===`damage`&&e.defeated&&e.unit&&a.push({...e.unit,ghost:!0});a.sort((t,n)=>{let r=this.screenPosition(t,e),i=this.screenPosition(n,e);return r.y-i.y||r.x-i.x});for(let n of a){let r=this.screenPosition(n,e);t.save();let i=this.feedback.find(e=>e.type===`damage`&&e.id===n.id);n.ghost&&(t.globalAlpha=Math.max(0,Math.min(1,1-(e-i.start)/i.duration))),n.team?(n.acted&&(t.globalAlpha*=.7),i&&e>=i.start&&e-i.start<100&&!this.reducedMotion&&(t.filter=`brightness(0) invert(1)`),Ae(t,n,r,e,r.walking,n.intent?.x<n.x||n.intent?.y<n.y?-1:1)):n.type===`tree`?Oe(t,r,n.hp<n.maxHp):ke(t,r,n.type===`barrier`),t.restore()}for(let e of this.motions.length?[]:n.enemies)e.intent&&this.arrow([e,...n.enemyAttackPath(e)],`#ffb799`,!0);n.selected&&X(t,K(n.selected.x,n.selected.y),q.gold,1);let o=this.cursor||this.hover;o&&X(t,K(o.x,o.y),q.cream,0),this.drawIsometricPreview(),this.drawIsometricEffect(e);for(let n of a){let r=this.screenPosition(n,e);n.ghost||(n.team?(this.health(n,r.x,r.y-49,n.team===`enemy`?`#ff8890`:E[n.element].color),n.team===`enemy`?Y(t,[[r.x,r.y+5],[r.x+3,r.y+8],[r.x,r.y+11],[r.x-3,r.y+8]],`#ff8890`):(t.strokeStyle=q.cream,t.beginPath(),t.arc(r.x,r.y+8,3,0,Math.PI*2),t.stroke())):n.hp<n.maxHp&&this.badge(r,`${n.hp}/${n.maxHp}`,q.gold,-6))}for(let n of this.feedback)if(e>=n.start){let r=(e-n.start)/n.duration;if(n.type===`damage`){let t=n.unit?this.screenPosition(n.unit,e):K(n.at.x,n.at.y);this.badge(t,`−${n.amount}`,`#ffb6a0`,-35-r*15)}else if([`collision`,`impact`].includes(n.type)){let e=K(n.to.x,n.to.y);for(let n=0;n<5;n++)J(t,e.x+(n-2)*5*(1+r),e.y-10-n%2*8*r,2,2,q.gold)}else n.type===`enemy-ready`&&this.badge(K(n.at.x,n.at.y),`ARMADO`,q.gold,18)}t.font=`10px monospace`,t.textAlign=`center`,t.fillStyle=`#a5b8b6`;for(let e=0;e<8;e++){let n=K(e,-1);t.fillText(`ABCDEFGH`[e],n.x,n.y-3),n=K(-1,e),t.fillText(String(e+1),n.x,n.y+2)}this.syncUnitInputs(e)}arrow(e,t,n=!1){if(e.length<2)return;let r=this.ctx,i=e.map(e=>K(e.x,e.y));r.save(),r.strokeStyle=t,r.fillStyle=t,r.lineWidth=2,r.setLineDash(n?[4,3]:[]),r.beginPath(),i.forEach((e,t)=>t?r.lineTo(e.x,e.y):r.moveTo(e.x,e.y)),r.stroke(),r.setLineDash([]);let a=i.at(-1),o=i.at(-2),s=Math.atan2(a.y-o.y,a.x-o.x);Y(r,[[a.x,a.y],[a.x-Math.cos(s-.5)*8,a.y-Math.sin(s-.5)*8],[a.x-Math.cos(s+.5)*8,a.y-Math.sin(s+.5)*8]],t),r.restore()}badge(e,t,n,r=-18){let i=this.ctx;i.font=`bold 9px monospace`,i.textAlign=`center`;let a=i.measureText(t).width+6;J(i,e.x-a/2,e.y+r-9,a,12,`#111b26ed`),i.fillStyle=n,i.fillText(t,Math.round(e.x),Math.round(e.y+r))}drawIsometricPreview(){let e=this.preview;if(e){for(let t of e.pushes){let n=e.units.find(e=>e.id===t.id);this.ctx.save(),this.ctx.globalAlpha=.4,Ae(this.ctx,n,K(t.to.x,t.to.y)),this.ctx.restore(),this.arrow([t.from,t.to],`#e78646`)}for(let t of e.structureMoves)this.ctx.save(),this.ctx.globalAlpha=.45,ke(this.ctx,K(t.to.x,t.to.y),t.type===`barrier`),this.ctx.restore(),this.arrow([t.from,t.to],`#e78646`);for(let t of e.units)this.badge(K(t.from.x,t.from.y),`${t.hpBefore}→${t.hpAfter} PV`,t.team===`ally`?q.gold:q.cream,-57),t.defeated&&this.badge(K(t.from.x,t.from.y),`×`,q.red,0);for(let t of e.structures){let e=t.to||t.from||t;X(this.ctx,K(e.x,e.y),q.gold,1,!0),this.badge(K(e.x,e.y),`${t.hpBefore}→${t.hpAfter} PV`,q.gold,-32)}for(let t of e.collisions)this.badge(K(t.to.x,t.to.y),`IMPACTO`,q.gold,-12);for(let t of e.nextEnemies)t.status===`moves`&&this.arrow(t.path,`#b8b5ed`,!0);e.effect?.type===`fire`&&this.arrow([e.effect.from,e.effect.to],q.gold)}}drawIsometricEffect(e){let t=this.effect;if(!t)return;let n=(e-t.start)/650;if(n>1){this.effect=null;return}let r=this.ctx,i=K(t.to?.x??0,t.to?.y??0);if(r.save(),r.globalAlpha=1-n,t.type===`move`)this.arrow([t.from,...t.path],q.cream,!0);else if(t.type===`water`||t.type===`wind`)r.strokeStyle=q.foam,r.lineWidth=2,r.beginPath(),r.ellipse(i.x,i.y,14+n*65,7+n*32,0,0,Math.PI*2),r.stroke();else if(t.type===`fire`){let e=K(t.from.x,t.from.y),a=Math.min(1,n*2);J(r,e.x+(i.x-e.x)*a-4,e.y+(i.y-e.y)*a-12,9,9,`#e78646`),J(r,e.x+(i.x-e.x)*a-2,e.y+(i.y-e.y)*a-10,4,4,q.gold)}else if(t.type===`enemy`)for(let e of t.strikes||[])e.cancelled||this.arrow([e.from,e.hit||e.to],`#ff8890`);else for(let e=0;e<6;e++)J(r,i.x+(e-3)*(2+n*5),i.y-12-e%3*4,3,3,q.gold);r.restore()}syncUnitInputs(e){if(!this.unitInputs)return;let t=new Set(this.battle.units.map(e=>e.id));for(let e of this.unitInputs.children)t.has(e.dataset.unitId)||e.remove();for(let t of this.battle.units){let n=[...this.unitInputs.children].find(e=>e.dataset.unitId===t.id);n||(n=document.createElement(`button`),n.className=`isometric-unit-target`,n.dataset.unitId=t.id,n.tabIndex=-1,this.unitInputs.append(n));let r=this.screenPosition(t,e);n.dataset.x=t.x,n.dataset.y=t.y,n.style.left=`${(r.x-13)/G.width*100}%`,n.style.top=`${(r.y-43)/G.height*100}%`,n.style.width=`${26/G.width*100}%`,n.style.height=`${43/G.height*100}%`,n.style.zIndex=String(100+Math.round(r.y)),n.disabled=this.inputLocked||this.canvas.parentElement.querySelector(`.cell[data-x="${t.x}"][data-y="${t.y}"]`)?.disabled,n.setAttribute(`aria-label`,`${t.name}, ${t.hp} PV`)}}},Z=e=>`${`ABCDEFGH`[e.x]}${e.y+1}`,Q=e=>String(e).replace(/[&<>"]/g,e=>({"&":`&amp;`,"<":`&lt;`,">":`&gt;`,'"':`&quot;`})[e]);function Me(e,t){let n=e.collisions.find(e=>e.id===t.id||e.obstacleType===`unit`&&e.obstacleId===t.id);return n?(e.mode===`punch`||e.effect?.type===`lightning`)&&n.id===t.id?`Dano: 1 PV do ${e.effect?.type===`lightning`?`Dash`:`Soco`} + 1 PV da colisão`:`Dano: 1 PV da colisão`:``}function Ne(e){let t=`<div class="preview-heading"><h2>Prévia da jogada</h2><span>ANTES DE CONFIRMAR</span></div>`;if(!e)return`${t}<p class="preview-empty">Selecione Soco ou Especial. Aponte uma casa válida ou use as setas. A prévia não gasta a ação.</p>`;let n=e.mode===`punch`?`Soco`:E[e.actor.element].special,r=e.units.map(t=>{let n=Me(e,t),r=e.blocked.find(e=>e.id===t.id),i=e.pushes.find(e=>e.id===t.id),a=i&&t.intent&&!t.defeated?`Ataque mantém a direção ${t.intent.x>t.to.x?`→`:t.intent.x<t.to.x?`←`:t.intent.y>t.to.y?`↓`:`↑`} · ${t.attackCells.length?t.attackCells.map(Z).join(`, `):`bloqueado ou fora do mapa`}`:``,o=t.id===e.actor.id&&e.effect?.type===`lightning`?`Dash: ${Z(t.from)} → ${Z(e.effect.impactFrom)} · custo: 1 PV`:i?`Empurrão: ${Z(i.from)} → ${Z(i.to)}`:r&&[`structure`,`unit`].includes(r.reason)?`Colisão em ${Z(r.to)} · ${r.obstacle}`:r?.reason===`edge`?`Empurrão bloqueado pela borda`:r?.reason===`terrain`?`Empurrão bloqueado por terreno intransponível`:e.collisions.some(e=>e.obstacleId===t.id)?`Atingido pela colisão em ${Z(t.from)}`:``;return`<li class="preview-unit ${t.team===`ally`?`preview-ally`:``}"><div><strong>${Q(t.name)}</strong>${t.team===`ally`?`<em>ALIADO</em>`:``}<span>${t.hpBefore} → ${t.hpAfter} PV</span></div>${n?`<small>${Q(n)}</small>`:``}${o?`<small>${Q(o)}</small>`:``}${a?`<small class="preview-armed">${Q(a)}</small>`:``}${t.defeated?`<b class="preview-defeated">Derrotado</b>`:``}</li>`});for(let t of e.structures){let n=e.blocked.find(e=>e.id===t.id),i=t.moved?`Empurrão: ${Z(t.from)} → ${Z(t.to)}`:t.created?`Criada em ${Z(t)}`:t.destroyed?`Destruída · ${Z(t)} fica livre`:n?.reason===`edge`?`Empurrão bloqueado pela borda`:n?`Colisão em ${Z(n.to)} · ${n.obstacle}`:`Danificada em ${Z(t)}`;r.push(`<li class="preview-structure"><div><strong>${Q(t.name)}</strong><span>${t.hpBefore} → ${t.hpAfter} PV</span></div><small>${Q(i)}</small></li>`)}let i=e.nextEnemies.length?`<div class="preview-next"><h3>AO ENCERRAR O TURNO</h3>${e.nextEnemies.map(e=>{let t=e.status===`moves`?`${Z(e.from)} → ${Z(e.to)} · ${e.path.length-1} casa${e.path.length===2?``:`s`}`:e.status===`stays`?`Permanece em ${Z(e.to)}`:e.status===`defeated`?`Derrotado na resolução dos ataques`:`Sem avanço: batalha encerrada`;return`<div class="preview-route"><strong>${Q(e.name)}</strong><span>${Q(t)}</span>${e.attackInterrupted?`<small>O inimigo mantém a direção, mas o ataque encontra um bloqueio ou a borda.</small>`:``}</div>`}).join(``)}${e.incomingCount?`<p>${e.incomingCount===1?`Chega`:`Chegam`} ${e.incomingCount} reforço${e.incomingCount===1?``:`s`} antes do próximo avanço.</p>`:``}${e.forecastResultReason===`timeout`?`<p class="preview-defeated">O prazo termina ao encerrar este turno.</p>`:``}<p>Se encerrar o turno agora. Outras jogadas mudam a previsão.</p></div>`:``;return`${t}<div class="preview-action">${Q(n)} · ${Z(e.at)}</div><ul>${r.join(``)||`<li class="preview-empty">Nenhuma unidade atingida.</li>`}</ul>${e.outcome===`victory`?`<p class="preview-victory">Vitória ao confirmar esta ação.</p>`:``}${i}<div class="preview-legend"><span><i class="preview-push-color"></i>1 · Empurrão imediato</span><span><i class="preview-path-color"></i>2 · Próximo avanço</span></div>`}function Pe(e){let t=new Map,n=(e,n)=>{if(!e||!R(e.x,e.y))return;let r=L(e.x,e.y);t.set(r,[...t.get(r)||[],n])};if(!e)return t;for(let t of e.units)n(t.from,`${t.name}: ${t.hpBefore} para ${t.hpAfter} PV${t.defeated?`, será derrotado`:``}${Me(e,t)?`. ${Me(e,t)}`:``}`);if(e.effect?.type===`lightning`){for(let t of e.effect.path.slice(1))n(t,`Caminho do Dash Relâmpago`);n(e.effect.impactFrom,`Destino do dash · Rai perde 1 PV`)}for(let t of e.pushes)n(t.to,`Destino do empurrão imediato`);for(let t of e.structureMoves||[])n(t.to,`Destino do empurrão de ${t.name}`);for(let t of e.collisions)n(t.to,t.obstacleType===`unit`?`Colisão prevista contra personagem: 1 de dano em cada`:`Colisão prevista contra estrutura: 1 de dano em cada`);for(let t of e.structures)n(t.from||t.to||t,`${t.name}: ${t.hpBefore} para ${t.hpAfter} PV${t.destroyed?`, será destruída`:``}`);for(let t of e.nextEnemies){for(let e of t.path.slice(1))n(e,`Caminho previsto de ${t.name} ao encerrar o turno`);t.to&&[`moves`,`stays`].includes(t.status)&&n(t.to,`Destino do próximo avanço: ${t.name}`)}return t}var Fe={fire:`M12 3c1 5 5 6 5 11a5 5 0 0 1-10 0c0-3 2-5 3-6 0 3 2 4 2 1V3Z`,lightning:`m13 2-8 12h6l-1 8 9-13h-6l1-7Z`,wind:`M3 8h12c5 0 5-6 1-6M2 12h17c5 0 5 7 0 7M5 16h6c4 0 4 6 0 6`,water:`M12 3s-6 7-6 12a6 6 0 0 0 12 0c0-5-6-12-6-12Zm-3 13c0 2 1 3 3 3`,earth:`m12 3 8 16H4L12 3Zm0 6 5 10M8 12h7`,sword:`m5 19 4-4m-3-3 6 6m-3-5L17 3l4 0-1 4-10 9M3 21l3-3`,move:`M12 3v18M3 12h18M8 7l4-4 4 4M8 17l4 4 4-4M7 8l-4 4 4 4m10-8 4 4-4 4`,punch:`M7 13V7a2 2 0 0 1 4 0V5a2 2 0 0 1 4 0v2a2 2 0 0 1 4 0v7l-3 7H9l-5-6a2 2 0 0 1 3-2Zm4-6v5m4-5v5`,wait:`M9 5v14M15 5v14`,arrow:`M4 12h16m-6-6 6 6-6 6`,ranged:`M5 5c8-2 16 6 14 14M4 4l16 16M5 19 19 5m-6 0h6v6M4 14l6 6`,reset:`M3 11a9 9 0 1 1 2 7M3 4v7h7`,undo:`M9 5 3 11l6 6M3 11h11a6 6 0 0 1 6 6v2`,help:`M9 8a3 3 0 1 1 4 3c-1 1-1 2-1 3m0 3v1M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z`,eye:`M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Zm13 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z`,flag:`M5 21V3c5-3 9 3 14 0v11c-5 3-9-3-14 0`,heart:`M20 5c-3-3-6-1-8 1-2-2-5-4-8-1-4 4 0 8 8 15 8-7 12-11 8-15Z`,shield:`m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z`,close:`m6 6 12 12M6 18 18 6`,check:`m5 12 4 4L19 6`,leaf:`M19 3C8 3 3 6 4 14c1 5 8 7 12 1 2-3 3-8 3-12ZM5 20l10-11`},$=(e,t=``)=>`<svg class="icon ${t}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${Fe[e]||Fe.shield}"/></svg>`,Ie=(e,t)=>`<span class="hearts" aria-label="${e} de ${t} pontos de vida">${Array.from({length:t},(t,n)=>$(`heart`,n<e?`full`:`empty`)).join(``)}</span>`,Le=e=>`${`ABCDEFGH`[e.x]}${e.y+1}`,Re=e=>e.intent?e.intent.x>e.x?`→ LESTE`:e.intent.x<e.x?`← OESTE`:e.intent.y>e.y?`↓ SUL`:`↑ NORTE`:`Sem direção`,ze={grass:`grama`,water:`água`,tree:`árvore — bloqueada`,rock:`pedra — bloqueada`,wall:`muralha em ruínas — bloqueada`},Be={river:`Rio`,lake:`Lago`,coast:`Costa`,custom:`Terreno personalizado`};function Ve(e,t={}){let n=t.visualTest??(!t.battleOptions&&!globalThis.__TRIADE_LEVEL__&&new URLSearchParams(location.search).get(`visual`)===`isometrico`),r=new le(t.battleOptions??(n?{level:we()}:globalThis.__TRIADE_LEVEL__?{level:globalThis.__TRIADE_LEVEL__}:{seed:new URLSearchParams(location.search).get(`map`)||void 0})),i=t.teamSelection??(!n&&!t.battleOptions&&!globalThis.__TRIADE_LEVEL__),a=r.team.slice(),o=new AbortController,{signal:s}=o,c=null,l=null,u=null,d=null,f=null,p=!1,m=!1,h=1,g=!1,_=[],v=0,y=``;e.innerHTML=`
+    <div class="game-shell">
+      <header class="site-header">
+        <a class="brand" href="#" aria-label="Tríade, início da missão"><svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 5 45 41H3L24 5Z" stroke="currentColor" stroke-width="2"/><path d="m24 17 13 23H11l13-23Z" fill="currentColor" opacity=".23"/><path d="M24 5v12M3 41l8-1m34 1-8-1" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="30" r="3" fill="currentColor"/></svg><span>TRÍADE<small>TÁTICA ELEMENTAL</small></span></a>
+        <div class="header-mission"><span class="tiny-line"></span> UMA MISSÃO. TRÊS ELEMENTOS.</div>
+        <div class="header-actions">${!t.battleOptions?.level&&!globalThis.__TRIADE_LEVEL__?`<a class="help-btn editor-nav" href="${location.protocol===`file:`?`./editor-offline.html`:`./editor.html`}" aria-label="Editor de mapas">▦<span>Editor</span></a>`:``}<span class="prototype"><i></i> PROTÓTIPO JOGÁVEL</span><button class="help-btn level-load" data-command="open-level" aria-label="Carregar fase">${$(`leaf`)}<span>Fase</span></button><button class="help-btn" data-command="help">${$(`help`)}<span>Como jogar</span></button></div>
+      </header>
+
+      <main>
+        <section class="mission-header" aria-label="Missão">
+          <div><div class="eyebrow">MISSÃO 01 <span>/</span> FLORESTA VERDANTE</div><h1>Clareira do Rio<span>.</span></h1><p>Leia o campo. Escolha seus elementos. Encontre seu caminho.</p></div>
+          <div class="round-display"><div class="round-icon">${$(`leaf`)}</div><div><span class="eyebrow round-counter"><span id="round-number">TURNO 01</span><span id="round-limit"> / 05</span></span><strong id="phase-label">Sua vez de agir</strong></div><span class="live-dot"></span></div>
+        </section>
+
+        <section class="map-strip" aria-label="Mapa da missão"><div class="map-terrain">${$(`water`)}<span><strong id="map-kind">Terreno procedural</strong><small>Água contínua · muralhas em ruínas</small></span></div><div class="map-identity"><span>MAPA</span><code id="map-code"></code></div><button class="secondary-btn new-map-btn" data-command="new-map">${$(`reset`)} Novo mapa</button></section>
+
+        <p class="level-rule-notice" id="level-rule-notice" hidden></p><div class="battle-layout">
+          <aside class="squad-column">
+            <div class="section-heading"><h2>Seu esquadrão</h2><span id="ally-count">03 UNIDADES</span></div><button class="change-team-btn" data-command="choose-team">Trocar equipe</button>
+            <div id="squad" class="squad-list"></div>
+            <div class="objective-card"><div class="eyebrow">${$(`flag`)} OBJETIVO DA MISSÃO</div><h3>Vença em 5 turnos</h3><p>Elimine todas as ondas até o fim do turno 5. Mantenha um aliado de pé.</p><div class="objective-progress"><span id="kill-count">0 de 9 derrotados</span><div id="kill-dots" aria-hidden="true"></div></div><div class="wave-status"><span><strong id="active-enemies">3</strong> no campo</span><span><strong id="pending-enemies">6</strong> reforços restantes</span></div><div class="next-wave" id="next-wave">Próxima onda: 1 inimigo</div></div>
+            <div class="field-guide"><span class="eyebrow">LEITURA DO CAMPO</span><div><i class="legend-square movement"></i> Movimento disponível</div><div><i class="legend-square attack"></i> Alcance da ação</div><div><i class="legend-square danger"></i> Ataque inimigo anunciado</div><p>${$(`water`)} A água pode ser atravessada.</p><p>${$(`shield`)} Muralhas: 2 PV. Bloqueiam a passagem, podem ser destruídas e ficam no lugar.</p></div>
+          </aside>
+
+          <section class="board-column" aria-label="Campo de batalha">
+            <div class="board-topline"><span>${$(`eye`)} <span id="board-status">Intenções reveladas</span></span><span>8 × 8 <i>·</i> VISTA SUPERIOR</span></div>
+            <div class="board-frame"><div class="axis axis-top">${`ABCDEFGH`.split(``).map(e=>`<span>${e}</span>`).join(``)}</div><div class="axis axis-left">${Array.from({length:8},(e,t)=>`<span>${t+1}</span>`).join(``)}</div>
+              <div class="board-surface"><canvas id="battle-canvas" width="512" height="512" aria-hidden="true"></canvas><div id="grid-input" class="grid-input" role="group" aria-label="Tabuleiro 8 por 8">${Array.from({length:64},(e,t)=>`<button class="cell" data-x="${t%8}" data-y="${Math.floor(t/8)}" data-testid="cell-${t%8}-${Math.floor(t/8)}" tabindex="${t===41?0:-1}"></button>`).join(``)}</div><div id="result-overlay" class="result-overlay" hidden></div></div>
+              <div class="board-corner corner-tl"></div><div class="board-corner corner-tr"></div><div class="board-corner corner-bl"></div><div class="board-corner corner-br"></div>
+            </div>
+            <div class="board-caption"><span id="action-hint">Selecione uma casa destacada para mover Ígni.</span><span id="hover-coordinate">—</span></div>
+            <div class="turn-controls"><div class="turn-summary"><span id="ready-count">3</span><div><strong id="ready-label">unidades disponíveis</strong><small>Um movimento + uma ação por unidade</small></div></div><button class="end-turn" data-command="end" id="end-turn">Encerrar turno ${$(`arrow`)}<kbd>E</kbd></button></div>
+          </section>
+
+          <aside class="action-column">
+            <div class="section-heading"><h2>Unidade selecionada</h2><span class="selection-dot"></span></div>
+            <section class="unit-panel" id="unit-panel"></section>
+            <section id="attack-preview" class="preview-panel" aria-label="Prévia da jogada" aria-live="polite" aria-atomic="true"></section>
+            <section class="intent-panel"><div class="section-heading"><h2>${$(`eye`)} Intenções inimigas</h2><span id="threat-count">03</span></div><p>A cada turno, os inimigos avançam até 2 casas e armam o próximo ataque. A seta mostra a direção: um empurrão desloca o ataque junto com o inimigo.</p><div id="intent-list"></div><div class="intent-note">${$(`shield`)} Empurre para mudar as casas ameaçadas. A direção permanece.</div></section>
+          </aside>
+        </div>
+
+        <section class="battle-journal"><div class="journal-title"><span class="eyebrow"><i></i> REGISTRO DE CAMPO</span><span id="journal-round">T01</span></div><div id="battle-log" class="battle-log" role="log" aria-live="polite"></div><button class="restart-btn" data-command="restart">${$(`reset`)} Reiniciar missão</button></section>
+      </main>
+      <footer><span>Cinco elementos. Três ninjas. <strong>A estratégia é sua.</strong></span><div><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> cursor</span><span><kbd>↵</kbd> confirmar</span><span><kbd>Esc</kbd> cancelar</span><span><kbd>Z</kbd> desfazer movimento</span></div><span class="build-tag">TRÍADE <i>/</i> PROTÓTIPO 0.1</span></footer>
+      <input id="game-level-file" type="file" accept=".json,application/json" hidden><div id="toast" class="toast" role="status" hidden></div>
+      <dialog id="help-dialog" aria-labelledby="help-title"><button class="dialog-close" data-command="close-dialog" aria-label="Fechar">${$(`close`)}</button><div class="eyebrow">GUIA DE CAMPO</div><h2 id="help-title">Pense um turno à frente.</h2><p>Elimine os 9 inimigos de todas as ondas até o fim do turno 5. Se o prazo acabar ou todo o esquadrão cair, a missão termina.</p><div class="help-steps"><div><b>01</b><span><strong>Escolha e mova</strong>Clique em um aliado e em uma casa verde. Todos os ninjas andam até 3 casas, sem diagonais. Antes de usar uma ação, use Desfazer movimento (Z) para voltar à posição anterior, se a casa estiver livre.</span></div><div><b>02</b><span><strong>Escolha sua ação</strong>Use Soco, um Especial ou Esperar. Você também pode agir sem se mover; a ação encerra a vez da unidade. Aponte uma casa para ver o resultado antes de confirmar.</span></div><div><b>03</b><span><strong>Antecipe o perigo</strong>Sentinelas atacam a casa vizinha. Besteiros atacam em linha reta até 4 casas: o primeiro personagem ou barreira recebe 1 de dano. Árvores, pedras e muralhas bloqueiam o disparo. Após um empurrão, o ataque acompanha a nova posição e mantém a mesma direção. O inimigo sobrevivente ataca ao encerrar o turno, sem voltar a mirar nos aliados.</span></div><div><b>04</b><span><strong>Prepare-se para as ondas</strong>Ao encerrar o turno, os inimigos atacam e avançam até 2 casas. Dos turnos 2 a 5, chegam 1 ou 2 reforços e todos revelam seus próximos ataques. Elimine a última onda antes que o turno 5 termine.</span></div></div><p class="help-push">Soco e Onda Circular empurram personagens, pedras naturais e barreiras por 1 casa. O Soco causa 1 de dano e empurra o personagem mesmo se o golpe zerar seus PV: ele ainda causa 1 de dano no personagem ou estrutura logo atrás. A Onda não causa dano direto. Uma colisão com personagem ou estrutura causa 1 de dano em cada envolvido, sem empurrão em cadeia. Soco contra outro personagem: o alvo perde 2 PV (1 do Soco + 1 da colisão) e o personagem atrás perde apenas 1 PV. Árvores têm 2 PV, sofrem 1 de dano por colisão e exibem copa quebrada e 1/2 PV quando feridas. Árvores e muralhas ficam no lugar. O Soco pode danificar muralhas adjacentes, mas não as empurra; a Onda não as desloca. Muralhas têm 2 PV e bloqueiam a caminhada até serem destruídas. A água pode ser atravessada.</p><div class="help-elements">${Object.entries(E).map(([e,t])=>`<div style="--element:${t.color}">${$(e)}<strong>${t.special}</strong><p>${t.description}</p></div>`).join(``)}</div><div class="help-keyboard"><kbd>WASD / ↑↓←→</kbd> Cursor <kbd>Enter / Espaço</kbd> Confirmar <kbd>Esc</kbd> Cancelar <kbd>Z</kbd> Desfazer movimento <kbd>E</kbd> Encerrar <kbd>1 / 2 / 3</kbd> Unidade</div><button class="primary-btn" data-command="close-dialog">Entendido. Vamos ao campo. ${$(`arrow`)}</button></dialog>
+      <dialog id="team-dialog" class="team-dialog" aria-labelledby="team-title"><div class="eyebrow">MONTE SEU ESQUADRÃO</div><h2 id="team-title">Três ninjas. Sua estratégia.</h2><p>Escolha 3 dos 5 elementos. Todos têm 3 PV, 3 casas de caminhada, Soco e um poder próprio. Os poderes funcionam individualmente.</p><div id="team-options" class="team-options"></div><p id="team-count" role="status" aria-live="polite"></p><p class="team-restart-note">Ao confirmar, a missão começa no turno 1 no mesmo mapa.</p><div class="dialog-actions"><button class="secondary-btn" data-command="close-dialog" id="team-cancel">Continuar missão</button><button class="primary-btn" data-command="start-team" id="team-start">Iniciar missão ${$(`arrow`)}</button></div></dialog>
+      <dialog id="restart-dialog" class="restart-dialog" aria-labelledby="restart-title"><div class="eyebrow">RECOMEÇAR</div><h2 id="restart-title">Uma nova estratégia?</h2><p>A missão volta ao turno 1 de 5 no mesmo mapa, com todas as unidades restauradas e as ondas reiniciadas.</p><div class="dialog-actions"><button class="secondary-btn" data-command="close-dialog">Continuar missão</button><button class="primary-btn" data-command="confirm-restart">${$(`reset`)} Reiniciar</button></div></dialog>
+      <dialog id="new-map-dialog" class="restart-dialog" aria-labelledby="new-map-title"><div class="eyebrow">OUTRO CAMPO</div><h2 id="new-map-title">Explorar outro terreno?</h2><p>Gera um novo mapa e começa a missão no turno 1 de 5. A partida atual será encerrada. Para tentar novamente no mesmo terreno, use Reiniciar missão.</p><div class="dialog-actions"><button class="secondary-btn" data-command="close-dialog">Continuar missão</button><button class="primary-btn" data-command="confirm-new-map">${$(`reset`)} Gerar novo mapa</button></div></dialog>
+    </div>`;let b=t=>e.querySelector(t),x=new(n?je:Ce)(b(`#battle-canvas`),r);if(n){b(`#battle-canvas`).dataset.projection=`isometric`,b(`.board-topline > span:last-child`).textContent=`8 × 8 · VISTA ISOMÉTRICA`;for(let t of[`new-map`,`choose-team`,`open-level`]){let n=e.querySelector(`[data-command="${t}"]`);n.disabled=!0,n.title=`Cenário fixo do teste visual: três ninjas e um inimigo.`}}let S=[...e.querySelectorAll(`.cell`)],C={x:r.selected.x,y:r.selected.y};function w(e,t,n=!1){let r=e.getContext(`2d`);r.clearRect(0,0,80,80),r.imageSmoothingEnabled=!1,_e(r,t,40,n?43:42,n?2:1.7)}function T(){v++;let t=r.selected,a=t?E[t.element]:null,o=r.phase===`player`&&!m&&!p&&!i,s=[`victory`,`defeat`].includes(r.phase),c=m?h:r.round,u=r.options.level;b(`.mission-header h1`).textContent=u?.name||`Clareira do Rio.`,b(`.mission-header p`).textContent=u?.description||`Leia o campo. Escolha seus elementos. Encontre seu caminho.`,b(`.objective-card h3`).textContent=`Vença em ${r.maxRounds||`∞`} turnos`,b(`.objective-card > p`).textContent=`Elimine todos os ${r.totalEnemies} inimigos e reforços até o fim do turno ${r.maxRounds||`final`}. Mantenha um aliado de pé.`,b(`.help-steps > div:nth-child(4) span`).innerHTML=`<strong>Prepare-se para as ondas</strong>Ao encerrar o turno, os inimigos atacam e avançam até 2 casas, preparando a próxima direção. ${u?`Os reforços seguem a configuração desta fase. Elimine todos até o turno ${r.maxRounds}.`:`Dos turnos 2 a 5, chegam 1 ou 2 reforços. Elimine a última onda antes que o turno 5 termine.`}`;let d=u?se(u):[];b(`#level-rule-notice`).hidden=!d.length,b(`#level-rule-notice`).textContent=d.length?`Regras deste teste: `+d.map(e=>`${e.name}: ${e.rule} ${e.future}`).join(` `):``,b(`#help-dialog > p`).textContent=`Elimine os ${r.totalEnemies} inimigos e reforços em até ${r.maxRounds} turnos. Se o esquadrão cair ou o prazo acabar, a missão termina.`,u?(b(`#help-dialog > p`).textContent=`Elimine os ${r.totalEnemies} inimigos e reforços em até ${r.maxRounds} turnos. As ondas e entradas foram definidas nesta fase.`,b(`.map-terrain small`).textContent=se(u).length?`Fase do editor · há efeitos em planejamento`:`Fase criada no editor de mapas`):b(`.map-terrain small`).textContent=`Água contínua · muralhas em ruínas`,b(`#map-code`).textContent=r.mapSeed||`personalizado`,b(`#map-code`).title=r.waterKind===`custom`?`Terreno personalizado`:`Código do terreno. A URL desta página abre o mesmo mapa.`,b(`#map-kind`).textContent=Be[r.waterKind]||`Terreno procedural`,b(`#round-number`).textContent=`TURNO ${String(c).padStart(2,`0`)}`,b(`#round-limit`).textContent=` / ${String(r.maxRounds).padStart(2,`0`)}`,b(`.round-display`).classList.toggle(`last-round`,c===r.maxRounds&&!s),b(`#phase-label`).textContent=p?`Dash em execução`:m?`Inimigos em movimento`:{player:`Sua vez de agir`,enemy:`Inimigos em ação`,victory:`Missão cumprida`,defeat:`Missão encerrada`}[r.phase],b(`.round-display`).classList.toggle(`enemy-phase`,r.phase===`enemy`||m),b(`.round-display`).setAttribute(`aria-label`,`Turno ${c} de ${r.maxRounds}. ${b(`#phase-label`).textContent}.`),b(`#board-status`).textContent=p?`Dash Relâmpago…`:m?`Inimigos avançando…`:r.phase===`enemy`?`Resolvendo ataques…`:s?`Batalha encerrada`:`Intenções reveladas`,b(`#ally-count`).textContent=`${String(r.allies.length).padStart(2,`0`)} UNIDADES`,b(`#squad`).innerHTML=r.team.map((e,t)=>{let n=E[e],i=r.units.find(t=>t.id===e);return`<button class="squad-card ${r.selectedId===e?`selected`:``} ${i?``:`defeated`}" data-command="select" data-unit="${e}" style="--element:${n.color}" ${!i||!o?`disabled`:``} aria-label="Selecionar ${n.character}, ${n.name}${i?`, ${i.hp} pontos de vida`:`, derrotado`}" aria-pressed="${r.selectedId===e}"><span class="portrait-frame"><canvas width="80" height="80" data-portrait="${e}" aria-hidden="true"></canvas><span class="element-badge">${$(e)}</span></span><span class="squad-info"><span class="squad-name">${n.character}<kbd>${t+1}</kbd></span><span class="element-name">${n.name}</span>${Ie(i?.hp||0,3)}<span class="unit-status">${i?i.acted?`${$(`check`)} Turno concluído`:`<i></i> ${i.moved?`Ação disponível`:`Pronto para agir`}`:`Derrotado`}</span></span></button>`}).join(``),e.querySelectorAll(`[data-portrait]`).forEach(e=>w(e,{team:`ally`,element:e.dataset.portrait})),n&&(b(`#map-kind`).textContent=`Cenário fixo`,b(`#map-code`).textContent=`TESTE-ISO-01`,b(`.map-terrain small`).textContent=`Rio · grama · pedras · árvores`);let f=r.allies.filter(e=>!e.acted).length,_=r.kills;if(b(`#ready-count`).textContent=f,b(`#ready-label`).textContent=f===1?`unidade disponível`:`unidades disponíveis`,b(`#kill-count`).textContent=`${_} de ${r.totalEnemies} derrotados`,b(`#kill-dots`).innerHTML=Array.from({length:r.totalEnemies},(e,t)=>`<i class="${t<_?`complete`:``}"></i>`).join(``),b(`#active-enemies`).textContent=r.enemies.length,b(`#pending-enemies`).textContent=r.pendingReinforcements,b(`#next-wave`).textContent=s?r.phase===`victory`?`Todas as ondas derrotadas`:`Missão encerrada`:r.nextWaveCount>0?`Próxima onda: ${r.nextWaveCount} ${r.nextWaveCount===1?`inimigo`:`inimigos`}`:r.pendingReinforcements>0?`Reforços aguardando espaço no campo`:`Última onda no campo · elimine os restantes`,b(`.objective-card`).classList.toggle(`last-round`,c===r.maxRounds&&!s),b(`#end-turn`).disabled=!o,b(`#end-turn`).classList.toggle(`all-done`,f===0),t){let e=!o||t.acted,n=o&&r.canUndoMove();b(`#unit-panel`).style.setProperty(`--element`,a.color),b(`#unit-panel`).innerHTML=`<div class="selected-profile"><span class="selected-portrait"><canvas id="large-portrait" width="80" height="80" aria-hidden="true"></canvas></span><div><div class="eyebrow">${$(t.element)} ${a.name.toUpperCase()}</div><h3>${t.name}</h3><span>${a.title}</span></div></div><div class="unit-stats"><span>${$(`heart`)} <strong>${t.hp}</strong><small>/ 3 PV</small></span><span>${$(`move`)} <strong>${t.range}</strong><small>casas</small></span><span>${$(`sword`)} <strong>1</strong><small>ação</small></span></div><div class="action-heading"><span class="eyebrow">${t.acted?`TURNO CONCLUÍDO`:`ESCOLHA SUA AÇÃO`}</span><span class="action-pips"><i class="${t.moved?`used`:``}" title="Movimento"></i><i class="${t.acted?`used`:``}" title="Ação"></i></span></div><div class="action-buttons"><button class="action-btn ${r.mode===`move`&&!t.acted?`active`:``}" data-command="mode" data-mode="move" ${e||t.moved?`disabled`:``}>${$(`move`)}<span><strong>Mover</strong><small>Até ${t.range} casas</small></span><span class="action-value">${t.range}</span></button><button class="action-btn undo-btn" id="undo-move" data-command="undo" ${n?``:`disabled`} aria-keyshortcuts="Z">${$(`undo`)}<span><strong>Desfazer movimento</strong><small>Voltar antes de usar uma ação</small></span><kbd>Z</kbd></button><button class="action-btn ${r.mode===`punch`?`active`:``}" data-command="mode" data-mode="punch" ${e?`disabled`:``}>${$(`punch`)}<span><strong>Soco</strong><small>1 de dano · empurra 1 casa</small></span><span class="action-value">1</span></button><button class="action-btn special-btn ${r.mode===`special`?`active`:``}" data-command="mode" data-mode="special" ${e?`disabled`:``}>${$(t.element)}<span><strong>${a.special}</strong><small>${t.element===`fire`?`Linha reta · até 4 casas`:t.element===`water`?`Própria casa · 4 vizinhas`:t.element===`lightning`?`Linha reta · custa 1 PV`:t.element===`wind`?`Qualquer casa · 4 vizinhas`:`Adjacente · 2 PV`}</small></span><span class="special-star">✦</span></button><button class="action-btn wait-btn" data-command="wait" ${e?`disabled`:``}>${$(`wait`)}<span><strong>Esperar</strong><small>Encerrar ação da unidade</small></span></button></div><div class="ability-note">${t.acted?`${$(`check`)} ${t.name} já agiu. Selecione outro aliado.`:r.mode===`special`?a.description:r.mode===`punch`?`1 de dano e empurrão de 1 casa em inimigos, pedras ou barreiras. Colisão: 1 de dano em cada envolvido, sem empurrão em cadeia. Contra outro personagem: 2 PV no alvo (Soco + colisão) e 1 PV no personagem atrás, aliado ou inimigo. Mesmo com 0 PV, o alvo ainda é empurrado e causa dano no obstáculo atrás. Árvores e muralhas ficam no lugar; o Soco também danifica muralhas.`:`Você pode agir sem se mover. Desfaça o movimento com Z antes de usar uma ação, que encerra a vez desta unidade.`}</div>`,w(b(`#large-portrait`),t,!0)}else b(`#unit-panel`).innerHTML=`<div class="empty-unit">Nenhuma unidade disponível.</div>`;b(`#threat-count`).textContent=String(r.enemies.length).padStart(2,`0`),b(`#intent-list`).innerHTML=r.enemies.map(e=>{let t=e.kind===`ranged`,n=r.enemyThreatenedCells(e),i=n.at(-1)||r.enemyAttackPath(e).at(-1);return`<div class="intent-row ${t?`ranged`:`melee`} ${e.intent&&!n.length?`attack-blocked`:``}" data-enemy="${e.id}"><span class="enemy-number">${$(t?`ranged`:`sword`)}</span><span><strong>${e.name}</strong><span class="enemy-role">${t?`DISTÂNCIA · ATÉ 4 CASAS`:`CORPO A CORPO · 1 CASA`}</span><span class="enemy-ready-label">${Re(e)} · ${m?`PREPARANDO ATAQUE`:`ATAQUE ARMADO`}</span><small>${e.advanceSteps?`Avançou ${e.advanceSteps} casa${e.advanceSteps===1?``:`s`}`:`Em posição`} · ${i?`Ataque em <b>${Le(i)}</b>`:`Voltado para fora do mapa`}${i&&!n.length?` · bloqueado`:``} · 1 de dano</small></span>${Ie(e.hp,e.maxHp)}</div>`}).join(``)||`<div class="no-threats">${r.pendingReinforcements>0?`Campo livre. Há reforços a caminho.`:`Todas as ondas derrotadas.`}</div>`,b(`#battle-log`).innerHTML=r.log.slice(0,3).map((e,t)=>`<div class="log-entry ${e.type} ${t===0?`latest`:``}"><span class="log-dot"></span><span>${e.text}</span></div>`).join(``),b(`#journal-round`).textContent=`T${String(r.round).padStart(2,`0`)}`,b(`#action-hint`).textContent=o?t?t.acted?`Unidade concluiu a vez. Selecione outro aliado ou encerre o turno.`:r.mode===`move`?`Clique em uma casa destacada para mover ${t.name}.`:r.mode===`punch`?`Soco: 1 de dano no alvo adjacente. Empurra inimigos, pedras e barreiras; muralhas ficam no lugar.`:t.element===`water`?`Ative a Onda Circular na casa de ${t.name}: empurra personagens e pedras vizinhos.`:t.element===`earth`?`Escolha uma casa de grama adjacente para erguer a barreira.`:t.element===`lightning`?`Escolha uma direção destacada: dash até o primeiro alvo. Rai perde 1 PV.`:t.element===`wind`?`Mire qualquer casa: a rajada empurra as quatro vizinhas, inclusive aliados.`:`Escolha uma direção destacada para lançar o projétil.`:`Selecione uma unidade.`:s?`Reinicie para testar uma nova estratégia.`:`Os inimigos executam as intenções anunciadas…`;let y=new Set(r.enemies.flatMap(e=>r.enemyAttackPath(e).map(e=>L(e.x,e.y)))),x=new Set(r.enemies.flatMap(e=>r.enemyThreatenedCells(e).map(e=>L(e.x,e.y)))),C=new Set((o?r.targets():[]).map(e=>L(e.x,e.y))),O=o&&r.mode===`special`&&t?.element===`water`&&!t.acted,k=new Set((O?r.waveArea():[]).map(e=>L(e.x,e.y)));S.forEach(e=>{let t=+e.dataset.x,n=+e.dataset.y,i=r.unitAt(t,n),a=r.structureAt(t,n),s=r.terrain[n][t],c=`${Le({x:t,y:n})}, ${ze[s]||ee[s]?.name||s}${i?`, ${i.name}, ${i.hp} PV`:``}${a?(a.type===`barrier`?`, barreira, `:`, estrutura, `)+a.hp+` PV`:``}${x.has(L(t,n))?`, perigo: ataque anunciado`:y.has(L(t,n))?`, ataque anunciado sem alcance ou bloqueado`:``}${C.has(L(t,n))?`, ${r.mode===`move`?`movimento disponível`:O?`ativar Onda Circular`:`alcance da ação`}`:``}${k.has(L(t,n))?`, área afetada pela onda`:``}${r.levelLayers?.effects[n][t]?`, ${ee[r.levelLayers.effects[n][t]].name}`:``}${s===`mud`?`, custo de movimento 2`:``}`;e.setAttribute(`aria-label`,c),e.disabled=!o,e.title=c,e.setAttribute(`aria-pressed`,String(i?.id===r.selectedId))});let A=b(`#result-overlay`);s&&!g&&l===null&&(l=setTimeout(()=>{l=null,g=!0,T()},460)),A.hidden=!s||!g,s&&(A.innerHTML=`<div class="result-card ${r.phase}"><div class="result-emblem">${$(r.phase===`victory`?`flag`:`shield`)}</div><span class="eyebrow">${r.phase===`victory`?`CLAREIRA PROTEGIDA`:r.resultReason===`timeout`?`LIMITE DE TURNOS`:`O CAMPO SILENCIOU`}</span><h2>${r.phase===`victory`?`Missão cumprida.`:r.resultReason===`timeout`?`Tempo esgotado.`:`Esquadrão derrotado.`}</h2><p>${r.phase===`victory`?`Todas as ondas caíram em ${r.round} turno${r.round===1?``:`s`}.<br>${_} inimigos derrotados. A clareira está protegida.`:r.resultReason===`timeout`?`O turno ${r.maxRounds} terminou.<br>Você derrotou ${_} de ${r.totalEnemies} inimigos. Tente uma nova estratégia.`:`Toda estratégia é um começo.<br>Reagrupe os elementos e tente novamente.`}</p><button class="primary-btn" data-command="confirm-restart">${$(`reset`)} Jogar novamente</button></div>`),D()}function D(){let e=x.cursor||x.hover,t=`${v}:${d?.open?`dialog`:`game`}:${e?L(e.x,e.y):`none`}`;if(t===y)return;y=t;let n=e&&!m&&!p&&!d?.open?r.previewAction(e.x,e.y):null;x.preview=n,b(`#attack-preview`).innerHTML=Ne(n),b(`#attack-preview`).classList.toggle(`has-preview`,!!n);let i=Pe(n);for(let e of S){let t=i.get(L(+e.dataset.x,+e.dataset.y))?.join(`. `);t?e.setAttribute(`aria-description`,`Prévia: ${t}`):e.removeAttribute(`aria-description`),e.title=e.getAttribute(`aria-label`)+(t?`. Prévia: ${t}`:``)}x.draw(performance.now())}function O(e){clearTimeout(u),b(`#toast`).textContent=e,b(`#toast`).hidden=!1,u=setTimeout(()=>{b(`#toast`).hidden=!0},2600)}function k(){return x.trigger(r.lastEffect),x.consumeEvents()}function A(e){clearTimeout(c),p=e>0,x.inputLocked=p,p&&(c=setTimeout(()=>P(`finish-action`),e))}function j(e,t=r.round){clearTimeout(c),p=!1,m=e>0,h=t,x.inputLocked=m,m&&(c=setTimeout(()=>P(`finish-enemy`),e))}function te(){if(r.mapSeed&&r.waterKind!==`custom`)try{let e=new URL(location.href);e.searchParams.set(`map`,r.mapSeed),history.replaceState(history.state,``,e)}catch{}}function M(e=!1,t=null,i=null){clearTimeout(c),clearTimeout(l),clearTimeout(u),c=null,l=null,g=!1,_.length=0,i?r.setTeam(i):t?r.loadLevel(t):e&&!n?r.newMap():r.reset(),te(),C={x:r.selected.x,y:r.selected.y},x.reset(),S.forEach(e=>e.tabIndex=+e.dataset.x===C.x&&+e.dataset.y===C.y?0:-1),b(`#hover-coordinate`).textContent=`—`,b(`#toast`).hidden=!0,j(x.consumeEvents()),I(),T()}function N(e){r.select(e)&&(C={x:r.selected.x,y:r.selected.y},x.cursor=null,T())}function ne(e,t){if(r.phase!==`player`||m||d?.open||i)return;C={x:e,y:t},x.cursor=null;let n=r.unitAt(e,t);r.mode===`special`&&r.selected?.element===`water`&&!r.selected.acted?r.selected.x===e&&r.selected.y===t?P(`wave`):n?.team===`ally`?P(`select`,n.id):O(`Ative a Onda Circular na própria casa de Nami.`):r.mode===`special`&&r.selected?.element===`wind`&&!r.selected.acted?P(`wind`,{x:e,y:t}):n?.team===`ally`?P(`select`,n.id):r.selected?.acted?O(`Esta unidade já agiu. Escolha outro aliado.`):r.mode===`move`?P(`move`,{x:e,y:t}):r.mode===`punch`?P(`punch`,{x:e,y:t}):r.mode===`special`&&P(r.selected?.element,{x:e,y:t})}let re={"choose-team":()=>{a=r.team.slice(),z(),F(`team-dialog`)},"toggle-team":e=>{a.includes(e)?a=a.filter(t=>t!==e):a.length<3&&Object.hasOwn(E,e)&&a.push(e),z()},"start-team":()=>{a.length===3&&(i=!1,M(!1,null,a))},select:e=>N(e),mode:e=>{r.setMode(e)&&(x.cursor=null,e===`special`&&r.selected.element===`water`&&R(r.selected.x,r.selected.y),T())},move:e=>{r.move(e.x,e.y)?(k(),T()):O(`Escolha uma casa verde ao alcance.`)},undo:()=>{r.undoMove()&&(k(),C={x:r.selected.x,y:r.selected.y},x.cursor=null,x.hover=null,S.forEach(e=>e.tabIndex=+e.dataset.x===C.x&&+e.dataset.y===C.y?0:-1),b(`#hover-coordinate`).textContent=`—`,T())},punch:e=>{r.punch(e.x,e.y)?(k(),T()):O(`O Soco precisa de um inimigo, pedra, barreira ou muralha a 1 casa.`)},fire:e=>{r.fire(e.x,e.y)?(k(),T()):O(`Escolha uma linha livre destacada, até 4 casas.`)},wave:()=>{r.wave()&&(k(),T())},lightning:e=>{r.lightning(e.x,e.y)?(A(k()),T()):O(`Escolha uma linha até um inimigo ou estrutura. Aliados e terreno intransponível bloqueiam o dash.`)},wind:e=>{r.wind(e.x,e.y)&&(k(),T())},earth:e=>{r.earth(e.x,e.y)?(k(),T()):O(`A barreira precisa de grama adjacente e vazia.`)},wait:()=>{r.wait()&&T()},end:()=>{r.beginEnemyTurn()&&(T(),c=setTimeout(()=>{P(`resolve`)},700))},resolve:()=>{let e=r.round;r.resolveEnemyTurn()&&(j(k(),e),T())},"finish-action":()=>{p=!1,x.inputLocked=!1,T()},"finish-enemy":()=>{m=!1,x.inputLocked=!1,T()},restart:()=>{F(`restart-dialog`)},"confirm-restart":()=>M(),"new-map":()=>{F(`new-map-dialog`)},"confirm-new-map":()=>M(!0),"open-level":()=>b(`#game-level-file`).click(),"load-level":e=>M(!1,e.level),help:()=>F(`help-dialog`),"close-dialog":()=>I()};function P(e,n){t.eventDriven?_.push({type:e,payload:n}):ie(e,n)}function ie(e,t){(!m&&!p||[`finish-enemy`,`finish-action`,`choose-team`,`toggle-team`,`start-team`,`help`,`close-dialog`,`restart`,`confirm-restart`,`new-map`,`confirm-new-map`,`open-level`,`load-level`].includes(e))&&re[e]?.(t)}function ce(e){for(;_.length&&e.includes(_[0].type);){let e=_.shift();ie(e.type,e.payload)}}function F(e){f=document.activeElement,d=b(`#`+e),d.showModal(),d.querySelector(`button:not(:disabled):not([hidden])`)?.focus({preventScroll:!0}),D()}function I(){i&&d?.id===`team-dialog`||(d?.open&&d.close(),d=null,f?.isConnected&&f.focus(),D())}e.addEventListener(`click`,e=>{let t=e.target.closest(`.cell, .isometric-unit-target`);if(t){ne(+t.dataset.x,+t.dataset.y);return}let n=e.target.closest(`[data-command]`);n&&!n.disabled&&(e.preventDefault(),P(n.dataset.command,n.dataset.unit||n.dataset.mode)),e.target.closest(`.brand`)&&e.preventDefault()},{signal:s}),b(`#grid-input`).addEventListener(`pointermove`,e=>{let t=e.target.closest(`.cell, .isometric-unit-target`);t&&(x.hover?.x!==+t.dataset.x||x.hover?.y!==+t.dataset.y||x.cursor)&&(x.hover={x:+t.dataset.x,y:+t.dataset.y},x.cursor=null,b(`#hover-coordinate`).textContent=Le(x.hover),D())},{signal:s}),b(`#grid-input`).addEventListener(`pointerleave`,()=>{x.hover=null,b(`#hover-coordinate`).textContent=`—`,D()},{signal:s}),b(`#grid-input`).addEventListener(`focusin`,e=>{let t=e.target.closest(`.cell, .isometric-unit-target`);t&&(C={x:+t.dataset.x,y:+t.dataset.y},x.cursor=C,x.hover=null,D())},{signal:s}),e.querySelectorAll(`dialog`).forEach(e=>{e.addEventListener(`click`,t=>{t.target===e&&I()},{signal:s}),e.addEventListener(`cancel`,e=>{e.preventDefault(),I()},{signal:s})});function R(e,t){C={x:Math.max(0,Math.min(7,e)),y:Math.max(0,Math.min(7,t))},x.cursor=C,x.hover=null,S.forEach(e=>e.tabIndex=+e.dataset.x===C.x&&+e.dataset.y===C.y?0:-1),S[C.y*8+C.x].focus({preventScroll:!0}),b(`#hover-coordinate`).textContent=Le(C),D()}document.addEventListener(`keydown`,e=>{if(d?.open){if(e.key===`Tab`){let t=[...d.querySelectorAll(`button:not(:disabled)`)],n=t[0],r=t.at(-1);e.shiftKey&&document.activeElement===n?(e.preventDefault(),r?.focus()):!e.shiftKey&&document.activeElement===r&&(e.preventDefault(),n?.focus())}return}if(e.ctrlKey||e.metaKey||e.altKey)return;let t=e.key.toLowerCase(),n={w:[0,-1],arrowup:[0,-1],d:[1,0],arrowright:[1,0],s:[0,1],arrowdown:[0,1],a:[-1,0],arrowleft:[-1,0]};if(n[t]){e.preventDefault();let[r,i]=n[t];R(C.x+r,C.y+i)}else t===`z`?(e.preventDefault(),e.repeat||P(`undo`)):t===`e`?(e.preventDefault(),e.repeat||P(`end`)):t===`escape`?(e.preventDefault(),x.cursor=null,x.hover=null,r.selected&&!r.selected.moved?P(`mode`,`move`):r.selected&&!r.selected.acted&&P(`mode`,`punch`),D()):[`1`,`2`,`3`].includes(t)?(e.preventDefault(),P(`select`,r.team[t-1])):(t===`enter`||t===` `)&&(!e.target.closest(`button`)||e.target.classList.contains(`cell`))&&(e.preventDefault(),e.repeat||ne(C.x,C.y))},{signal:s}),b(`#game-level-file`).addEventListener(`change`,async e=>{let t=e.target.files[0];if(t){try{if(t.size>2e5)throw Error(`Use uma fase JSON de até 200 KB.`);let e=ae(JSON.parse(await t.text())),n=oe(e);if(n.errors.length)throw Error(n.errors.join(` `));P(`load-level`,{level:e}),O(n.warnings.length?n.warnings.join(` `):`Fase carregada.`)}catch(e){O(e.message)}e.target.value=``}},{signal:s});function z(){let t=document.activeElement?.dataset.unit;b(`#team-options`).innerHTML=Object.entries(E).map(([e,t])=>`<button class="team-option" data-command="toggle-team" data-unit="${e}" style="--element:${t.color}" aria-pressed="${a.includes(e)}" ${!a.includes(e)&&a.length===3?`disabled`:``}><span class="team-portrait"><canvas width="80" height="80" data-team-portrait="${e}" aria-hidden="true"></canvas>${$(e)}</span><span class="team-option-name">${t.character}<small>${t.name}</small></span><strong>${t.special}</strong><span class="team-description">${t.description}</span><span class="team-choice">${a.includes(e)?`${a.indexOf(e)+1} · SELECIONADO`:`SELECIONAR`}</span></button>`).join(``),e.querySelectorAll(`[data-team-portrait]`).forEach(e=>w(e,{team:`ally`,element:e.dataset.teamPortrait})),b(`#team-count`).textContent=`${a.length} / 3 ninjas selecionados${a.length===3?`. Desmarque um ninja para trocar por outro.`:`. Escolha mais `+(3-a.length)+`.`}`,b(`#team-start`).disabled=a.length!==3,b(`#team-cancel`).hidden=i,t&&b(`#team-options`).querySelector(`[data-unit="${t}"]`)?.focus({preventScroll:!0})}return te(),j(x.consumeEvents()),T(),i&&(z(),F(`team-dialog`)),{battle:r,renderer:x,process:ce,update:T,root:e,dispose(){o.abort(),clearTimeout(c),clearTimeout(l),clearTimeout(u),x.dispose(),e.innerHTML=``}}}return e.createApp=Ve,e})({});
+Triade.createApp(document.getElementById('app'));</script></body></html>
