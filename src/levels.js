@@ -1,4 +1,5 @@
 import { ELEMENTS, DEFAULT_TEAM } from "./roster.js";
+import { ENEMY_KINDS } from "./enemies.js";
 // Versioned level files are shared by the editor, game and standalone exports.
 export const LEVEL_SIZE = 8;
 const tile = (id, name, category, layer, color, rule, future = "") => ({
@@ -376,7 +377,7 @@ export function normalizeLevel(input) {
       return { id: u.id, team: "ally", element: u.element, x: u.x, y: u.y };
     if (
       u.team === "enemy" &&
-      ["melee", "ranged"].includes(u.kind) &&
+      ENEMY_KINDS.includes(u.kind) &&
       /^enemy-[1-9]\d{0,3}$/.test(u.id)
     )
       return { id: u.id, team: "enemy", kind: u.kind, x: u.x, y: u.y };
@@ -411,7 +412,7 @@ export function normalizeLevel(input) {
           !Array.isArray(wave.kinds) ||
           wave.kinds.length < 1 ||
           wave.kinds.length > 8 ||
-          wave.kinds.some((kind) => !["melee", "ranged"].includes(kind))
+          wave.kinds.some((kind) => !ENEMY_KINDS.includes(kind))
         )
           fail("Cada onda deve ter de 1 a 8 inimigos válidos.");
         rounds.add(wave.round);

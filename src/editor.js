@@ -1,4 +1,5 @@
 import { ELEMENTS } from "./roster.js";
+import { ENEMY_TYPES, ENEMY_KINDS } from "./enemies.js";
 import { createApp } from "./app.js";
 import { createTerrainCanvas, drawUnit } from "./art.js";
 import { generateMap, randomSeed } from "./maps.js";
@@ -29,9 +30,7 @@ const DRAFT_KEY = "triade.editor.draft.v1",
   LIBRARY_KEY = "triade.editor.library.v1";
 const unitName = (u) =>
   u.team === "enemy"
-    ? u.kind === "ranged"
-      ? "Besteiro"
-      : "Sentinela"
+    ? ENEMY_TYPES[u.kind].name
     : ELEMENTS[u.element].character;
 const fileName = (name) =>
   name
@@ -184,7 +183,7 @@ export function createEditor(root, options = {}) {
       const kind = id.slice(5);
       drawUnit(
         c,
-        ["melee", "ranged"].includes(kind)
+        ENEMY_KINDS.includes(kind)
           ? { team: "enemy", kind }
           : { team: "ally", element: kind },
         32,
@@ -204,8 +203,10 @@ export function createEditor(root, options = {}) {
             { id: "unit:earth", name: "Taro · Terra" },
             { id: "unit:lightning", name: "Rai · Raio" },
             { id: "unit:wind", name: "Sora · Vento" },
-            { id: "unit:melee", name: "Sentinela" },
-            { id: "unit:ranged", name: "Besteiro" },
+            ...ENEMY_KINDS.map((kind) => ({
+              id: `unit:${kind}`, name: ENEMY_TYPES[kind].name,
+              rule: ENEMY_TYPES[kind].rule,
+            })),
           ]
         : TILE_CATALOG.filter((t) => t.category === category);
     $("#editor-palette-items").innerHTML = entries
@@ -230,7 +231,7 @@ export function createEditor(root, options = {}) {
     const t = TILE_BY_ID[brush];
     $("#editor-brush-info").innerHTML = t
       ? `<strong>${escape(t.name)}</strong><span>${escape(t.rule)}</span>${t.future ? `<small>◇ ${escape(t.future)}</small>` : '<small class="editor-ready">● Regra disponível no teste</small>'}`
-      : `<strong>${escape(brush.slice(5) === "melee" ? "Sentinela" : brush.slice(5) === "ranged" ? "Besteiro" : ELEMENTS[brush.slice(5)]?.character || "Personagem")}</strong><span>Clique em uma casa livre. Um aliado já colocado muda para a nova posição; inimigos podem ser adicionados várias vezes. Com Área inicial, os ninjas no mapa são opcionais: o jogador escolhe o trio antes de posicionar. Sem essa área, coloque exatamente 3 ninjas. Use a borracha de Personagens para retirar aliados.</span>`;
+      : `<strong>${escape(ENEMY_TYPES[brush.slice(5)]?.name || ELEMENTS[brush.slice(5)]?.character || "Personagem")}</strong>${ENEMY_TYPES[brush.slice(5)] ? `<small>${escape(ENEMY_TYPES[brush.slice(5)].rule)}</small>` : ""}<span>Clique em uma casa livre. Um aliado já colocado muda para a nova posição; inimigos podem ser adicionados várias vezes. Com Área inicial, os ninjas no mapa são opcionais: o jogador escolhe o trio antes de posicionar. Sem essa área, coloque exatamente 3 ninjas. Use a borracha de Personagens para retirar aliados.</span>`;
     for (const b of root.querySelectorAll("[data-brush]"))
       b.setAttribute("aria-pressed", String(b.dataset.brush === brush));
     for (const b of root.querySelectorAll("[data-mode]"))
@@ -427,7 +428,7 @@ export function createEditor(root, options = {}) {
     $("#editor-waves").innerHTML = level.rules.waves
       .map(
         (w, i) =>
-          `<div class="editor-wave" data-wave="${i}"><label>Turno<input data-wave-field="round" type="number" min="2" max="${level.rules.maxRounds}" value="${w.round}"></label><label>Sentinelas<input data-wave-field="melee" type="number" min="0" max="8" value="${w.kinds.filter((k) => k === "melee").length}"></label><label>Besteiros<input data-wave-field="ranged" type="number" min="0" max="8" value="${w.kinds.filter((k) => k === "ranged").length}"></label><button data-edit="remove-wave" data-index="${i}" aria-label="Excluir onda do turno ${w.round}">×</button></div>`,
+          `<div class="editor-wave" data-wave="${i}"><label>Turno<input data-wave-field="round" type="number" min="2" max="${level.rules.maxRounds}" value="${w.round}"></label>${ENEMY_KINDS.map((kind) => `<label>${ENEMY_TYPES[kind].plural}<input data-wave-field="${kind}" type="number" min="0" max="8" value="${w.kinds.filter((k) => k === kind).length}"></label>`).join("")}<button data-edit="remove-wave" data-index="${i}" aria-label="Excluir onda do turno ${w.round}">×</button></div>`,
       )
       .join("");
     $("#editor-library").innerHTML =
@@ -713,22 +714,17 @@ export function createEditor(root, options = {}) {
         change((l) => {
           const row = field.closest("[data-wave]"),
             round = +row.querySelector('[data-wave-field="round"]').value;
-          const melee = +row.querySelector('[data-wave-field="melee"]').value,
-            ranged = +row.querySelector('[data-wave-field="ranged"]').value;
+          const counts = ENEMY_KINDS.map((kind) =>
+            +row.querySelector(`[data-wave-field="${kind}"]`).value);
           if (
-            !Number.isInteger(melee) ||
-            !Number.isInteger(ranged) ||
-            melee < 0 ||
-            ranged < 0 ||
-            melee + ranged > 8
+            counts.some((n) => !Number.isInteger(n) || n < 0) ||
+            counts.reduce((sum, n) => sum + n, 0) < 1 ||
+            counts.reduce((sum, n) => sum + n, 0) > 8
           )
             throw new Error("Use de 1 a 8 inimigos por onda.");
           l.rules.waves[index] = {
             round,
-            kinds: [
-              ...Array(melee).fill("melee"),
-              ...Array(ranged).fill("ranged"),
-            ],
+            kinds: ENEMY_KINDS.flatMap((kind, i) => Array(counts[i]).fill(kind)),
           };
         });
       }

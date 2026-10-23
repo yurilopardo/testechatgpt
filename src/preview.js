@@ -33,7 +33,7 @@ export function previewMarkup(preview) {
     const push = preview.pushes.find((p) => p.id === unit.id);
     const armed =
       push && unit.intent && !unit.defeated
-        ? `Ataque mantém a direção ${unit.intent.x > unit.to.x ? "→" : unit.intent.x < unit.to.x ? "←" : unit.intent.y > unit.to.y ? "↓" : "↑"} · ${unit.attackCells.length ? unit.attackCells.map(coordinate).join(", ") : "bloqueado ou fora do mapa"}`
+        ? `Ataque mantém a direção ${unit.intent.x > unit.to.x ? "→" : unit.intent.x < unit.to.x ? "←" : unit.intent.y > unit.to.y ? "↓" : "↑"} · ${unit.attackCells.length ? unit.attackCells.map(coordinate).join(", ") : "bloqueado ou fora do mapa"}${unit.kind === "lobber" ? " · tiro por cima: alvo acompanha o empurrão" : ""}`
         : "";
     const movement =
       unit.id === preview.actor.id && preview.effect?.type === "lightning"
@@ -107,6 +107,10 @@ export function previewCellDescriptions(preview) {
     add(preview.effect.impactFrom, "Destino do dash · Rai perde 1 PV");
   }
   for (const p of preview.pushes) add(p.to, "Destino do empurrão imediato");
+  for (const u of preview.units)
+    if (u.kind === "lobber" && !u.defeated && preview.pushes.some((p) => p.id === u.id))
+      for (const cell of u.attackCells)
+        add(cell, `Novo alvo do tiro por cima de ${u.name}: 1 PV ao encerrar o turno`);
   for (const p of preview.structureMoves || [])
     add(p.to, `Destino do empurrão de ${p.name}`);
   for (const c of preview.collisions)

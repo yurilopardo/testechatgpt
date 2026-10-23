@@ -5,13 +5,14 @@ import {
   deploymentCells, defaultDeploymentCells, suggestedLevelTeam,
 } from "./levels.js";
 import { ELEMENTS, DEFAULT_TEAM, normalizeTeam, createAlly } from "./roster.js";
+import { createEnemy } from "./enemies.js";
 
 export const SIZE = 8;
 export const MAX_ROUNDS = 5;
 export const REINFORCEMENTS = [
   { round: 2, kinds: ["melee"] },
   { round: 3, kinds: ["melee", "ranged"] },
-  { round: 4, kinds: ["ranged"] },
+  { round: 4, kinds: ["lobber"] },
   { round: 5, kinds: ["melee", "ranged"] },
 ];
 export const DIRECTIONS = [
@@ -180,7 +181,6 @@ export class Battle {
       intent: null,
     }));
     if (level) {
-      const templates = this.units;
       const authoredSlots = level.units.filter((u) => u.team === "ally")
         .map(({ x, y }) => ({ x, y }));
       const slots = [
@@ -190,14 +190,9 @@ export class Battle {
       ];
       this.units = [
         ...this.team.map((element, i) => createAlly(element, slots[i])),
-        ...level.units.filter((u) => u.team === "enemy").map((u) => ({
-          ...templates.find((t) => t.kind === u.kind),
-          ...u,
-          name: `${u.kind === "ranged" ? "Besteiro" : "Sentinela"} ${u.id.slice(6)}`,
-          moved: false,
-          acted: false,
-          intent: null,
-        })),
+        ...level.units
+          .filter((u) => u.team === "enemy")
+          .map((u) => createEnemy(u.kind, u.id, u)),
       ];
     }
     this.round = 1;
@@ -356,23 +351,8 @@ export class Battle {
       cells.sort((a, b) => a.nearest - b.nearest || b.y - a.y || b.x - a.x);
       const destination = cells[0];
       if (!destination) break;
-      const serial = ++this.enemySerial,
-        ranged = entry.kind === "ranged";
-      this.units.push({
-        id: `enemy-${serial}`,
-        team: "enemy",
-        kind: entry.kind,
-        name: `${ranged ? "Besteiro" : "Sentinela"} ${serial}`,
-        x: destination.x,
-        y: destination.y,
-        hp: ranged ? 1 : 2,
-        maxHp: ranged ? 1 : 2,
-        range: 2,
-        attackRange: ranged ? 4 : 1,
-        moved: false,
-        acted: false,
-        intent: null,
-      });
+      const serial = ++this.enemySerial;
+      this.units.push(createEnemy(entry.kind, `enemy-${serial}`, destination));
       this.reinforcementQueue.splice(this.reinforcementQueue.indexOf(entry), 1);
       spawned++;
     }
@@ -1294,7 +1274,8 @@ export class Battle {
     return (
       steps > 0 &&
       (enemy.x === target.x || enemy.y === target.y) &&
-      steps <= (enemy.kind === "ranged" ? enemy.attackRange || 4 : 1)
+      (enemy.kind === "lobber" ||
+        steps <= (enemy.kind === "ranged" ? enemy.attackRange || 4 : 1))
     );
   }
 
@@ -1312,6 +1293,10 @@ export class Battle {
   }
 
   enemyThreatenedCells(enemy) {
+    // The flight path is safe: an overhead shot damages only its exact endpoint.
+    // Never clamp an off-board endpoint to the last cell of its flight path.
+    if (enemy.kind === "lobber")
+      return this.enemyAttackValid(enemy) ? [{ ...enemy.intent }] : [];
     const cells = [];
     for (const point of this.enemyAttackPath(enemy)) {
       if (
@@ -1329,6 +1314,7 @@ export class Battle {
 
   enemyAttackValid(enemy, target = enemy.intent) {
     if (!this.enemyAttackInRange(enemy, target)) return false;
+    if (enemy.kind === "lobber") return inside(target.x, target.y);
     if (enemy.kind !== "ranged")
       return this.enemyAttackPath(enemy, target).length > 0;
     const path = this.enemyAttackPath(enemy, target);
@@ -1352,7 +1338,7 @@ export class Battle {
       if (!this.allies.length) break;
       enemy.advanceSteps = 0;
       const canHit = (position, ally) =>
-        enemy.kind === "ranged"
+        enemy.kind === "ranged" || enemy.kind === "lobber"
           ? this.enemyAttackValid({ ...enemy, ...position }, ally)
           : distance(position, ally) === 1;
       const adjacent = this.allies.find((a) => canHit(enemy, a));
@@ -1401,7 +1387,7 @@ export class Battle {
           distance(enemy, a) - distance(enemy, b) || a.id.localeCompare(b.id),
       )[0];
       if (!target) continue;
-      if (enemy.kind === "ranged") {
+      if (enemy.kind === "ranged" || enemy.kind === "lobber") {
         const visible = [...this.allies]
           .filter((ally) => this.enemyAttackValid(enemy, ally))
           .sort(
@@ -1410,7 +1396,16 @@ export class Battle {
               a.id.localeCompare(b.id),
           )[0];
         if (visible) enemy.intent = { x: visible.x, y: visible.y };
-        else {
+        else if (enemy.kind === "lobber") {
+          // If this advance cannot align an ally yet, announce a real tile on
+          // the closest cardinal projection. It remains fixed until the shot.
+          enemy.intent = [
+            { x: target.x, y: enemy.y },
+            { x: enemy.x, y: target.y },
+          ]
+            .filter((p) => this.enemyAttackValid(enemy, p))
+            .sort((a, b) => distance(a, target) - distance(b, target))[0];
+        } else {
           const [dx, dy] = [...DIRECTIONS].sort(
             (a, b) =>
               distance({ x: enemy.x + a[0], y: enemy.y + a[1] }, target) -
@@ -1485,6 +1480,23 @@ export class Battle {
           `${strike.name} não tem uma direção de ataque válida.`,
           "evade",
         );
+        continue;
+      }
+      if (strike.kind === "lobber") {
+        if (!inside(strike.to.x, strike.to.y)) {
+          this.addLog(
+            `${strike.name} disparou por cima para fora do tabuleiro.`, "evade",
+          );
+          continue;
+        }
+        strike.hit = { ...strike.to };
+        const target =
+          this.unitAt(strike.to.x, strike.to.y) ||
+          this.structureAt(strike.to.x, strike.to.y);
+        if (target) {
+          this.damage(target, 1);
+          this.addLog(`${strike.name} disparou por cima em ${target.name}. −1 PV.`, "danger");
+        } else this.addLog(`${strike.name} disparou por cima em uma casa vazia.`, "evade");
         continue;
       }
       if (strike.kind === "ranged") {

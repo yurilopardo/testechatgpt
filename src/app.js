@@ -1,4 +1,5 @@
 import { Battle, ELEMENTS, SIZE, key, inside } from "./engine.js";
+import { ENEMY_TYPES } from "./enemies.js";
 import { BoardRenderer, drawUnit } from "./art.js";
 import { IsometricRenderer } from "./isometric-art.js";
 import { isometricTestLevel } from "./isometric-scene.js";
@@ -24,6 +25,7 @@ const paths = {
   wait: "M9 5v14M15 5v14",
   arrow: "M4 12h16m-6-6 6 6-6 6",
   ranged: "M5 5c8-2 16 6 14 14M4 4l16 16M5 19 19 5m-6 0h6v6M4 14l6 6",
+  lobber: "M3 18C3 2 21 2 21 18m-4-4 4 4 2-5M3 21h7M5 16v5M18 21h5",
   reset: "M3 11a9 9 0 1 1 2 7M3 4v7h7",
   undo: "M9 5 3 11l6 6M3 11h11a6 6 0 0 1 6 6v2",
   help: "M9 8a3 3 0 1 1 4 3c-1 1-1 2-1 3m0 3v1M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z",
@@ -154,7 +156,7 @@ export function createApp(root, options = {}) {
       </main>
       <footer><span>Cinco elementos. Três ninjas. <strong>A estratégia é sua.</strong></span><div><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> cursor</span><span><kbd>↵</kbd> confirmar</span><span><kbd>Esc</kbd> cancelar</span><span><kbd>Z</kbd> desfazer movimento</span></div><span class="build-tag">TRÍADE <i>/</i> PROTÓTIPO 0.1</span></footer>
       <input id="game-level-file" type="file" accept=".json,application/json" hidden><div id="toast" class="toast" role="status" hidden></div>
-      <dialog id="help-dialog" aria-labelledby="help-title"><button class="dialog-close" data-command="close-dialog" aria-label="Fechar">${icon("close")}</button><div class="eyebrow">GUIA DE CAMPO</div><h2 id="help-title">Pense um turno à frente.</h2><p>Elimine os 9 inimigos de todas as ondas até o fim do turno 5. Se o prazo acabar ou todo o esquadrão cair, a missão termina.</p><div class="help-steps"><div><b>01</b><span><strong>Escolha e mova</strong>Clique em um aliado e em uma casa verde. Todos os ninjas andam até 3 casas, sem diagonais. Antes de usar uma ação, use Desfazer movimento (Z) para voltar à posição anterior, se a casa estiver livre.</span></div><div><b>02</b><span><strong>Escolha sua ação</strong>Use Soco, um Especial ou Esperar. Você também pode agir sem se mover; a ação encerra a vez da unidade. Aponte uma casa para ver o resultado antes de confirmar.</span></div><div><b>03</b><span><strong>Antecipe o perigo</strong>Sentinelas atacam a casa vizinha. Besteiros atacam em linha reta até 4 casas: o primeiro personagem ou barreira recebe 1 de dano. Árvores, pedras e muralhas bloqueiam o disparo. Após um empurrão, o ataque acompanha a nova posição e mantém a mesma direção. O inimigo sobrevivente ataca ao encerrar o turno, sem voltar a mirar nos aliados.</span></div><div><b>04</b><span><strong>Prepare-se para as ondas</strong>Ao encerrar o turno, os inimigos atacam e avançam até 2 casas. Dos turnos 2 a 5, chegam 1 ou 2 reforços e todos revelam seus próximos ataques. Elimine a última onda antes que o turno 5 termine.</span></div></div><p class="help-push">Soco e Onda Circular empurram personagens, pedras naturais e barreiras por 1 casa. O Soco causa 1 de dano e empurra o personagem mesmo se o golpe zerar seus PV: ele ainda causa 1 de dano no personagem ou estrutura logo atrás. A Onda não causa dano direto. Uma colisão com personagem ou estrutura causa 1 de dano em cada envolvido, sem empurrão em cadeia. Soco contra outro personagem: o alvo perde 2 PV (1 do Soco + 1 da colisão) e o personagem atrás perde apenas 1 PV. Árvores têm 2 PV, sofrem 1 de dano por colisão e exibem copa quebrada e 1/2 PV quando feridas. Árvores e muralhas ficam no lugar. O Soco pode danificar muralhas adjacentes, mas não as empurra; a Onda não as desloca. Muralhas têm 2 PV e bloqueiam a caminhada até serem destruídas. A água pode ser atravessada.</p><div class="help-elements">${Object.entries(
+      <dialog id="help-dialog" aria-labelledby="help-title"><button class="dialog-close" data-command="close-dialog" aria-label="Fechar">${icon("close")}</button><div class="eyebrow">GUIA DE CAMPO</div><h2 id="help-title">Pense um turno à frente.</h2><p>Elimine os 9 inimigos de todas as ondas até o fim do turno 5. Se o prazo acabar ou todo o esquadrão cair, a missão termina.</p><div class="help-steps"><div><b>01</b><span><strong>Escolha e mova</strong>Clique em um aliado e em uma casa verde. Todos os ninjas andam até 3 casas, sem diagonais. Antes de usar uma ação, use Desfazer movimento (Z) para voltar à posição anterior, se a casa estiver livre.</span></div><div><b>02</b><span><strong>Escolha sua ação</strong>Use Soco, um Especial ou Esperar. Você também pode agir sem se mover; a ação encerra a vez da unidade. Aponte uma casa para ver o resultado antes de confirmar.</span></div><div><b>03</b><span><strong>Antecipe o perigo</strong>Sentinelas atacam a casa vizinha. Besteiros atacam em linha reta até 4 casas: o primeiro personagem ou barreira recebe 1 de dano. Árvores, pedras e muralhas bloqueiam o disparo. Artilheiros atiram por cima, sem limite de distância, apenas na mesma linha ou coluna. Só a casa marcada recebe 1 PV de dano; personagens e estruturas no caminho não interceptam. Após um empurrão, o alvo acompanha a nova posição pela mesma distância e direção; se sair do tabuleiro, o tiro por cima erra. O inimigo sobrevivente ataca ao encerrar o turno, sem voltar a mirar nos aliados.</span></div><div><b>04</b><span><strong>Prepare-se para as ondas</strong>Ao encerrar o turno, os inimigos atacam e avançam até 2 casas. Dos turnos 2 a 5, chegam 1 ou 2 reforços e todos revelam seus próximos ataques. Elimine a última onda antes que o turno 5 termine.</span></div></div><p class="help-push">Soco e Onda Circular empurram personagens, pedras naturais e barreiras por 1 casa. O Soco causa 1 de dano e empurra o personagem mesmo se o golpe zerar seus PV: ele ainda causa 1 de dano no personagem ou estrutura logo atrás. A Onda não causa dano direto. Uma colisão com personagem ou estrutura causa 1 de dano em cada envolvido, sem empurrão em cadeia. Soco contra outro personagem: o alvo perde 2 PV (1 do Soco + 1 da colisão) e o personagem atrás perde apenas 1 PV. Árvores têm 2 PV, sofrem 1 de dano por colisão e exibem copa quebrada e 1/2 PV quando feridas. Árvores e muralhas ficam no lugar. O Soco pode danificar muralhas adjacentes, mas não as empurra; a Onda não as desloca. Muralhas têm 2 PV e bloqueiam a caminhada até serem destruídas. A água pode ser atravessada.</p><div class="help-elements">${Object.entries(
         ELEMENTS,
       )
         .map(
@@ -351,10 +353,11 @@ export function createApp(root, options = {}) {
     $("#intent-list").innerHTML =
       battle.enemies
         .map((e) => {
-          const ranged = e.kind === "ranged";
+          const type = ENEMY_TYPES[e.kind];
           const threatened = battle.enemyThreatenedCells(e);
-          const point = threatened.at(-1) || battle.enemyAttackPath(e).at(-1);
-          return `<div class="intent-row ${ranged ? "ranged" : "melee"} ${e.intent && !threatened.length ? "attack-blocked" : ""}" data-enemy="${e.id}"><span class="enemy-number">${icon(ranged ? "ranged" : "sword")}</span><span><strong>${e.name}</strong><span class="enemy-role">${ranged ? "DISTÂNCIA · ATÉ 4 CASAS" : "CORPO A CORPO · 1 CASA"}</span><span class="enemy-ready-label">${isDeployment ? "AGUARDANDO POSICIONAMENTO" : `${facing(e)} · ${enemyAnimating ? "PREPARANDO ATAQUE" : "ATAQUE ARMADO"}`}</span><small>${e.advanceSteps ? `Avançou ${e.advanceSteps} casa${e.advanceSteps === 1 ? "" : "s"}` : "Em posição"} · ${point ? `Ataque em <b>${coord(point)}</b>` : isDeployment ? "Ataque ainda não preparado" : "Voltado para fora do mapa"}${point && !threatened.length ? " · bloqueado" : ""} · 1 de dano</small></span>${hearts(e.hp, e.maxHp)}</div>`;
+          const point = threatened.at(-1) ||
+            (e.kind === "lobber" ? null : battle.enemyAttackPath(e).at(-1));
+          return `<div class="intent-row ${e.kind} ${e.intent && !threatened.length ? "attack-blocked" : ""}" data-enemy="${e.id}"><span class="enemy-number">${icon(type.icon)}</span><span><strong>${e.name}</strong><span class="enemy-role">${type.role}</span><span class="enemy-ready-label">${isDeployment ? "AGUARDANDO POSICIONAMENTO" : `${facing(e)} · ${enemyAnimating ? "PREPARANDO ATAQUE" : "ATAQUE ARMADO"}`}</span><small>${e.advanceSteps ? `Avançou ${e.advanceSteps} casa${e.advanceSteps === 1 ? "" : "s"}` : "Em posição"} · ${point ? `Ataque em <b>${coord(point)}</b>` : isDeployment ? "Ataque ainda não preparado" : "Alvo fora do mapa"}${point && !threatened.length ? " · bloqueado" : ""} · 1 de dano${e.kind === "lobber" ? " · só no destino, por cima dos obstáculos" : ""}</small></span>${hearts(e.hp, e.maxHp)}</div>`;
         })
         .join("") ||
       `<div class="no-threats">${battle.pendingReinforcements > 0 ? "Campo livre. Há reforços a caminho." : "Todas as ondas derrotadas."}</div>`;
@@ -392,7 +395,8 @@ export function createApp(root, options = {}) {
                       : "Escolha uma direção destacada para lançar o projétil.";
     const announced = new Set(
       battle.enemies.flatMap((e) =>
-        battle.enemyAttackPath(e).map((p) => key(p.x, p.y)),
+        (e.kind === "lobber" ? battle.enemyThreatenedCells(e) :
+          battle.enemyAttackPath(e)).map((p) => key(p.x, p.y)),
       ),
     );
     const danger = new Set(

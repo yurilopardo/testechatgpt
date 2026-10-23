@@ -2526,6 +2526,21 @@ dialog > p {
 .intent-row.attack-blocked small b {
   color: #9c9e90;
 }
+.intent-row.lobber {
+  border-left: 2px solid #c38d56;
+  border-bottom-color: #67503b;
+  background: #ffc17b0b;
+  padding-left: 8px;
+}
+.lobber .enemy-number {
+  border-color: #a56a43;
+  background: #ffc17b21;
+  color: #ffc17b;
+}
+.lobber .enemy-role,
+.intent-row.lobber strong {
+  color: #ffc17b;
+}
 
 @media (max-width: 940px) {
   .objective-card {

@@ -1,4 +1,5 @@
-import { ELEMENTS, SIZE, key, STRUCTURES } from "./engine.js";
+import { ELEMENTS, SIZE, key, STRUCTURES, inside } from "./engine.js";
+import { ENEMY_TYPES } from "./enemies.js";
 import {
   drawExtraGround,
   drawExtraObject,
@@ -39,6 +40,37 @@ export function drawUnit(ctx, unit, x, y, scale = 1) {
   ctx.translate(Math.round(x), Math.round(y));
   ctx.scale(scale, scale);
   if (unit.team === "enemy") {
+    if (unit.kind === "lobber") {
+      // Broad round helmet, black uniform and upright mortar distinguish it
+      // from the sentinel's hood and the marksman's pointed cloak.
+      rect(ctx, -18, 12, 37, 5, "#10251d88");
+      rect(ctx, -10, 7, 7, 10, "#08090b");
+      rect(ctx, 4, 7, 7, 10, "#08090b");
+      rect(ctx, -13, -6, 27, 19, "#101114");
+      rect(ctx, -17, -3, 6, 14, "#08090b");
+      rect(ctx, 11, -3, 7, 14, "#08090b");
+      rect(ctx, -12, 5, 26, 4, "#292522");
+      rect(ctx, -9, -22, 18, 4, "#24272c");
+      rect(ctx, -14, -18, 28, 14, "#101114");
+      rect(ctx, -16, -13, 32, 4, "#24272c");
+      rect(ctx, -10, -10, 20, 10, "#030405");
+      rect(ctx, -8, -8, 6, 4, "#811529");
+      rect(ctx, 3, -8, 6, 4, "#811529");
+      rect(ctx, -7, -7, 4, 2, "#ff354f");
+      rect(ctx, 4, -7, 4, 2, "#ff354f");
+      rect(ctx, -3, 1, 6, 11, "#08090b");
+      rect(ctx, -18, 3, 7, 8, "#292522");
+      rect(ctx, -17, 4, 5, 2, "#a56a43");
+      // A thick vertical launcher with a dark open muzzle and copper rims.
+      rect(ctx, 13, -20, 10, 29, "#1b1c20");
+      rect(ctx, 15, -18, 3, 24, "#393630");
+      rect(ctx, 11, -23, 14, 6, "#a56a43");
+      rect(ctx, 14, -22, 8, 3, "#030405");
+      rect(ctx, 12, -3, 12, 4, "#c38d56");
+      rect(ctx, 13, 9, 12, 3, "#08090b");
+      ctx.restore();
+      return;
+    }
     if (unit.kind === "ranged") {
       // The marksman wears a pointed hood and flared cloak and carries a crossbow.
       rect(ctx, -17, 12, 35, 5, "#10251d88");
@@ -753,7 +785,7 @@ export class BoardRenderer {
         ctx.lineTo(ex + dx * 18 + dy * 6, ey + dy * 18 - dx * 6);
         ctx.closePath();
         ctx.fill();
-        const point = threatened.at(-1) || path[0];
+        const point = threatened.at(-1) || (enemy.kind === "lobber" ? null : path[0]);
         if (!point) continue;
         const { x, y } = point,
           px = x * 64,
@@ -781,7 +813,9 @@ export class BoardRenderer {
         ctx.setLineDash([3, 4]);
         ctx.beginPath();
         ctx.moveTo(ex, ey);
-        ctx.lineTo(px + 32, py + 32);
+        if (enemy.kind === "lobber")
+          ctx.quadraticCurveTo((ex + px + 32) / 2, Math.min(ey, py + 32) - 60, px + 32, py + 32);
+        else ctx.lineTo(px + 32, py + 32);
         ctx.stroke();
         ctx.setLineDash([]);
       }
@@ -827,9 +861,7 @@ export class BoardRenderer {
         selected = unit.id === b.selectedId;
       const color =
         unit.team === "enemy"
-          ? unit.kind === "ranged"
-            ? "#c8b3ed"
-            : "#ef9f8b"
+          ? (ENEMY_TYPES[unit.kind] || ENEMY_TYPES.melee).color
           : ELEMENTS[unit.element].color;
       if (selected && ["player", "deployment"].includes(b.phase)) {
         ctx.strokeStyle = "#eef2bd";
@@ -1188,6 +1220,21 @@ export class BoardRenderer {
     } else if (e.type === "enemy") {
       for (const strike of e.strikes) {
         if (strike.cancelled) continue;
+        if (strike.kind === "lobber") {
+          const progress = Math.min(t * 1.5, 1);
+          const x = (strike.from.x + (strike.to.x - strike.from.x) * progress) * TILE + 32;
+          const y = (strike.from.y + (strike.to.y - strike.from.y) * progress) * TILE + 32 -
+            Math.sin(progress * Math.PI) * 80;
+          rect(ctx, x - 5, y - 5, 10, 10, "#a56a43");
+          rect(ctx, x - 2, y - 3, 4, 4, "#ffe0a0");
+          if (progress === 1 && inside(strike.to.x, strike.to.y)) {
+            ctx.strokeStyle = "#ffc17b";
+            ctx.beginPath();
+            ctx.arc(x, y, 9 + (t - 2 / 3) * 36, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+          continue;
+        }
         if (strike.kind === "ranged") {
           const end = strike.hit || strike.to,
             progress = Math.min(t * 2, 1);

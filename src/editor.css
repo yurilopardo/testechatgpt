@@ -343,7 +343,7 @@
 }
 .editor-wave {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 24px;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) 24px;
   gap: 6px;
   align-items: end;
   margin-bottom: 10px;

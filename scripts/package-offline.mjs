@@ -14,13 +14,15 @@ function crc32(data) {
 const files = [
   ["jogar.html", await readFile("jogar.html")],
   ["teste-isometrico.html", await readFile("teste-isometrico.html")],
+  ["teste-artilheiro.html", await readFile("teste-artilheiro.html")],
   ["editor-offline.html", await readFile("editor-offline.html")],
   ["banco-de-ideias.txt", await readFile("banco-de-ideias.txt")],
   ["fase-exemplo.json", await readFile("public/fase-exemplo.json")],
+  ["fase-tiro-por-cima.json", await readFile("public/fase-tiro-por-cima.json")],
   [
     "LEIA-ME.txt",
     Buffer.from(
-      "TRÍADE TÁTICA\n\nAbra jogar.html para jogar ou editor-offline.html para criar fases.\nAbra teste-isometrico.html para o teste visual reduzido: mapa fixo, três ninjas e um inimigo.\nOs arquivos funcionam offline, sem instalação.\n\nNo editor: Baixar fase salva JSON; Baixar fase jogável salva um HTML independente.\nFases salvas na biblioteca ficam apenas neste navegador; exporte para guardar.\nTiles com ◇ mostram quais efeitos ainda estão em planejamento.\n",
+      "TRÍADE TÁTICA\n\nAbra jogar.html para jogar ou editor-offline.html para criar fases.\nAbra teste-isometrico.html para o teste visual reduzido: mapa fixo, três ninjas e um inimigo.\nAbra teste-artilheiro.html para experimentar os três inimigos. Mova Nami de C6 para C7 e use Onda Circular: o alvo do tiro por cima passa de D2 para E2.\nOs arquivos funcionam offline, sem instalação.\n\nNo editor: Baixar fase salva JSON; Baixar fase jogável salva um HTML independente.\nFases salvas na biblioteca ficam apenas neste navegador; exporte para guardar.\nTiles com ◇ mostram quais efeitos ainda estão em planejamento.\n",
       "utf8",
     ),
   ],
@@ -70,6 +72,7 @@ await mkdir("dist", { recursive: true });
 for (const file of [
   "jogar.html",
   "teste-isometrico.html",
+  "teste-artilheiro.html",
   "editor-offline.html",
   "triade-tatica.zip",
 ])

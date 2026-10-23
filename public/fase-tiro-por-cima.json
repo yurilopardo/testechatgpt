@@ -1,0 +1,465 @@
+{
+  "format": "triade-level",
+  "version": 1,
+  "size": 8,
+  "name": "Tiro por cima",
+  "description": "Três tipos de inimigo. O Artilheiro passa por cima do muro e marca apenas o destino. Mova Nami de C6 para C7 e use Onda Circular: o alvo vai de D2 para E2.",
+  "ground": [
+    [
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass"
+    ],
+    [
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass"
+    ],
+    [
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass"
+    ],
+    [
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass"
+    ],
+    [
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass"
+    ],
+    [
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass"
+    ],
+    [
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass"
+    ],
+    [
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass",
+      "grass"
+    ]
+  ],
+  "objects": [
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "tree",
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "tree",
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      "wall",
+      "wall",
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      "rock",
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  ],
+  "effects": [
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  ],
+  "deployment": [
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  ],
+  "directions": [
+    [
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east"
+    ],
+    [
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east"
+    ],
+    [
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east"
+    ],
+    [
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east"
+    ],
+    [
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east"
+    ],
+    [
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east"
+    ],
+    [
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east"
+    ],
+    [
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east",
+      "east"
+    ]
+  ],
+  "units": [
+    {
+      "id": "fire",
+      "team": "ally",
+      "element": "fire",
+      "x": 3,
+      "y": 1
+    },
+    {
+      "id": "water",
+      "team": "ally",
+      "element": "water",
+      "x": 2,
+      "y": 5
+    },
+    {
+      "id": "earth",
+      "team": "ally",
+      "element": "earth",
+      "x": 4,
+      "y": 1
+    },
+    {
+      "id": "enemy-1",
+      "team": "enemy",
+      "kind": "lobber",
+      "x": 3,
+      "y": 6
+    },
+    {
+      "id": "enemy-2",
+      "team": "enemy",
+      "kind": "ranged",
+      "x": 7,
+      "y": 4
+    },
+    {
+      "id": "enemy-3",
+      "team": "enemy",
+      "kind": "melee",
+      "x": 0,
+      "y": 4
+    }
+  ],
+  "rules": {
+    "maxRounds": 8,
+    "waves": []
+  }
+}

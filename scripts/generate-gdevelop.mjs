@@ -1,5 +1,6 @@
 import { build } from "vite";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { exportPlayableHtml } from "../src/levels.js";
 
 // A self-contained GDevelop 5 project: no remote assets, extensions or runtime fetches.
 const result = await build({
@@ -124,9 +125,9 @@ if (app) {
   ),
   group(
     "10. Intenções inimigas",
-    "Inimigos avançam até duas casas quando necessário e armam um ataque direcional a cada turno, com seta persistente, caminho ameaçado e aviso ARMADO após o avanço. Sentinelas têm ataque adjacente; Besteiros disparam até quatro casas ortogonais e preparam uma direção mesmo sem aliado alinhado. Empurrões trasladam a intenção com o inimigo, sem girar nem mirar de novo; o sobrevivente ataca nessa direção ao encerrar o turno. A borda limita os disparos. O disparo para no primeiro personagem ou barreira; árvores, pedras e muralhas bloqueiam. A prévia considera ataques, reforços e prazo antes do próximo movimento, supondo encerrar o turno sem outras jogadas.",
+    "Inimigos avançam até duas casas quando necessário e armam um ataque direcional a cada turno, com seta persistente, caminho ameaçado e aviso ARMADO após o avanço. Sentinelas têm ataque adjacente; Besteiros disparam até quatro casas ortogonais e preparam uma direção mesmo sem aliado alinhado. Empurrões trasladam a intenção com o inimigo, sem girar nem mirar de novo; o sobrevivente ataca nessa direção ao encerrar o turno. Artilheiros atiram por cima de personagens e obstáculos, sem limite de distância, somente em linha ou coluna. O alvo específico se desloca junto com o atacante quando empurrado, mantendo direção e distância. Apenas o destino recebe um dano, inclusive estruturas; um destino fora do mapa erra sem atingir a última casa interna. O tiro reto do Besteiro para no primeiro personagem ou barreira; árvores, pedras e muralhas bloqueiam. A prévia considera ataques, reforços e prazo antes do próximo movimento, supondo encerrar o turno sem outras jogadas.",
     `const app = runtimeScene.__triade;
-if (app) runtimeScene.getVariables().get('Intencoes').setString(JSON.stringify(app.battle.enemies.map(e => ({ id:e.id, tipo:e.kind, alcance:e.kind==='ranged'?4:1, x:e.x, y:e.y, alvo:e.intent }))));`,
+if (app) runtimeScene.getVariables().get('Intencoes').setString(JSON.stringify(app.battle.enemies.map(e => ({ id:e.id, tipo:e.kind, alcance:e.kind==='lobber'?'sem-limite':e.kind==='ranged'?4:1, x:e.x, y:e.y, alvo:e.intent }))));`,
   ),
   group(
     "11. Resolução do turno",
@@ -315,6 +316,9 @@ console.log(
 const standalone = `<!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#111a15"><title>Tríade — Clareira do Rio</title><style>${css.replaceAll("</style", "<\\/style")}</style></head><body><div id="app"></div><script>${bundle.replaceAll("</script", "<\\/script")}\nTriade.createApp(document.getElementById('app'));</script></body></html>\n`;
 await writeFile("jogar.html", standalone);
+await writeFile("teste-artilheiro.html", exportPlayableHtml(
+  standalone, JSON.parse(await readFile("public/fase-tiro-por-cima.json", "utf8")),
+));
 await writeFile(
   "teste-isometrico.html",
   standalone.replace(

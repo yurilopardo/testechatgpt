@@ -14,6 +14,12 @@ O GDD também está disponível em [Word .doc](docs/GDD_Into_The_Shinobi_v0.1.do
 
 Abra **[jogar.html](jogar.html)** no navegador do PC. O arquivo é autocontido: funciona offline, sem servidor, instalação, conta ou assets externos.
 
+## Novo inimigo: Artilheiro
+
+O terceiro inimigo já participa da missão, na onda do turno 4, e pode ser colocado em **Personagens → Artilheiro** no editor ou configurado nas ondas.
+
+Para experimentar imediatamente, abra **[teste-artilheiro.html](teste-artilheiro.html)**. O mapa fixo traz os três tipos de inimigo. Selecione Nami em C6, mova-a para C7 e ative **Onda Circular**: o Artilheiro vai de D7 para E7 e seu alvo vai de D2 para E2, mesmo com muralhas no caminho. A prévia mostra a mudança antes de confirmar. A fase também está em [public/fase-tiro-por-cima.json](public/fase-tiro-por-cima.json) para importar no editor.
+
 ## Posicionamento inicial
 
 Depois de escolher o trio, selecione um ninja no painel e clique em uma **casa azul** para escolher onde ele começa. Clicar em uma casa ocupada por outro aliado troca os dois de lugar. Ajuste a formação livremente e use **Confirmar posicionamento** para iniciar o turno 1, com todos os movimentos, ações e PV disponíveis. Os inimigos só preparam seus ataques após a confirmação.
@@ -48,12 +54,12 @@ Abra **[editor-offline.html](editor-offline.html)** para criar fases sem instala
 
 - Tabuleiro 8×8 com **29 tiles**: os 24 terrenos/objetos/efeitos sugeridos, vapor, pedra incandescente, selo elétrico, água eletrizada e Área inicial.
 - Camadas independentes de chão, objetos, efeitos e área inicial. Pincel com arraste, balde de chão, borracha por camada, conta-gotas, orientação e até 100 passos de desfazer/refazer. Troncos pintam dois segmentos fixos, na horizontal ou vertical.
-- Ninjas opcionais quando há Área inicial, ou três posições fixas escolhidas entre os cinco elementos; múltiplos Sentinelas e Besteiros; prazo de 1 a 20 turnos e ondas configuráveis. Sem Área inicial, os personagens começam exatamente nas casas escolhidas. Com a marcação, o jogador escolhe a formação antes do combate.
+- Ninjas opcionais quando há Área inicial, ou três posições fixas escolhidas entre os cinco elementos; múltiplos Sentinelas, Besteiros e Artilheiros; prazo de 1 a 20 turnos e ondas configuráveis. Sem Área inicial, os personagens começam exatamente nas casas escolhidas. Com a marcação, o jogador escolhe a formação antes do combate.
 - **Testar fase** abre o jogo dentro do editor. Voltar preserva o rascunho. A validação indica personagens ausentes, casas bloqueadas e efeitos em planejamento; não garante que a fase seja vencível.
 - Biblioteca local com salvar, carregar, duplicar e excluir. Ela pertence ao navegador e não é um backup: use **Baixar fase** para guardar o JSON. Também é possível copiar e colar JSON em **Importar / JSON**.
 - **Baixar fase jogável (.html)** cria um arquivo independente, com jogo e mapa embutidos, que funciona offline. O jogo normal importa arquivos de fase pelo botão **Fase**.
 
-Regras disponíveis no teste: terreno comum; lama com custo de entrada 2; água profunda e abismo bloqueando caminhada; ponte transitável; árvores, pedras e muralhas; caixas móveis de 1 PV; pilares e segmentos de tronco fixos de 2 PV; pedras incandescentes móveis de 2 PV; vapor bloqueando projéteis; entradas de reforços marcadas.
+Regras disponíveis no teste: terreno comum; lama com custo de entrada 2; água profunda e abismo bloqueando caminhada; ponte transitável; árvores, pedras e muralhas; caixas móveis de 1 PV; pilares e segmentos de tronco fixos de 2 PV; pedras incandescentes móveis de 2 PV; vapor bloqueando projéteis em linha reta; entradas de reforços marcadas.
 
 Os tiles com **◇** mostram sua regra atual e o efeito ainda planejado. Gelo não desliza; arbustos não ocultam; troncos não se movem como uma peça única; pilares não tombam; pontes não são destruídas; espinhos, brasa, correnteza, selos e água eletrizada não aplicam seus efeitos especiais. Placas, santuários e solo rachado são marcadores, sem mecanismos ou novos objetivos. O aviso acompanha o teste e o HTML exportado. Combinações elementais continuam no banco de ideias.
 
@@ -134,7 +140,7 @@ Desfazer altera apenas a posição e devolve o movimento da unidade; vida, estru
 
 ## Objetivo e ondas
 
-Elimine **9 inimigos** até o fim do turno 5, mantendo pelo menos um aliado vivo. A missão começa com dois Sentinelas e um Besteiro. Nos turnos 2, 3, 4 e 5 chegam, respectivamente, **1, 2, 1 e 2 reforços**, misturando os dois tipos de inimigo. A sequência é fixa para permitir planejar as jogadas e reproduzir as prévias.
+Elimine **9 inimigos** até o fim do turno 5, mantendo pelo menos um aliado vivo. A missão começa com dois Sentinelas e um Besteiro. Nos turnos 2, 3, 4 e 5 chegam, respectivamente, **1, 2, 1 e 2 reforços**, misturando os três tipos de inimigo. A onda do turno 4 introduz um Artilheiro. A sequência é fixa para permitir planejar as jogadas e reproduzir as prévias.
 
 Os reforços entram pelas bordas livres antes do planejamento inimigo e anunciam seus ataques antes de você agir. Só atacam ao encerrar a vez seguinte do jogador. Se as entradas estiverem bloqueadas, aguardam uma casa livre; continuam contando entre os inimigos a eliminar. O painel informa quantos estão no campo, quantos ainda chegam e o tamanho da próxima onda.
 
@@ -159,7 +165,8 @@ Aponte outra casa para comparar, saia do tabuleiro ou pressione Esc para limpar 
 - **Barreira de Terra:** criada em grama adjacente vazia, 2 PV, bloqueia movimento e projéteis e pode ser empurrada como uma pedra. Criar outra substitui a anterior, mesmo depois de movida.
 - **Sentinelas:** corpo a corpo, 2 PV, movimento de até 2 casas e ataque adjacente de 1 de dano. Silhueta preta com rosto coberto e olhos vermelhos. Aproximam-se pelo caminho livre mais curto antes de anunciar a próxima intenção, com animação por casa ortogonal.
 - **Besteiros:** ataque à distância, 1 PV, movimento de até 2 casas e disparo ortogonal de até 4 casas, causando 1 de dano. Capuz pontudo, capa, besta larga e detalhes roxos distinguem o desenho do Sentinela. Mantêm posição quando já têm linha de tiro; caso contrário, procuram uma posição de disparo. A flecha para no primeiro personagem ou barreira, incluindo inimigos. Árvores, pedras e muralhas bloqueiam sem sofrer dano do disparo.
-- **Intenções:** todos os inimigos preparam um ataque a cada turno, depois de avançar até duas casas quando necessário. Quem já está em posição mantém a casa e arma o ataque. Setas persistentes mostram a direção, o caminho ameaçado é destacado no tabuleiro, e o aviso **ARMADO** aparece ao terminar o avanço. O painel mostra o deslocamento e a direção de cada inimigo. Empurrões trasladam a área de ataque junto com o personagem, preservando direção e alcance preparado; não cancelam automaticamente o ataque nem fazem o inimigo mirar de novo. Ao encerrar o turno, o sobrevivente ataca as novas casas marcadas. Personagens derrotados não atacam; estruturas e personagens ainda bloqueiam ou interceptam disparos. Raios são limitados pela borda, sem acesso a casas fora do tabuleiro. O Besteiro também prepara um disparo direcional quando não consegue alinhar um aliado naquele turno.
+- **Artilheiros:** 1 PV, movimento de até 2 casas e tiro por cima de 1 PV de dano. Miram uma casa específica na mesma linha ou coluna, sem limite de distância. Personagens, barreiras, árvores, pedras, muralhas e vapor no caminho não interceptam o projétil. Só o destino recebe dano, inclusive se for ocupado por outro inimigo ou uma estrutura; não há dano em área. Capacete arredondado, lançador vertical e detalhes de cobre distinguem a silhueta preta de olhos vermelhos. A trajetória em arco e a marcação mostram o impacto. Se for empurrado, o destino se desloca exatamente como ele, preservando direção e distância: D2 vira E2 após um empurrão para a direita. Se o destino sair do tabuleiro, o tiro erra, sem atingir a última casa interna.
+- **Intenções:** todos os inimigos preparam um ataque a cada turno, depois de avançar até duas casas quando necessário. Quem já está em posição mantém a casa e arma o ataque. Setas persistentes mostram a direção, o caminho ameaçado é destacado no tabuleiro, e o aviso **ARMADO** aparece ao terminar o avanço. O painel mostra o deslocamento e a direção de cada inimigo. Empurrões trasladam a área de ataque junto com o personagem, preservando direção e alcance preparado; não cancelam automaticamente o ataque nem fazem o inimigo mirar de novo. Ao encerrar o turno, o sobrevivente ataca as novas casas marcadas. Personagens derrotados não atacam; estruturas e personagens bloqueiam ou interceptam o tiro reto do Besteiro. O tiro por cima só considera o ocupante da casa de destino. Raios são limitados pela borda, sem acesso a casas fora do tabuleiro. O Besteiro também prepara um disparo direcional quando não consegue alinhar um aliado naquele turno.
 - **Resultado:** eliminar todas as ondas até o turno 5 vence; perder o esquadrão ou esgotar o prazo derrota. Reiniciar restaura o estado inteiro, sem recarregar a página.
 
 Sem mana, recargas, progressão, equipamento, história ou multiplayer.

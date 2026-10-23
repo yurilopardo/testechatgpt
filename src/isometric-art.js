@@ -1,5 +1,5 @@
 import { BoardRenderer, ENEMY_STEP_MS } from "./art.js";
-import { ELEMENTS, key } from "./engine.js";
+import { ELEMENTS, key, inside } from "./engine.js";
 import { ISO, projectCell, isometricCellBox } from "./isometric-scene.js";
 
 const P = {
@@ -299,6 +299,16 @@ export function drawIsometricUnit(
     box(c, -8, -36, 16, 3, "#24272c");
     box(c, -6, -31, 5, 2, "#ff354f");
     box(c, 3, -31, 5, 2, "#ff354f");
+    if (unit.kind === "lobber") {
+      box(c, -10, -42, 20, 5, "#24272c");
+      box(c, -12, -37, 24, 3, "#101114");
+      box(c, 12, -39, 10, 30, "#1b1c20");
+      box(c, 14, -36, 3, 25, "#393630");
+      box(c, 10, -42, 14, 6, "#a56a43");
+      box(c, 13, -41, 8, 3, "#030405");
+      box(c, 11, -18, 12, 4, "#c38d56");
+      box(c, -15, -19, 6, 10, "#292522");
+    }
   }
   if (element === "fire") {
     polygon(
@@ -540,8 +550,12 @@ export class IsometricRenderer extends BoardRenderer {
       else rock(c, p, entity.type === "barrier");
       c.restore();
     }
-    for (const e of this.motions.length ? [] : b.enemies)
-      if (e.intent) this.arrow([e, ...b.enemyAttackPath(e)], "#ffb799", true);
+    for (const e of this.motions.length ? [] : b.enemies) {
+      if (!e.intent) continue;
+      if (e.kind === "lobber") {
+        if (b.enemyAttackValid(e)) this.lobArc(e, e.intent, "#ffc17b");
+      } else this.arrow([e, ...b.enemyAttackPath(e)], "#ffb799", true);
+    }
     if (b.selected)
       outline(c, projectCell(b.selected.x, b.selected.y), P.gold, 1);
     const hover = this.cursor || this.hover;
@@ -647,6 +661,25 @@ export class IsometricRenderer extends BoardRenderer {
     c.fillStyle = color;
     c.fillText(text, Math.round(p.x), Math.round(p.y + offset));
   }
+  lobArc(from, to, color, progress = null) {
+    const c = this.ctx, a = projectCell(from.x, from.y), b = projectCell(to.x, to.y);
+    c.save();
+    c.strokeStyle = color;
+    c.lineWidth = 1.5;
+    if (progress === null) {
+      c.setLineDash([3, 4]);
+      c.beginPath();
+      c.moveTo(a.x, a.y - 24);
+      c.quadraticCurveTo((a.x + b.x) / 2, Math.min(a.y, b.y) - 90, b.x, b.y);
+      c.stroke();
+    } else {
+      box(c, a.x + (b.x - a.x) * progress - 3,
+        a.y + (b.y - a.y) * progress - Math.sin(progress * Math.PI) * 65 - 6 * (1 - progress),
+        7, 7, color);
+    }
+    if (inside(to.x, to.y)) outline(c, b, color, 1, true);
+    c.restore();
+  }
   drawIsometricPreview() {
     const p = this.preview;
     if (!p) return;
@@ -670,6 +703,11 @@ export class IsometricRenderer extends BoardRenderer {
       this.arrow([move.from, move.to], "#e78646");
     }
     for (const u of p.units) {
+      if (u.team === "enemy" && !u.defeated && p.pushes.some((push) => push.id === u.id))
+        for (const target of u.attackCells || []) {
+          outline(this.ctx, projectCell(target.x, target.y), "#ffc17b", 1, true);
+          if (u.kind === "lobber") this.lobArc(u.to, target, "#ffc17b");
+        }
       this.badge(
         projectCell(u.from.x, u.from.y),
         `${u.hpBefore}→${u.hpAfter} PV`,
@@ -736,8 +774,9 @@ export class IsometricRenderer extends BoardRenderer {
       );
     } else if (e.type === "enemy")
       for (const hit of e.strikes || []) {
-        if (!hit.cancelled)
-          this.arrow([hit.from, hit.hit || hit.to], "#ff8890");
+        if (hit.cancelled) continue;
+        if (hit.kind === "lobber") this.lobArc(hit.from, hit.to, "#ffc17b", Math.min(t * 1.5, 1));
+        else this.arrow([hit.from, hit.hit || hit.to], "#ff8890");
       }
     else {
       for (let i = 0; i < 6; i++)
