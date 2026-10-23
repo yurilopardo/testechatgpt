@@ -325,17 +325,17 @@ test("wave collision damages the enemy and rock, destroys both on the second hit
   );
 });
 
-test("earth creates a blocking two-HP barrier, then restart restores the scene", async ({
+test("earth throws a rock at an enemy, then restart restores its health", async ({
   page,
 }) => {
   await page.getByRole("button", { name: /Selecionar Taro/ }).click();
   await page
-    .getByRole("button", { name: "Barreira de Terra", exact: false })
+    .getByRole("button", { name: "Arremesso de Pedra", exact: false })
     .click();
-  await cell(page, 2, 7).click();
-  await expect(cell(page, 2, 7)).toHaveAttribute(
+  await cell(page, 3, 7).click();
+  await expect(cell(page, 3, 7)).toHaveAttribute(
     "aria-label",
-    /barreira, 2 PV/,
+    /Sentinela III, 1 PV/,
   );
   await page
     .getByRole("button", { name: "Reiniciar missão", exact: true })
@@ -346,12 +346,12 @@ test("earth creates a blocking two-HP barrier, then restart restores the scene",
   await page
     .getByRole("button", { name: "Continuar missão", exact: true })
     .click();
-  await expect(cell(page, 2, 7)).toHaveAttribute("aria-label", /barreira/);
+  await expect(cell(page, 3, 7)).toHaveAttribute("aria-label", /Sentinela III, 1 PV/);
   await page
     .getByRole("button", { name: "Reiniciar missão", exact: true })
     .click();
   await page.getByRole("button", { name: "Reiniciar", exact: true }).click();
-  await expect(cell(page, 2, 7)).not.toHaveAttribute("aria-label", /barreira/);
+  await expect(cell(page, 3, 7)).toHaveAttribute("aria-label", /Sentinela III, 2 PV/);
   await expect(page.locator("#ready-count")).toHaveText("3");
 });
 
@@ -407,12 +407,12 @@ test("mobile layout has no horizontal overflow and keeps the game operable", asy
   ).toBe(true);
   await page.getByRole("button", { name: /Selecionar Taro/ }).click();
   await page
-    .getByRole("button", { name: "Barreira de Terra", exact: false })
+    .getByRole("button", { name: "Arremesso de Pedra", exact: false })
     .click();
-  await cell(page, 2, 7).click();
-  await expect(cell(page, 2, 7)).toHaveAttribute(
+  await cell(page, 3, 7).click();
+  await expect(cell(page, 3, 7)).toHaveAttribute(
     "aria-label",
-    /barreira, 2 PV/,
+    /Sentinela III, 1 PV/,
   );
 });
 

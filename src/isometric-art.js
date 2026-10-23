@@ -486,24 +486,10 @@ export class IsometricRenderer extends BoardRenderer {
         for (let i = -10; i <= 10; i += 5)
           box(c, q.x + i, q.y - 2, 2, 3, P.red);
       }
-    const radial =
-      b.mode === "special" && !b.selected?.acted
-        ? b.selected?.element === "water"
-          ? b.waveArea()
-          : b.selected?.element === "wind" && this.preview
-            ? [
-                [0, -1],
-                [1, 0],
-                [0, 1],
-                [-1, 0],
-              ]
-                .map(([dx, dy]) => ({
-                  x: this.preview.at.x + dx,
-                  y: this.preview.at.y + dy,
-                }))
-                .filter((p) => p.x >= 0 && p.y >= 0 && p.x < 8 && p.y < 8)
-            : []
-        : [];
+    const pointed = this.preview?.at || this.cursor || this.hover;
+    const radial = !this.inputLocked && b.mode === "special"
+      ? b.specialArea(pointed?.x, pointed?.y)
+      : [];
     radial.forEach((p) => outline(c, projectCell(p.x, p.y), P.gold, 2));
     const entities = [
       ...b.structures.values(),
@@ -733,6 +719,10 @@ export class IsometricRenderer extends BoardRenderer {
       if (e.status === "moves") this.arrow(e.path, "#b8b5ed", true);
     if (p.effect?.type === "fire")
       this.arrow([p.effect.from, p.effect.to], P.gold);
+    if (p.effect?.type === "earth") {
+      this.lobArc(p.effect.from, p.effect.to, P.gold);
+      this.badge(projectCell(p.at.x, p.at.y), p.effect.directHit ? "PEDRA · −1 PV" : "QUEDA · EMPURRÃO", P.gold, 0);
+    }
   }
   drawIsometricEffect(time) {
     const e = this.effect;
@@ -753,6 +743,14 @@ export class IsometricRenderer extends BoardRenderer {
       c.beginPath();
       c.ellipse(to.x, to.y, 14 + t * 65, 7 + t * 32, 0, 0, Math.PI * 2);
       c.stroke();
+    } else if (e.type === "earth") {
+      const progress = Math.min(1, t * 1.5);
+      this.lobArc(e.from, e.to, P.stoneLight, progress);
+      if (e.radial && progress === 1)
+        for (const [dx, dy] of [[0, -1], [1, 0], [0, 1], [-1, 0]]) {
+          const next = { x: e.to.x + dx, y: e.to.y + dy };
+          if (inside(next.x, next.y)) outline(c, projectCell(next.x, next.y), P.gold, 2);
+        }
     } else if (e.type === "fire") {
       const from = projectCell(e.from.x, e.from.y),
         k = Math.min(1, t * 2);

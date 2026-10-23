@@ -1,4 +1,4 @@
-import { ELEMENTS, inside, key } from "./engine.js";
+import { ELEMENTS, DIRECTIONS, inside, key } from "./engine.js";
 
 export const coordinate = (p) => `${"ABCDEFGH"[p.x]}${p.y + 1}`;
 const escape = (value) =>
@@ -85,7 +85,12 @@ export function previewMarkup(preview) {
           "",
         )}${preview.incomingCount ? `<p>${preview.incomingCount === 1 ? "Chega" : "Chegam"} ${preview.incomingCount} reforço${preview.incomingCount === 1 ? "" : "s"} antes do próximo avanço.</p>` : ""}${preview.forecastResultReason === "timeout" ? '<p class="preview-defeated">O prazo termina ao encerrar este turno.</p>' : ""}<p>Se encerrar o turno agora. Outras jogadas mudam a previsão.</p></div>`
     : "";
-  return `${header}<div class="preview-action">${escape(action)} · ${coordinate(preview.at)}</div><ul>${rows.join("") || '<li class="preview-empty">Nenhuma unidade atingida.</li>'}</ul>${preview.outcome === "victory" ? '<p class="preview-victory">Vitória ao confirmar esta ação.</p>' : ""}${next}<div class="preview-legend"><span><i class="preview-push-color"></i>1 · Empurrão imediato</span><span><i class="preview-path-color"></i>2 · Próximo avanço</span></div>`;
+  const earthImpact = preview.effect?.type === "earth"
+    ? `<p class="preview-earth">${preview.effect.directHit
+      ? "Impacto direto: 1 PV no ocupante do centro, que fica no lugar. Empurra as 4 vizinhas, sem dano direto nelas."
+      : "Casa livre: empurra as 4 vizinhas, sem dano direto."} Colisões causam 1 PV em cada envolvido.</p>`
+    : "";
+  return `${header}<div class="preview-action">${escape(action)} · ${coordinate(preview.at)}</div>${earthImpact}<ul>${rows.join("") || '<li class="preview-empty">Nenhuma unidade atingida.</li>'}</ul>${preview.outcome === "victory" ? '<p class="preview-victory">Vitória ao confirmar esta ação.</p>' : ""}${next}<div class="preview-legend"><span><i class="preview-push-color"></i>1 · Empurrão imediato</span><span><i class="preview-path-color"></i>2 · Próximo avanço</span></div>`;
 }
 
 export function previewCellDescriptions(preview) {
@@ -96,6 +101,14 @@ export function previewCellDescriptions(preview) {
     cells.set(id, [...(cells.get(id) || []), text]);
   };
   if (!preview) return cells;
+  if (preview.effect?.type === "earth") {
+    add(preview.at, preview.effect.directHit
+      ? "Impacto da pedra: 1 PV no ocupante central e empurrão nas 4 vizinhas"
+      : "Queda da pedra em casa livre: empurra as 4 vizinhas sem dano direto");
+    if (preview.effect.radial)
+      for (const [dx, dy] of DIRECTIONS)
+        add({ x: preview.at.x + dx, y: preview.at.y + dy }, "Área do empurrão da queda da pedra");
+  }
   for (const u of preview.units)
     add(
       u.from,

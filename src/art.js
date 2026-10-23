@@ -705,23 +705,10 @@ export class BoardRenderer {
       b.mode === "special" &&
       b.selected?.element === "water" &&
       !b.selected.acted;
-    const windCenter =
-      !this.inputLocked &&
-      b.mode === "special" &&
-      b.selected?.element === "wind" &&
-      !b.selected.acted
-        ? this.cursor || this.hover
-        : null;
-    const radialArea = windCenter
-      ? [
-          { x: windCenter.x, y: windCenter.y - 1 },
-          { x: windCenter.x + 1, y: windCenter.y },
-          { x: windCenter.x, y: windCenter.y + 1 },
-          { x: windCenter.x - 1, y: windCenter.y },
-        ].filter((p) => p.x >= 0 && p.y >= 0 && p.x < SIZE && p.y < SIZE)
-      : waveSelected
-        ? b.waveArea()
-        : [];
+    const pointed = this.cursor || this.hover;
+    const radialArea = !this.inputLocked && b.mode === "special"
+      ? b.specialArea(pointed?.x, pointed?.y)
+      : [];
     if (radialArea.length) {
       for (const p of radialArea) {
         rect(ctx, p.x * TILE + 3, p.y * TILE + 3, 58, 58, "#efb37838");
@@ -1011,6 +998,19 @@ export class BoardRenderer {
     ctx.save();
     if (preview.effect?.type === "fire")
       arrow([preview.effect.from, preview.effect.to], amber);
+    if (preview.effect?.type === "earth") {
+      const from = preview.effect.from, to = preview.effect.to;
+      ctx.strokeStyle = "#e8db9a";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.moveTo(from.x * TILE + 32, from.y * TILE + 32);
+      ctx.quadraticCurveTo((from.x + to.x) * TILE / 2 + 32,
+        Math.min(from.y, to.y) * TILE - 28, to.x * TILE + 32, to.y * TILE + 32);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      badge(to, preview.effect.directHit ? "PEDRA · −1 PV" : "QUEDA · EMPURRÃO", amber);
+    }
     if (preview.effect?.type === "lightning") {
       arrow(preview.effect.path, "#fff0a4", false);
       badge(preview.effect.impactFrom, "DASH · −1 PV", amber);
@@ -1178,6 +1178,27 @@ export class BoardRenderer {
         y = (e.from.y + (e.to.y - e.from.y) * Math.min(t * 2, 1)) * 64 + 32;
       rect(ctx, x - 6, y - 6, 12, 12, "#f6a953");
       rect(ctx, x - 3, y - 3, 6, 6, "#fff0b4");
+    } else if (e.type === "earth") {
+      const progress = Math.min(t * 1.5, 1);
+      const x = (e.from.x + (e.to.x - e.from.x) * progress) * TILE + 32;
+      const y = (e.from.y + (e.to.y - e.from.y) * progress) * TILE + 32 -
+        Math.sin(progress * Math.PI) * 80;
+      rect(ctx, x - 7, y - 5, 14, 11, "#64756d");
+      rect(ctx, x - 4, y - 7, 9, 5, "#9aa596");
+      rect(ctx, x - 3, y - 4, 4, 3, "#d5dc92");
+      if (progress === 1) {
+        const radius = 9 + Math.max(0, t - 2 / 3) * 40;
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.stroke();
+        if (e.radial)
+          for (const [dx, dy] of [[0, -1], [1, 0], [0, 1], [-1, 0]]) {
+            ctx.beginPath();
+            ctx.moveTo(x + dx * 15, y + dy * 15);
+            ctx.lineTo(x + dx * (25 + radius), y + dy * (25 + radius));
+            ctx.stroke();
+          }
+      }
     } else if (e.type === "lightning") {
       ctx.beginPath();
       ctx.moveTo(e.from.x * TILE + 32, e.from.y * TILE + 32);

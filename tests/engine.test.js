@@ -693,27 +693,17 @@ test("reset restores destroyed and damaged structures with full HP", () => {
   assert.equal(b.structureAt(2, 4).hp, 2);
 });
 
-test("earth: only adjacent empty grass, 2 HP, new barrier replaces old one", () => {
+test("earth: overhead impact damages an occupied tile without pushing or creating a barrier", () => {
   const b = arena("earth");
-  b.terrain[3][4] = "water";
-  b.terrain[2][3] = "tree";
-  b.units.push(ally("water", 3, 4));
-  for (const p of [
-    [4, 3],
-    [3, 2],
-    [3, 4],
-    [1, 3],
-  ])
-    assert.equal(b.earth(...p), false);
-  assert.ok(b.earth(2, 3));
-  assert.equal(b.barrier.hp, 2);
-  assert.equal(b.free(2, 3), false);
-  b.selected.moved = false;
-  b.selected.acted = false;
-  b.terrain[3][4] = "grass";
-  assert.ok(b.earth(4, 3));
-  assert.equal(b.barrierAt(2, 3), null);
-  assert.equal(b.barrierAt(4, 3).hp, 2);
+  b.terrain[1][3] = "tree";
+  b.terrain[2][3] = "wall";
+  assert.equal(b.earth(4, 4), false);
+  assert.equal(b.earth(3, 3), false);
+  assert.equal(b.earth(3, 1), true);
+  assert.equal(b.structureAt(3, 1).hp, 1);
+  assert.equal(b.structureAt(3, 2).hp, 2);
+  assert.equal(b.lastEffect.directHit, true);
+  assert.equal(b.barrier, null);
 });
 
 test("barrier takes melee damage, moves and is removed at zero HP", () => {
@@ -1055,14 +1045,17 @@ test("preview does not show enemy advance when the announced attacks end the bat
   assert.deepEqual(p.nextEnemies[0].path, [{ x: 5, y: 3 }]);
 });
 
-test("earth preview shows the removed barrier and the new two-HP barrier", () => {
+test("earth preview shows direct structure damage and preserves an unrelated barrier", () => {
   const b = arena("earth");
   b.barrier = { x: 0, y: 0, hp: 1, maxHp: 2, type: "barrier" };
+  b.terrain[3][2] = "tree";
   const p = commitAndComparePreview(b, 2, 3, "special");
-  assert.equal(p.units.length, 0);
-  assert.equal(p.structures.length, 2);
-  assert.ok(p.structures.find((s) => s.x === 0).destroyed);
-  assert.equal(p.structures.find((s) => s.x === 2).hpAfter, 2);
+  assert.equal(p.units.length, 1);
+  assert.equal(p.units[0].moved, true);
+  assert.equal(p.structures.length, 1);
+  assert.equal(p.structures[0].hpAfter, 1);
+  assert.equal(p.structures[0].created, false);
+  assert.equal(b.barrier.hp, 1);
 });
 
 test("invalid, blocked and spent actions never produce a forecast or mutate state", () => {
@@ -1083,7 +1076,7 @@ test("invalid, blocked and spent actions never produce a forecast or mutate stat
   assert.equal(water.previewAction(3, 3, "special"), null);
   const earth = arena("earth");
   earth.terrain[3][2] = "water";
-  assert.equal(earth.previewAction(2, 3, "special"), null);
+  assert.equal(earth.previewAction(2, 2, "special"), null);
   b.beginEnemyTurn();
   assert.equal(b.previewAction(3, 2, "special"), null);
 });

@@ -389,30 +389,19 @@ test("movable structures: a character pushed into a rock damages both without pu
   assert.equal(preview.structureMoves.length, 0);
 });
 
-test("movable structures: a moved, damaged Earth barrier is replaced only when another is summoned", () => {
+test("movable structures: a placed barrier keeps its identity and can be damaged by an overhead rock", () => {
   const b = arena("earth");
-  assert.equal(b.earth(4, 3), true);
-  const old = b.structureAt(4, 3);
-  assert.ok(old.id);
+  const old = structure(b, "barrier", 4, 3);
   b.units.push(hero("fire", 4, 4));
   assert.equal(b.select("fire"), true);
   previewAndCommit(b, 4, 3, "punch");
   assert.equal(b.structureAt(4, 2), old);
   assert.equal(old.hp, 1);
-  assert.equal(b.beginEnemyTurn(), true);
-  assert.equal(b.resolveEnemyTurn(), true);
   assert.equal(b.select("earth"), true);
-  const preview = previewAndCommit(b, 2, 3, "special");
-  const replacement = b.structureAt(2, 3);
-  assert.ok(replacement);
-  assert.equal(replacement.hp, 2);
-  assert.notEqual(replacement.id, old.id);
+  assert.equal(b.move(3, 2), true);
+  const preview = previewAndCommit(b, 4, 2, "special");
   assert.equal(b.structureAt(4, 2), null);
   assert.equal(preview.structures.find((s) => s.id === old.id).destroyed, true);
-  assert.equal(
-    preview.structures.find((s) => s.id === replacement.id).created,
-    true,
-  );
   assert.equal(preview.structureMoves.length, 0);
 });
 

@@ -2309,6 +2309,12 @@ dialog > p {
   padding-bottom: 10px;
   border-bottom: 1px solid #365044;
 }
+.preview-earth {
+  font-size: 10px;
+  line-height: 1.7;
+  color: #c3c9ad;
+  margin: 10px 0;
+}
 .preview-panel ul {
   list-style: none;
   padding: 0;

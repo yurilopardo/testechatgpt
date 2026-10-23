@@ -177,20 +177,17 @@ test("forecasts recompute after a different ally acts instead of retaining old H
   );
 });
 
-test("barrier creation appears in the preview before the actual structure is placed", async ({
-  page,
-}) => {
+test("Earth empty landing previews radial displacement without placing a persistent object", async ({ page }) => {
   await page.getByRole("button", { name: /Selecionar Taro/ }).click();
-  await page.getByRole("button", { name: /^Barreira de Terra/ }).click();
+  await page.getByRole("button", { name: /^Arremesso de Pedra/ }).click();
   await cell(page, 2, 7).hover();
-  await expect(preview(page)).toContainText("0 → 2 PV");
-  await expect(preview(page)).toContainText("Criada em C8");
-  await expect(cell(page, 2, 7)).not.toHaveAttribute("aria-label", /barreira/);
+  await expect(preview(page)).toContainText("Casa livre: empurra as 4 vizinhas");
+  await expect(preview(page)).toContainText("Empurrão: D8 → E8");
+  await expect(cell(page, 3, 7)).toHaveAttribute("aria-label", /Sentinela III, 2 PV/);
   await cell(page, 2, 7).click();
-  await expect(cell(page, 2, 7)).toHaveAttribute(
-    "aria-label",
-    /barreira, 2 PV/,
-  );
+  await expect(cell(page, 2, 7)).not.toHaveAttribute("aria-label", /estrutura|barreira/);
+  await expect(cell(page, 4, 7)).toHaveAttribute("aria-label", /Sentinela III, 2 PV/);
+  await expect(cell(page, 0, 7)).toHaveAttribute("aria-label", /Taro, 3 PV/);
 });
 
 test("an ally pushed into a tree takes the same collision damage shown in the preview", async ({

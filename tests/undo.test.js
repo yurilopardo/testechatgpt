@@ -136,7 +136,7 @@ test("undo: Soco, each special and waiting commit the actor's movement", () => {
       },
     ],
     ["water", (b) => b.wave()],
-    ["earth", (b) => b.earth(4, 2)],
+    ["earth", (b) => b.earth(4, 1)],
     ["fire", (b) => b.wait()],
   ];
   for (const [element, action] of scenarios) {
@@ -196,15 +196,17 @@ test("undo: returning preserves health, terrain and a different ally's completed
   const earth = addAlly(b);
   assert.equal(b.move(4, 3), true);
   assert.equal(b.select("earth"), true);
+  b.terrain[4][6] = "rock";
   assert.equal(b.earth(6, 4), true);
-  const barrier = b.barrier;
+  const rock = b.structureAt(6, 4);
   b.damage(b.enemies[0], 1);
   const priorLog = [...b.log];
   assert.equal(b.select("fire"), true);
   assert.equal(b.undoMove(), true);
   assert.equal(fire.hp, 2);
   assert.equal(b.enemies[0].hp, 1);
-  assert.equal(b.barrier, barrier);
+  assert.equal(b.structureAt(6, 4), rock);
+  assert.equal(rock.hp, 1);
   assert.equal(earth.acted, true);
   assert.deepEqual(b.log.slice(1), priorLog);
 });

@@ -21,10 +21,10 @@ export const ELEMENTS = {
     name: "Terra",
     character: "Taro",
     title: "A firmeza da terra",
-    special: "Barreira de Terra",
+    special: "Arremesso de Pedra",
     color: "#bdcb7b",
     description:
-      "Cria uma barreira de 2 PV em grama adjacente vazia. Pode ser empurrada. Criar outra substitui a anterior.",
+      "Atira uma pedra por cima, na mesma linha ou coluna, sem limite de distância. Causa 1 PV no ocupante do centro e sempre empurra as 4 vizinhas para fora, sem dano direto nelas. O alvo central fica no lugar. Colisões seguem as regras normais; árvores e muralhas ficam paradas. A pedra não permanece no mapa.",
   },
   lightning: {
     name: "Raio",

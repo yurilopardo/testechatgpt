@@ -120,7 +120,7 @@ if (app) {
   ),
   group(
     "9. Especial de Terra",
-    "Cria uma barreira de dois PV em grama adjacente vazia. Substitui a anterior.",
+    "Arremesso de Pedra substitui a Barreira de Terra. Mira qualquer outra casa na mesma linha ou coluna, sem limite de distância e ignorando ocupantes e obstáculos no caminho. No destino ocupado por personagem ou estrutura causa um PV no alvo central, que fica no lugar. Todas as quedas empurram simultaneamente os ocupantes das quatro vizinhas, sem dano direto nelas, mesmo após um impacto letal no centro. Colisões seguem as regras comuns; árvores e muralhas ficam fixas. A queda não cria uma pedra persistente. Prévia, animação em arco e exportação usam as mesmas regras.",
     process("earth"),
   ),
   group(

@@ -614,6 +614,12 @@ export class Battle {
       return cells;
     }
     if (unit.element === "water") return [{ x: unit.x, y: unit.y }];
+    if (unit.element === "earth")
+      return DIRECTIONS.flatMap(([dx, dy]) =>
+        Array.from({ length: SIZE - 1 }, (_, i) => ({
+          x: unit.x + dx * (i + 1), y: unit.y + dy * (i + 1),
+        })).filter((p) => inside(p.x, p.y)),
+      );
     if (unit.element === "wind")
       return Array.from({ length: SIZE * SIZE }, (_, i) => ({
         x: i % SIZE,
@@ -627,15 +633,20 @@ export class Battle {
           : [];
       });
     }
-    const adjacent = DIRECTIONS.map(([dx, dy]) => ({
-      x: unit.x + dx,
-      y: unit.y + dy,
-    })).filter((p) => inside(p.x, p.y));
-    return unit.element === "earth"
-      ? adjacent.filter(
-          (p) => this.terrain[p.y][p.x] === "grass" && this.free(p.x, p.y),
-        )
-      : adjacent;
+    return [];
+  }
+
+  // Shared by the board, accessible cells and previews. An occupied Earth
+  // endpoint also takes direct damage; both kinds of landing push neighbors.
+  specialArea(x, y, unit = this.selected) {
+    if (!unit || unit.acted || this.phase !== "player") return [];
+    if (unit.element === "water") return this.waveArea(unit);
+    if (!inside(x, y) || !["wind", "earth"].includes(unit.element)) return [];
+    if (unit.element === "earth" && (
+      !this.targets("special", unit).some((p) => p.x === x && p.y === y)
+    )) return [];
+    return DIRECTIONS.map(([dx, dy]) => ({ x: x + dx, y: y + dy }))
+      .filter((p) => inside(p.x, p.y));
   }
 
   waveArea(unit = this.selected) {
@@ -721,10 +732,11 @@ export class Battle {
       });
     const actor = beforeUnits.find((u) => u.id === this.selectedId);
     const isWave =
-      mode === "special" && ["water", "wind"].includes(actor.element);
+      mode === "special" && (["water", "wind"].includes(actor.element) ||
+        (actor.element === "earth" && simulation.lastEffect.radial));
     const isDash = mode === "special" && actor.element === "lightning";
     const origin =
-      isWave && actor.element === "wind"
+      isWave && ["wind", "earth"].includes(actor.element)
         ? { x, y }
         : isDash
           ? simulation.lastEffect.impactFrom
@@ -1199,6 +1211,7 @@ export class Battle {
     for (const impact of collisions) this.collide(impact.unit, impact.obstacle);
     this.lastEffect = {
       type: element,
+      ...(element === "earth" ? { radial: true } : {}),
       from,
       to: { ...center },
       collisions: collisions.map((p) => ({
@@ -1208,13 +1221,13 @@ export class Battle {
     };
     this.addLog(
       `${unit.name} usou ${ELEMENTS[element].special}. ${pushes.length} unidade${pushes.length === 1 ? "" : "s"} empurrada${pushes.length === 1 ? "" : "s"}.`,
-      "water",
+      element === "earth" ? "earth" : "water",
     );
     this.finishAction(unit);
     return true;
   }
 
-  // 9. Especial de Terra
+  // 9. Especial de Terra: direct impact damage plus a radial push on every landing.
   earth(x, y) {
     const unit = this.selected;
     if (
@@ -1225,22 +1238,13 @@ export class Battle {
       !this.targets("special", unit).some((p) => p.x === x && p.y === y)
     )
       return false;
-    this.barrier = {
-      id: `barrier-${++this.structureSerial}`,
-      name: "Barreira de Terra",
-      x,
-      y,
-      hp: 2,
-      maxHp: 2,
-      type: "barrier",
-    };
-    this.lastEffect = {
-      type: "earth",
-      from: { x: unit.x, y: unit.y },
-      to: { x, y },
-    };
-    this.addLog(`${unit.name} ergueu uma Barreira de Terra. 2 PV.`, "earth");
-    this.finishAction(unit);
+    const target = this.unitAt(x, y) || this.structureAt(x, y);
+    if (target) {
+      this.damage(target, 1);
+      this.addLog(`${unit.name} acertou ${target.name} com uma pedra. −1 PV no centro.`, "earth");
+    }
+    this.radialPush(unit, { x, y }, "earth");
+    this.lastEffect.directHit = !!target;
     return true;
   }
 
